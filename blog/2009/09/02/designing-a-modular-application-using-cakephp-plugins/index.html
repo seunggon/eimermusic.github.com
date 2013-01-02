@@ -1,0 +1,499 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Designing a modular application using CakePHP plugins - My New Home</title>
+  <meta name="author" content="Martin Westin">
+
+  
+  <meta name="description" content="This article will try to explain how I build a modular application using plugins. I will cover how I implement them and integrate them into the main &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://eimer.co/blog/2009/09/02/designing-a-modular-application-using-cakephp-plugins">
+  <link href="/favicon.ico" rel="icon">
+
+  <link href="/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+  <link href="/atom.xml" rel="alternate" title="My New Home" type="application/atom+xml">
+  
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-11893308-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body    data-spy="scroll">
+
+  <div class="container">
+    <header class="jumbotron subhead" id="overview">
+      
+<div class="subscribe">
+  <table>
+    <tr>
+      <td><span>Get Updates: &nbsp;</span></td>
+      
+      
+      <td><a href="/atom.xml" class="btn"><i class="icon-cog"></i> By RSS</a></td>
+      
+      
+      <td><a href="http://twitter.com/eimer" class="btn"><i class="icon-twitter-sign"></i> On Twitter</a></td>
+      
+    </tr>
+  </table>
+</div>
+
+<h1 class="title">My New Home</h1>
+
+  <p class="lead">migrated from the 10 year-old eimermusic.com</p>
+
+
+      <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container" style="width: auto;">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <div class="nav-collapse">
+                <ul class="nav">
+          <li><a href="/">Home</a></li>
+          <li><a href="/music">Music</a></li>
+          <li><a href="/photos">Photos</a></li>
+          <li><a href="/portfolio">Portfolio</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+
+        
+          <form action="http://google.com/search" method="get" class="navbar-search pull-left">
+            <fieldset role="search">
+              <input type="hidden" name="q" value="site:eimer.co" />
+              <input type="text" name="q" results="0" placeholder="Search" class="search-query span2" />
+            </fieldset>
+          </form>
+        
+        
+      </div><!-- /.nav-collapse -->
+    </div>
+  </div><!-- /navbar-inner -->
+</div>
+
+    </header>
+    <div id="main">
+      <div id="content">
+        <div class="row">
+  
+  <div class="span8">
+    
+  <header>
+    
+      <h1 class="entry-title">Designing a Modular Application Using CakePHP Plugins</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-09-02T00:00:00+02:00" pubdate data-updated="true">Sep 2<span>nd</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  
+  
+  <div class="entry-content"><p>This article will try to explain how I build a modular application using plugins. I will cover how I implement them and integrate them into the main application.
+</p>
+
+
+<h2>Definition</h2>
+
+<p>There are a lot of different ideas around about what to put into the CakePHP plugins directory. In this article a plugin extends the application kind-of like a plugin in Photoshop.</p>
+
+<ul>
+    <li>A plugin does not extend CakePHP or &#8220;any&#8221; application. It is specific to &#8220;this&#8221; application.</li>
+    <li>A plugin may (or rather should) depend on the application.</li>
+    <li>The application may not depend on any one plugin.</li>
+</ul>
+
+
+<h2>Context</h2>
+
+<p>We need some context. An example application and how it makes use of plugins. I have chosen the application I continually develop at work. It is a system for communicating with mobile phones. Primarily via SMS and MMS. (That is: text messages and picture/video messages to most people.) I will use simplified and generalised features of this application to exemplify the design and implementation of plugins.</p>
+
+<h2>The design</h2>
+
+<p>The application has certain obvious core features. User management, managing phone numbers, sending SMS and MMS, receiving SMS and MMS, reporting on all transactions and other similar features.</p>
+
+<p>Each concrete end-user feature is implemented as a plugin.
+A few examples:
+A newsletters module used to send offers and news to customers.
+A feedback module used to receive and automatically publish incoming feedback from customers on the client&#8217;s website among other things.
+An opinions module to manage quick opinion polls.
+A subscriptions module and many others.</p>
+
+<p>Each of these make use of incoming and/or outgoing SMS and MMS messages in some way. Each one uses stored phone numbers. They all manage these things by making use of core features.</p>
+
+<h2>How plugins talk to the main application</h2>
+
+<p>This is the simple and obvious bit. A plugin can very simply just extend or associate itself with some resource in the main application.
+As an example (finally some code!), a subscriber model would look like this.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<?php  
+class SubsSubscriber extends SubsAppModel { 
+    var $name = 'SubsSubscriber';     
+    var $belongsTo = array( 
+        'Phone', 
+        'SubsSubscription'=>array( 
+            'className'    => 'Subs.SubsSubscription', 
+            'counterCache' => true 
+        ) 
+    ); 
+} 
+?>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+
+<p>Not only does the subscriber belong to a subscription, it also belongs to a phone. Creating a Subscriber involves registering the subscriber&#8217;s phone number with the Phone model. This ensures that there are no duplicate numbers, that any restrictions put on a certain phone is retained across the app. Things like that. The Phone model implements this registration method.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+function register($number) { 
+    $number = clean_phone($number); // utility function to normalize number formatting 
+
+    // not a real phone number: abort 
+    if ( empty($number) ) { 
+        return false; 
+    } 
+     
+    // look for existing registration  
+    $phone = $this->find('first',array( 
+        'conditions'=>array( $this->alias.'.number'=>$number ) 
+    )); 
+     
+    if ( !empty($phone) ) { 
+        // found it, return it 
+        return $phone; 
+    } 
+
+    // new number 
+    $this->create(); 
+    $data = array( 
+        $this->alias=>array( 
+            'number'=>$number 
+        ) 
+    ); 
+     
+    if ( $this->save($data) ) { 
+        return $this->read(); 
+    } else { 
+        return false; 
+    }     
+}
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+
+<p>That is really the basics behind how plugins interact with the main application. Similarly when a plugin needs to send an SMS, this is done using the SendSmsComponent in the main application. This component abstracts all the messy SOAP garbage phone-operators implement. :) Me, cranky? You bet!</p>
+
+<h2>How about the other way around?</h2>
+
+<p>The less obvious part is how the main application communicates back to the plugins. If I was starting out today I would certainly implement Eventful from cakealot.com, or something like Teknoid&#8217;s observer pattern. I did something a bit different.</p>
+
+<p>I keep all plugins in a table accessed via a model. That way I can have an administrative GUI to activate and deactivate different plugins for different clients. I also simplifies handling of permissions to plugins and menu-generation and other things. It is possible to get by with simply reading the app/plugins directory and caching that.</p>
+
+<p>AppController implements some empty methods used as callbacks or event handlers of sorts. As an example, when an SMS message is received in the main application it parses the message and locates the plugin that should receive it. It stores the message in the central SMS model and notifies the plugin that a new message with the ID=123 has arrived and that the plugin should do something about it.</p>
+
+<p>What happens next if of-course all up to the plugin. It may register the sender as a new subscriber, unregister the sender, post the message to the web, send an email, reply automatically&#8230; anything it wants. The point is that it is up to the plugin to decide.</p>
+
+<p>The application does this via the much debated requestAction:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+$this->requestAction('/'.$module['Module']['name'].'/on_incoming_sms/'.$saved['IncomingSms']['id'], array('return')); 
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+
+<p>And each plugin would implement this method to do something with the message. This is done in the &#8220;PluginnameController&#8221; as the request goes to /pluginname/on_incoming_sms/123. There is a positive side-effect to this. If I want some core feature to be called in this way I can make add a controller to the table of &#8220;modules&#8221; and requestAction will never know the difference. (This is why I still use a string url.)</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+function on_incoming_sms($id = null) { 
+    $this->autoRender = false; 
+    if ( !isset($this->params['requested']) || empty($id) ) { // check that we are contacted "from within" 
+        return false; 
+    } 
+    // do something useful here and return the id as confirmation 
+    return $id; 
+}
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+
+<p>Now I feel the need to get a bit on the defensive. I can almost hear people shouting about thin controllers, fat models and the evil of requestAction. This is communication. that is the exactly what controllers are meant to do. In Cake this is usually between the browser and the models but in this case it is between the app and it&#8217;s plugins. I don&#8217;t have any such logical reason for using requestAction except that is is by far the most convenient way of achieving this kind of communication. Since these calls are usually done from either an API call (incoming sms) or from a cron shell any increase in request time is not a great priority. People get annoyed by an extra 0.4sec, a cron job doesn&#8217;t :)</p>
+
+<h2>Speaking of Cron jobs</h2>
+
+<p>Housekeeping is done via cron. I have cron call a Cake shell every hour. This shell finds all modules and calls each one in turn. Again, the main application does not know or care about what each module is up to. One may update a cached view, another may remove expired items, another may send scheduled messages and guess what the Reports module does each hour?</p>
+
+<p>This is an example of such a shell</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+class HourlyShell extends Shell { 
+
+    var $tasks = array('LogRotation'); 
+    var $uses = array('Module'); 
+     
+    function main() { 
+        $this->out('Hourly shell updates'); 
+        $this->log('Hourly shell updates @ '.date('Y-m-d H:i:s'), 'cron'); 
+         
+        $this->LogRotation->execute(); 
+         
+        $this->update_plugins();         
+    } 
+     
+    function update_plugins() { 
+        $this->out('Updating plugins:'); 
+        $modules = $this->Module->find('list', array( 
+                'fields' => 'Module.controller', 
+                'conditions' => array('Module.installed'=>'1'), 
+                'recursive' => -1 
+            ) 
+        ); 
+
+        foreach ( $modules as $module) { 
+            $this->out('> '.$module); 
+            $this->requestAction('/'.$module.'/on_hourly_update', array('return'=>true, 'bare'=>1)); 
+        } 
+    } 
+}
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+
+<p>The method being called will typically just pass the call along to one or more parts of the module that need to do something periodic. For example:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+function on_hourly_update() {
+    // the template in AppController can be used to check that the call is legitimate.
+    if ( parent::on_hourly_update() ) {
+        $this->SubsSubscription->deleteExpired();
+    }
+}
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+
+<h2>A bonus trick</h2>
+
+<p>One cool thing that may not be apparent is that it is very easy to build a new feature as a normal controller and then turn it into a plugin. The trick is to name the plugin after the controller it should replace. Then you take the controller and make it the PluginnameController for that plugin. Cake will pass any call to that controller automatically. Example time:</p>
+
+<p>/news/edit/123 - would be seen as /controller/action/param
+/news/edit/123 - can also be be seen as /plugin/controller/action
+but since there is no edit controller in the news plugin Cake will try:
+/news/edit/123 - as /plugin{/pluginname}/action/param ending up in the PluginnameController and the edit action.</p>
+
+<p>You will have to move the model and views to the plugin too, of-course.</p>
+
+<h2>Closing remarks</h2>
+
+<p>That is the basic gist of how I have chosen to design a modular system based on plugins. If you feel I have left something out, please comment and I will answer or update the article.</p>
+
+<p>Plugins make up most end-user features.
+Plugins rely on models, components, elements and other code from the main application.
+The main application can pass events and information to plugins via the PluginnameController in each plugin.</p>
+
+<p>I have left out tricks and hacks to keep the article focused. In the real application I use a patch to the dispatcher class that reformats urls for plugins. News plugin has NewsMessagesController but showing /news/news_messages/index in the url is redundant to say the least. The patch allowsme to use urls like /news/messages/index and have the dispatcher prepend the plugin name to the controller name. Since most urls point to plugins I chose to patch the core for this feature. It is not necessary to do any such patch to make use of plugins but for me it made plugins a more attractive option as the foundation of most features.</p>
+
+<p>That&#8217;s all. Thanks for reading.</p>
+
+<p style="font-size:11px;">published @ <a href="http://bakery.cakephp.org/articles/view/designing-a-modular-application-using-cakephp-plugins">http://bakery.cakephp.org/articles/view/designing-a-modular-application-using-cakephp-plugins</a>
+</p>
+
+</div>
+
+  
+
+
+    <footer>
+      <p class="meta">
+        
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Martin Westin</span></span>
+
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-09-02T00:00:00+02:00" pubdate data-updated="true">Sep 2<span>nd</span>, 2009</time>
+        
+
+
+      </p>
+      
+        <div class="sharing">
+  <br/>
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://eimer.co/blog/2009/09/02/designing-a-modular-application-using-cakephp-plugins/" data-via="eimer" data-counturl="http://eimer.co/blog/2009/09/02/designing-a-modular-application-using-cakephp-plugins/" >Tweet</a>
+  
+  
+  
+</div>
+
+      
+      <p class="meta">
+        
+          <a class="basic-alignment pull-left" href="/blog/2009/06/29/javascript-variable-definitions/" title="Previous Post: Javascript variable definitions">&laquo; Javascript variable definitions</a>
+        
+        
+          <a class="basic-alignment pull-right" href="/blog/2009/12/04/why-isset-in-php-can-be-misleading/" title="Next Post: Why isset() in PHP can be misleading">Why isset() in PHP can be misleading &raquo;</a>
+        
+      </p>
+    </footer>
+
+    
+  </div>
+
+  
+    
+  <div class="span4 sidebar">
+    <div class="well">
+      
+        <section>
+  <h2>Recent Posts</h2>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/07/17/shelling-out-from-a-ruby-app-to-a-ruby-app-without-bundler-conflicts/">Shelling out from a ruby app to a ruby app without bundler conflicts</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/29/winning-two-gsma-global-mobile-awards/">Winning Two GSMA Global Mobile Awards</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/11/09/looping-through-large-and-slow-datasets-in-ruby/">Looping through large and slow datasets in Ruby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/11/03/quick-tip-ios-and-web-graphics-in-illustrator/">Quick Tip: iOS and web graphics in Illustrator</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/07/26/patents-gone-crazy/">Patents Gone Crazy</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h2>GitHub Repos</h2>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/eimermusic">@eimermusic</a> on GitHub
+  
+  <script type="text/javascript">
+    $(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'eimermusic',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h2>Latest Tweets</h2>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+    <a href="http://twitter.com/eimer" class="twitter-follow-button" data-show-count="false">Follow @eimer</a>
+  
+</section>
+
+
+
+
+
+      
+    </div>
+  </div>
+
+
+  
+</div>
+
+
+      </div>
+    </div>
+    <footer class="footer"><p>
+  Copyright &copy; 2013 - Martin Westin -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span> -
+  
+    <span class="credit">Theme by <a href="http://brianarmstrong.org">Brian Armstrong</a></span>
+  
+</p>
+</footer>
+    <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+
+
+
+
+
+
+
+
+  </div>
+</body>
+</html>

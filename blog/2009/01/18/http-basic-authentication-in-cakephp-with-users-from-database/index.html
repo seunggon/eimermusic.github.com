@@ -1,0 +1,434 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>HTTP basic authentication in CakePHP with users from database - My New Home</title>
+  <meta name="author" content="Martin Westin">
+
+  
+  <meta name="description" content="This is a few lines of code and explanations explaining how to get HTTP Auth to check against your normal users table. Intended audience:
+• You want &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://eimer.co/blog/2009/01/18/http-basic-authentication-in-cakephp-with-users-from-database">
+  <link href="/favicon.ico" rel="icon">
+
+  <link href="/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+  <link href="/atom.xml" rel="alternate" title="My New Home" type="application/atom+xml">
+  
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-11893308-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body    data-spy="scroll">
+
+  <div class="container">
+    <header class="jumbotron subhead" id="overview">
+      
+<div class="subscribe">
+  <table>
+    <tr>
+      <td><span>Get Updates: &nbsp;</span></td>
+      
+      
+      <td><a href="/atom.xml" class="btn"><i class="icon-cog"></i> By RSS</a></td>
+      
+      
+      <td><a href="http://twitter.com/eimer" class="btn"><i class="icon-twitter-sign"></i> On Twitter</a></td>
+      
+    </tr>
+  </table>
+</div>
+
+<h1 class="title">My New Home</h1>
+
+  <p class="lead">migrated from the 10 year-old eimermusic.com</p>
+
+
+      <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container" style="width: auto;">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <div class="nav-collapse">
+                <ul class="nav">
+          <li><a href="/">Home</a></li>
+          <li><a href="/music">Music</a></li>
+          <li><a href="/photos">Photos</a></li>
+          <li><a href="/portfolio">Portfolio</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+
+        
+          <form action="http://google.com/search" method="get" class="navbar-search pull-left">
+            <fieldset role="search">
+              <input type="hidden" name="q" value="site:eimer.co" />
+              <input type="text" name="q" results="0" placeholder="Search" class="search-query span2" />
+            </fieldset>
+          </form>
+        
+        
+      </div><!-- /.nav-collapse -->
+    </div>
+  </div><!-- /navbar-inner -->
+</div>
+
+    </header>
+    <div id="main">
+      <div id="content">
+        <div class="row">
+  
+  <div class="span8">
+    
+  <header>
+    
+      <h1 class="entry-title">HTTP Basic Authentication in CakePHP With Users From Database</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-01-18T00:00:00+01:00" pubdate data-updated="true">Jan 18<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  
+  
+  <div class="entry-content"><p>
+This is a few lines of code and explanations explaining how to get HTTP Auth to check against your normal users table.
+</p>
+
+
+<br />
+
+
+<p>
+Intended audience:<br />
+• You want to provide a protected RSS feed.<br />
+• You want to provide a protected API.<br />
+</p>
+
+
+<br />
+
+
+<p>
+Prerequisites: <br />
+• You should be familiar with the basics of the Security and Auth Comoponents.<br />
+• You should be aware that this technique does have a slightly lower level of security than your normal logins.<br />
+• Your application already has some form of authentication setup.<br />
+• I will asume you are using Auth Component in your App Controller in the example.
+</p>
+
+
+<br />
+
+
+<p>
+The Cookbook does a good job of explaining how to setup simple protection for a controller or action using HTTP basic authentication. In these examples the usernames and passwords are all hard-coded. Setting things up so that the authentication uses your normal user-data (e.g. from a database) is pretty simple but not extensively documented.
+</p>
+
+
+<br />
+
+
+<p>
+Here is all the relevant code.
+</p>
+
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+class MyController extends AppController {
+
+    var $components = array('Security','RequestHandler');
+    
+    function beforeFilter() { 
+        if ( $this->RequestHandler->isRss() ) { 
+            $this->Auth->allow('index'); 
+            $this->Security->loginOptions = array( 
+                'type'=>'basic', 
+                'login'=>'authenticate', 
+                'realm'=>'MyRealm' 
+            ); 
+            $this->Security->loginUsers = array(); 
+            $this->Security->requireLogin('index'); 
+        } 
+        parent::beforeFilter(); 
+    } 
+    
+    function authenticate($args) { 
+        $data[ $this->Auth->fields['username'] ] = $args['username']; 
+        $data[ $this->Auth->fields['password'] ] = $this->Auth->password($args['password']); 
+        if ( $this->Auth->login($data) ) { 
+            return true; 
+        } else { 
+            $this->Security->blackHole($this, 'login'); 
+            return false; 
+        } 
+    } 
+
+    function index() {
+        // this is a protected function now
+    }
+}
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+
+<h3>A quick walkthrough</h3>
+
+<p>
+I will asume that authentication is setup globally in AppController. Naturally it is necessary to include the relevant components. 
+</p>
+
+
+
+
+<h4>beforeFilter</h4>
+
+
+<ul>
+<li>
+First I check if the request is for the RSS feed. (If not the action authenticates like any other and renders a html view.)
+</li>
+<li>
+Normal Authentication is disabled
+</li>
+<li>
+loginOptions has set the &#8220;login&#8221; key containing the name of the method we want to handle authentication.
+</li>
+<li>
+Then loginUsers is left blank (they wont be used), and login is required for the index action.
+</li>
+</ul>
+
+
+<h4>authenticate</h4>
+
+
+<ul>
+<li>
+$args contains the username and password. They are placed into a new array using the keys set for Auth.
+</li>
+<li>
+Auth tries to login. if the login fails the request is actively &#8220;blackHoled&#8221;.
+</li>
+<li>
+Returning true of false is just for show. It is ignored by Security component
+</li>
+</ul>
+
+
+
+
+<br />
+
+
+<p>
+This is all that is needed to get started. It is not the safest authenticaiton in the world but using SSL alongside this technique will provide pretty good security for your API access.
+</p>
+
+
+<p style="font-size:11px;">published @ <a href="http://bakery.cakephp.org/articles/view/http-basic-authentication-with-users-from-database">http://bakery.cakephp.org/articles/view/http-basic-authentication-with-users-from-database</a>
+</p>
+
+</div>
+
+  
+
+
+    <footer>
+      <p class="meta">
+        
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Martin Westin</span></span>
+
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-01-18T00:00:00+01:00" pubdate data-updated="true">Jan 18<span>th</span>, 2009</time>
+        
+
+
+      </p>
+      
+        <div class="sharing">
+  <br/>
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://eimer.co/blog/2009/01/18/http-basic-authentication-in-cakephp-with-users-from-database/" data-via="eimer" data-counturl="http://eimer.co/blog/2009/01/18/http-basic-authentication-in-cakephp-with-users-from-database/" >Tweet</a>
+  
+  
+  
+</div>
+
+      
+      <p class="meta">
+        
+          <a class="basic-alignment pull-left" href="/blog/2008/11/04/migrating-a-real-world-application-from-cakephp-1-1-to-1-2/" title="Previous Post: Migrating a real-world application from CakePHP 1.1 to 1.2">&laquo; Migrating a real-world application from CakePHP 1.1 to 1.2</a>
+        
+        
+          <a class="basic-alignment pull-right" href="/blog/2009/02/02/finding-ordered-position-of-a-row-in-mysql/" title="Next Post: Finding ordered position of a row in MySQL">Finding ordered position of a row in MySQL &raquo;</a>
+        
+      </p>
+    </footer>
+
+    
+  </div>
+
+  
+    
+  <div class="span4 sidebar">
+    <div class="well">
+      
+        <section>
+  <h2>Recent Posts</h2>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/07/17/shelling-out-from-a-ruby-app-to-a-ruby-app-without-bundler-conflicts/">Shelling out from a ruby app to a ruby app without bundler conflicts</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/29/winning-two-gsma-global-mobile-awards/">Winning Two GSMA Global Mobile Awards</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/11/09/looping-through-large-and-slow-datasets-in-ruby/">Looping through large and slow datasets in Ruby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/11/03/quick-tip-ios-and-web-graphics-in-illustrator/">Quick Tip: iOS and web graphics in Illustrator</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/07/26/patents-gone-crazy/">Patents Gone Crazy</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h2>GitHub Repos</h2>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/eimermusic">@eimermusic</a> on GitHub
+  
+  <script type="text/javascript">
+    $(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'eimermusic',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h2>Latest Tweets</h2>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+    <a href="http://twitter.com/eimer" class="twitter-follow-button" data-show-count="false">Follow @eimer</a>
+  
+</section>
+
+
+
+
+
+      
+    </div>
+  </div>
+
+
+  
+</div>
+
+
+      </div>
+    </div>
+    <footer class="footer"><p>
+  Copyright &copy; 2013 - Martin Westin -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span> -
+  
+    <span class="credit">Theme by <a href="http://brianarmstrong.org">Brian Armstrong</a></span>
+  
+</p>
+</footer>
+    <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+
+
+
+
+
+
+
+
+  </div>
+</body>
+</html>

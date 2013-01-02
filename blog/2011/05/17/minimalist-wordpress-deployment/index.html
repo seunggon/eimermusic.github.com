@@ -1,0 +1,315 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Minimalist Wordpress Deployment - My New Home</title>
+  <meta name="author" content="Martin Westin">
+
+  
+  <meta name="description" content="So, my &#8220;sugar daddy&#8221; datacenter is kicking me out. This is where I have been hosting absolutely free for a decade so I have nothing bad &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://eimer.co/blog/2011/05/17/minimalist-wordpress-deployment">
+  <link href="/favicon.ico" rel="icon">
+
+  <link href="/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+  <link href="/atom.xml" rel="alternate" title="My New Home" type="application/atom+xml">
+  
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-11893308-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body    data-spy="scroll">
+
+  <div class="container">
+    <header class="jumbotron subhead" id="overview">
+      
+<div class="subscribe">
+  <table>
+    <tr>
+      <td><span>Get Updates: &nbsp;</span></td>
+      
+      
+      <td><a href="/atom.xml" class="btn"><i class="icon-cog"></i> By RSS</a></td>
+      
+      
+      <td><a href="http://twitter.com/eimer" class="btn"><i class="icon-twitter-sign"></i> On Twitter</a></td>
+      
+    </tr>
+  </table>
+</div>
+
+<h1 class="title">My New Home</h1>
+
+  <p class="lead">migrated from the 10 year-old eimermusic.com</p>
+
+
+      <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container" style="width: auto;">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <div class="nav-collapse">
+                <ul class="nav">
+          <li><a href="/">Home</a></li>
+          <li><a href="/music">Music</a></li>
+          <li><a href="/photos">Photos</a></li>
+          <li><a href="/portfolio">Portfolio</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+
+        
+          <form action="http://google.com/search" method="get" class="navbar-search pull-left">
+            <fieldset role="search">
+              <input type="hidden" name="q" value="site:eimer.co" />
+              <input type="text" name="q" results="0" placeholder="Search" class="search-query span2" />
+            </fieldset>
+          </form>
+        
+        
+      </div><!-- /.nav-collapse -->
+    </div>
+  </div><!-- /navbar-inner -->
+</div>
+
+    </header>
+    <div id="main">
+      <div id="content">
+        <div class="row">
+  
+  <div class="span8">
+    
+  <header>
+    
+      <h1 class="entry-title">Minimalist Wordpress Deployment</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-17T00:00:00+02:00" pubdate data-updated="true">May 17<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  
+  
+  <div class="entry-content"><p>So, my &#8220;sugar daddy&#8221; datacenter is kicking me out. This is where I have been hosting absolutely free for a decade so I have nothing bad to say about them&#8230; at all. :-)</p>
+
+<p>My 4U quad-core2duo, 4GB RAM, 8TB SATA beast will soon become homeless&#8230;. Did I mention they let me host that monster for free?</p>
+
+<p>This website was a minor task for that server but last Sunday I moved it onto a minuscule &#8220;cloud&#8221; VPS at <a href="http://www.glesys.se/">Gelsys</a>. Running PHP and MySQL on 256MB of RAM (and no swap) and expecting a stable server under load did require some tinkering. I am not going to detail every little thing. I&#8217;ll only outline the basic setup.</p>
+
+<p>I have Wordpress spitting out static html files which is what is being served for 99% of all requests. PHP is only being called on to re-generate the files when the caches expire and to serve up the admin interface. In this way my mini-VPS can handle a pretty decent amount of traffic. I don&#8217;t generally get a lot of traffic but I am curious to see how the server behaves during a spike.</p>
+
+<p>Wordpress caching is handled by the excellent W3 Total Cache plugin which recently got official support for Nginx. Yay! no more custom rewrite rules. My only problem getting it running this time was that it refused to cache the index page, which is kind-of bad when it is one of the heaviest pages to render. Turned out it was a simple precedence issue. &#8220;/&#8221; is considered a folder which I caught in a rule before the caching rules had a chance to do their thing.</p>
+
+<p>Nginx is the web server. I have been running it for a few years already but for this it is absolutely essential to save on ram and get the best performance serving static files.</p>
+
+<p>PHP is called from Nginx over an unix socket and served by php-fpm. PHP is compiled with my favorite accelerator eaccelerator. It is just the simplest to get going and has shown good performance for my apps. PHP has been scaled down a lot in php.ini, reducing mainly memory usage and timeouts.</p>
+
+<p>MySQL loves memory so I had to do the equivalent here. Basically taking the standard performance tips and doing the opposite. I know I will only server Wordpress and I know I don&#8217;t have any enormous datasets so MySQl should be fine on very low memory. Also since I limit the number of php processes I consequently limit the maximum number of client connections MySQL will need to keep track of.</p>
+
+<p>The only other service running is ssh and I was surprised to find that sftp was one of the biggest memory hogs. Uploading a bunch of files of sftp and the server would immediately come dangerously close to running our of memory. In fact it did a bunch of times during my tweaking.</p>
+
+<p>I have been thinking about switching from Wordpress to some static website generator but that is for another time. This setup looks fairly smooth at the moment.</p>
+</div>
+
+  
+
+
+    <footer>
+      <p class="meta">
+        
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Martin Westin</span></span>
+
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-17T00:00:00+02:00" pubdate data-updated="true">May 17<span>th</span>, 2011</time>
+        
+
+
+      </p>
+      
+        <div class="sharing">
+  <br/>
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://eimer.co/blog/2011/05/17/minimalist-wordpress-deployment/" data-via="eimer" data-counturl="http://eimer.co/blog/2011/05/17/minimalist-wordpress-deployment/" >Tweet</a>
+  
+  
+  
+</div>
+
+      
+      <p class="meta">
+        
+          <a class="basic-alignment pull-left" href="/blog/2011/01/19/graylog2-on-mac-os-x/" title="Previous Post: Graylog2 on Mac OS X">&laquo; Graylog2 on Mac OS X</a>
+        
+        
+          <a class="basic-alignment pull-right" href="/blog/2011/05/18/am-i-fierce/" title="Next Post: Am I Fierce?">Am I Fierce? &raquo;</a>
+        
+      </p>
+    </footer>
+
+    
+  </div>
+
+  
+    
+  <div class="span4 sidebar">
+    <div class="well">
+      
+        <section>
+  <h2>Recent Posts</h2>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/07/17/shelling-out-from-a-ruby-app-to-a-ruby-app-without-bundler-conflicts/">Shelling out from a ruby app to a ruby app without bundler conflicts</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/29/winning-two-gsma-global-mobile-awards/">Winning Two GSMA Global Mobile Awards</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/11/09/looping-through-large-and-slow-datasets-in-ruby/">Looping through large and slow datasets in Ruby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/11/03/quick-tip-ios-and-web-graphics-in-illustrator/">Quick Tip: iOS and web graphics in Illustrator</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/07/26/patents-gone-crazy/">Patents Gone Crazy</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h2>GitHub Repos</h2>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/eimermusic">@eimermusic</a> on GitHub
+  
+  <script type="text/javascript">
+    $(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'eimermusic',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h2>Latest Tweets</h2>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+    <a href="http://twitter.com/eimer" class="twitter-follow-button" data-show-count="false">Follow @eimer</a>
+  
+</section>
+
+
+
+
+
+      
+    </div>
+  </div>
+
+
+  
+</div>
+
+
+      </div>
+    </div>
+    <footer class="footer"><p>
+  Copyright &copy; 2013 - Martin Westin -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span> -
+  
+    <span class="credit">Theme by <a href="http://brianarmstrong.org">Brian Armstrong</a></span>
+  
+</p>
+</footer>
+    <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+
+
+
+
+
+
+
+
+  </div>
+</body>
+</html>

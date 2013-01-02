@@ -1,0 +1,403 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Implementing GUI persistence in an iPhone App - My New Home</title>
+  <meta name="author" content="Martin Westin">
+
+  
+  <meta name="description" content="With iOS 4, Apple pushes everyone to build our apps so that we preserve the state of the application when it terminates. This is because to the &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://eimer.co/blog/2010/07/12/implementing-gui-persistence-in-an-iphone-app">
+  <link href="/favicon.ico" rel="icon">
+
+  <link href="/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+  <link href="/atom.xml" rel="alternate" title="My New Home" type="application/atom+xml">
+  
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-11893308-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body    data-spy="scroll">
+
+  <div class="container">
+    <header class="jumbotron subhead" id="overview">
+      
+<div class="subscribe">
+  <table>
+    <tr>
+      <td><span>Get Updates: &nbsp;</span></td>
+      
+      
+      <td><a href="/atom.xml" class="btn"><i class="icon-cog"></i> By RSS</a></td>
+      
+      
+      <td><a href="http://twitter.com/eimer" class="btn"><i class="icon-twitter-sign"></i> On Twitter</a></td>
+      
+    </tr>
+  </table>
+</div>
+
+<h1 class="title">My New Home</h1>
+
+  <p class="lead">migrated from the 10 year-old eimermusic.com</p>
+
+
+      <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container" style="width: auto;">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <div class="nav-collapse">
+                <ul class="nav">
+          <li><a href="/">Home</a></li>
+          <li><a href="/music">Music</a></li>
+          <li><a href="/photos">Photos</a></li>
+          <li><a href="/portfolio">Portfolio</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+
+        
+          <form action="http://google.com/search" method="get" class="navbar-search pull-left">
+            <fieldset role="search">
+              <input type="hidden" name="q" value="site:eimer.co" />
+              <input type="text" name="q" results="0" placeholder="Search" class="search-query span2" />
+            </fieldset>
+          </form>
+        
+        
+      </div><!-- /.nav-collapse -->
+    </div>
+  </div><!-- /navbar-inner -->
+</div>
+
+    </header>
+    <div id="main">
+      <div id="content">
+        <div class="row">
+  
+  <div class="span8">
+    
+  <header>
+    
+      <h1 class="entry-title">Implementing GUI Persistence in an iPhone App</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-07-12T00:00:00+02:00" pubdate data-updated="true">Jul 12<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  
+  
+  <div class="entry-content"><p>With iOS 4, Apple pushes everyone to build our apps so that we preserve the state of the application when it terminates. This is because to the normal user there is no difference between an app being &#8220;pushed&#8221; to the background and an app being terminated. Apple want the users to feel like our apps never terminate. That they just leave them in the background a while.</p>
+
+<p>I&#8217;ll explain how I implemented this behaviour using NSUserDefaults in my app, <a href="http://extraction.eimermusic.com/">Extraction</a>. It may not be the most advanced technique or the best in any way. I just know it works for me.</p>
+
+<p>I will use the main view in Extraction to exemplify this. It requires that I &#8220;remember&#8221; the following things when my app terminates, receives a memory warning or is suspended in the background.</p>
+
+<ul>
+    <li>The selected item in the basket selector (at the top)</li>
+    <li>The state of the main button</li>
+    <li>The time of the timer if it is running</li>
+    <li>Finally, the scroll position of the Table View listing the stored extractions</li>
+</ul>
+
+
+<p>To handle the saving the restoration of the state of these elements I created two methods in my MainViewController, called <strong>saveGuiState</strong> and <strong>restoreGuiState</strong> of all things.</p>
+
+<p>The save method stores each of these values in NSUserDefaults. This is really made to be a preference storage but I hope it is OK with Apple to use it for this as well :)</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:objc </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+- (void)saveGuiState {
+    // basket selector state
+    [[NSUserDefaults standardUserDefaults] setInteger:[basketSelector selectedSegmentIndex] forKey:@"basketSelectorIndex"];
+
+    // button state based on internal "runlevel" integer
+    [[NSUserDefaults standardUserDefaults] setInteger:running forKey:@"running"];
+
+    // timer interval
+    [[NSUserDefaults standardUserDefaults] setDouble:startInterval forKey:@"startInterval"];
+
+    // Table scrolling
+    CGPoint contentOffset = [viewTable contentOffset];
+    [[NSUserDefaults standardUserDefaults] setFloat:contentOffset.y forKey:@"contentOffsetY"];
+}
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+
+<p>It does nothing very complicated. It simply takes each value I need to restore the GUi and stores it to the Defaults database.</p>
+
+<p>The most interesting detail for me was discovering the contentOffset property for UIScrollView (and also the subclass UITableView). It allows me to &#8220;scroll&#8221; the table to the exact pixel value it was scrolled to before. Very handy.</p>
+
+<p>The restore method does the reverse. It sets each parameter in the GUI to the value in NSUserDefaults (if it exists).</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:objc </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+- (void)restoreGuiState {
+    
+    // basket selector
+    if ( NULL != [[NSUserDefaults standardUserDefaults] objectForKey:@"basketSelectorIndex"] ) {
+        [basketSelector setSelectedSegmentIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"basketSelectorIndex"]];
+    }
+    
+    // timer interval
+    if ( NULL != [[NSUserDefaults standardUserDefaults] objectForKey:@"startInterval"] ) {
+        startInterval = [[NSUserDefaults standardUserDefaults] doubleForKey:@"startInterval"];
+        elapsedTime = [NSDate timeIntervalSinceReferenceDate] - startInterval;
+
+        // restore timer if we have not been gone too long
+        if ( elapsedTime < 90 ) {
+            
+            // running state
+            if ( NULL != [[NSUserDefaults standardUserDefaults] objectForKey:@"running"] ) {
+                running = [[NSUserDefaults standardUserDefaults] integerForKey:@"running"];
+                
+                // a little method for setting the button label for each run level
+                [self stepButtonTitleForRunningState:running];
+                
+                if ( running && ![myTimer isValid] ) {
+                    // restart an invalidated timer
+                    myTimer = [NSTimer scheduledTimerWithTimeInterval: 0.05 target: self selector: @selector(updateTime) userInfo: nil repeats: YES];
+                    // set the current timer object to the last one created
+                    current = [results objectAtIndex:[results count] - 1];
+                }
+            }
+            
+        }
+        
+    }
+
+    // Table scrolling
+    [viewTable reloadData];
+    if ( NULL != [[NSUserDefaults standardUserDefaults] objectForKey:@"contentOffsetY"] ) {
+        CGPoint contentOffset = CGPointMake(0.0,[[NSUserDefaults standardUserDefaults] floatForKey:@"contentOffsetY"]);
+        [viewTable setContentOffset:contentOffset animated:NO];
+    } else {
+        NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:([results count] - 1) inSection:0];
+        [viewTable scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }
+}
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+
+<p>Something to note here is that the if clauses check against the objectForKey value and not the integer or float. This is so it will return true even for 0 values that are set. For example, the default value for the selector is a double (index=1) if I checked against the integer I would never restore to a single basket setting.</p>
+
+<p>Also the nested ifs are there so that I only restore timer-related things if it is appropriate.</p>
+
+<p>These two methods are run then the view unloads and loads, respectively. I call the restore method in viewWillAppear and I set a bool so that I don&#8217;t do it repeatedly unless the view has been unloaded since it was last seen. I think it has to do with the UITableView needing to populate itself and viewDidLoad was too early.</p>
+
+<p>The save method is called from two places. viewDidUnload, obviously, and my &#8220;applicationWillTerminate&#8221; (which received the system notifications for both termination and entering background in iOS4). This is because viewDidUload does not fire when terminating the application and you are supposed to save state when entering background and about to be suspended.</p>
+
+<p>One very important detail to note here is that NSUserDefaults syncs up with the OS periodically&#8230;. not immediately. Anything that is saved just before termination is very very very likely to be lost. It is a very simple fix though:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:objc </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+[self saveGuiState];
+[[NSUserDefaults standardUserDefaults] synchronize];
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+
+<p>That is it. That is all I do to make my app behave like it never quits. It even gets some multitasking feeling on non-multitasking devices. You can make a very quick phone call on your iPhone 3G or OG (The Original Generation iPhone) and return to Extraction in time to stop the timer. Pretty cool.</p>
+</div>
+
+  
+
+
+    <footer>
+      <p class="meta">
+        
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Martin Westin</span></span>
+
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-07-12T00:00:00+02:00" pubdate data-updated="true">Jul 12<span>th</span>, 2010</time>
+        
+
+
+      </p>
+      
+        <div class="sharing">
+  <br/>
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://eimer.co/blog/2010/07/12/implementing-gui-persistence-in-an-iphone-app/" data-via="eimer" data-counturl="http://eimer.co/blog/2010/07/12/implementing-gui-persistence-in-an-iphone-app/" >Tweet</a>
+  
+  
+  
+</div>
+
+      
+      <p class="meta">
+        
+          <a class="basic-alignment pull-left" href="/blog/2010/07/08/the-prodigy-experience/" title="Previous Post: The Prodigy - Experience">&laquo; The Prodigy - Experience</a>
+        
+        
+          <a class="basic-alignment pull-right" href="/blog/2010/07/29/the-root-of-all-bugs-in-iphone-development/" title="Next Post: The root of all bugs in iphone development?">The root of all bugs in iphone development? &raquo;</a>
+        
+      </p>
+    </footer>
+
+    
+  </div>
+
+  
+    
+  <div class="span4 sidebar">
+    <div class="well">
+      
+        <section>
+  <h2>Recent Posts</h2>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/07/17/shelling-out-from-a-ruby-app-to-a-ruby-app-without-bundler-conflicts/">Shelling out from a ruby app to a ruby app without bundler conflicts</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/29/winning-two-gsma-global-mobile-awards/">Winning Two GSMA Global Mobile Awards</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/11/09/looping-through-large-and-slow-datasets-in-ruby/">Looping through large and slow datasets in Ruby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/11/03/quick-tip-ios-and-web-graphics-in-illustrator/">Quick Tip: iOS and web graphics in Illustrator</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/07/26/patents-gone-crazy/">Patents Gone Crazy</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h2>GitHub Repos</h2>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/eimermusic">@eimermusic</a> on GitHub
+  
+  <script type="text/javascript">
+    $(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'eimermusic',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h2>Latest Tweets</h2>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+    <a href="http://twitter.com/eimer" class="twitter-follow-button" data-show-count="false">Follow @eimer</a>
+  
+</section>
+
+
+
+
+
+      
+    </div>
+  </div>
+
+
+  
+</div>
+
+
+      </div>
+    </div>
+    <footer class="footer"><p>
+  Copyright &copy; 2013 - Martin Westin -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span> -
+  
+    <span class="credit">Theme by <a href="http://brianarmstrong.org">Brian Armstrong</a></span>
+  
+</p>
+</footer>
+    <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+
+
+
+
+
+
+
+
+  </div>
+</body>
+</html>

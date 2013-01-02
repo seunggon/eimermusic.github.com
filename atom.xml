@@ -1,0 +1,677 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[My New Home]]></title>
+  <link href="http://eimer.co/atom.xml" rel="self"/>
+  <link href="http://eimer.co/"/>
+  <updated>2013-01-02T19:15:08+01:00</updated>
+  <id>http://eimer.co/</id>
+  <author>
+    <name><![CDATA[Martin Westin]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Shelling out from a ruby app to a ruby app without bundler conflicts]]></title>
+    <link href="http://eimer.co/blog/2012/07/17/shelling-out-from-a-ruby-app-to-a-ruby-app-without-bundler-conflicts/"/>
+    <updated>2012-07-17T00:00:00+02:00</updated>
+    <id>http://eimer.co/blog/2012/07/17/shelling-out-from-a-ruby-app-to-a-ruby-app-without-bundler-conflicts</id>
+    <content type="html"><![CDATA[<p>My case is that I have a Rails app. It uses Bundler to manage its Gems.</p>
+
+<p>I also need to run some processing using an old version of one of my own libraries which also has dependencies and gems that need resolving. I chose to make this a small command line app with an executable ruby file. This little tool uses Bundler to manage its Gems.</p>
+
+<p>I will shell out to this executable from my Rails app. Simple, right? I thought it would, but there was a gotcha. The Rails app executes the external ruby file within the same &#8220;bundle&#8221; as the Rails app. I.E. I got the current versions of my lib and all gems.</p>
+
+<p>After much Googling I combined one Stack Overflow answer with a note on some blog (lost both references).</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">some_result_value</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'><span class="no">Bundler</span><span class="o">.</span><span class="n">with_clean_env</span> <span class="k">do</span>
+</span><span class='line'>  <span class="no">Dir</span><span class="o">.</span><span class="n">chdir</span> <span class="s2">&quot;/path/to/rubytool&quot;</span>
+</span><span class='line'>  <span class="n">some_result_value</span> <span class="o">=</span> <span class="sb">`./bin/rubytool param1 param2`</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The key details here are the clean environment AND that I change directory before executing. I don&#8217;t understand why changing the folder would be significant. It may even have been bad late-night mojo.</p>
+
+<p>Anyway, as long as the command line tool being called uses bundler correctly it works ar intended. It is run with its own bundle of gems.</p>
+
+<p>I would like to find a way to control this from the receiving ruby script but I have not looked into that yet.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Winning Two GSMA Global Mobile Awards]]></title>
+    <link href="http://eimer.co/blog/2012/02/29/winning-two-gsma-global-mobile-awards/"/>
+    <updated>2012-02-29T00:00:00+01:00</updated>
+    <id>http://eimer.co/blog/2012/02/29/winning-two-gsma-global-mobile-awards</id>
+    <content type="html"><![CDATA[<p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2012/02/logo_02.png" alt="" title="GSMA Global Awards 2012" width="380" height="100" class="size-full wp-image-186" /></p>
+
+<p>Yesterday, Feb 28 2012, <a href="http://www.greatconnection.se/" title="Great Connection Inc">Great Connection Inc</a>, the company I co-founded and work for, won two <a href="http://www.globalmobileawards.com/winners2012.php">GSMA Global Mobile Awards</a>. We won both categories relating to healthcare and both our nominations. As this is the equivalent to an Oscar or a Grammy in our industry, but far less glamourous, it&#8217;s pretty awesome.</p>
+
+<p>We won for <a href="http://www.globalmobileawards.com/winners2012.php#cat_id15">Best Mobile Health Innovation</a> and <a href="http://www.globalmobileawards.com/winners2012.php#cat_id12">mWomen Best Mobile Product or Service for Women in Emerging Markets</a>. As the product designer, lead developer and inventor I am most touched by the the fact that the Judges comments seem to recognize the work of my co-developer and myself.</p>
+
+<blockquote>Good initiative concerning maternal health. Nice convergence of a number of technologies in a critical area of need.</blockquote>
+
+
+<p>It is not easy to grasp a technical system and product like ours. Mobile Baby spans two very different industries: healthcare and mobile, and also cross many &#8220;glass walls&#8221;. Professional and consumer, men and women, rural and urban and many others. We have built a product that is irreverent towards pre-conceived notions in both healthcare IT and mobile communications and struggle to be understood and accepted in either industry.</p>
+
+<p>The TL;DR or what Mobile Baby is that we connect medical imaging equipment, mainly ultrasound, to the internet and run a hosted &#8220;cloud&#8221; system tailored to making geography and time a non-issue in the healthcare workflow. Images are available in clinical grade formats online in our web-based application and can be downloaded and opened in Imaging workstation software on iPhones, iPads or &#8220;real&#8221; computers.</p>
+
+<p>The feature that most people can relate to is the systems ability to provide expecting parents with high-rez images and videos in consumer-friendly digital formats for viewing at home and forwarding to family and friends. The same messaging features that give parents images on their phones is also used to alert doctors of new cases and examinations.</p>
+
+<p>Anyway. I am proud, both for myself but most for my colleges and partners at Qualcomm and Etisalat. Without all these people (too many to mention) and their ability to connect with people and generate interest, hype and trust, I would still be designing this product in even more obscurity than today. :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Looping through large and slow datasets in Ruby]]></title>
+    <link href="http://eimer.co/blog/2011/11/09/looping-through-large-and-slow-datasets-in-ruby/"/>
+    <updated>2011-11-09T00:00:00+01:00</updated>
+    <id>http://eimer.co/blog/2011/11/09/looping-through-large-and-slow-datasets-in-ruby</id>
+    <content type="html"><![CDATA[<p>I recently had the pleasure of needing to load 30&#8217;000 records from MongoDB and then performing slow and memory intensive processing on them. Basically you can imagine it as a database of videos and MongoDB was holding the metadata and other bits but the actual video files were on disk somewhere. My parsing involved loading in the entire video in memory and doing &#8220;stuff&#8221; with it as part of my model object.</p>
+
+<p>This is how I did it.</p>
+
+<h2>Take 1</h2>
+
+<p>At first I just did the normal Model.all.each&#8230; This worked fine for smaller datasets but on larger sets the whole thing would crash after 40 to 60 minutes (I never timed this in detail). MongoDB had timed out and I figured out that my ODM (Mongoid) was keeping an open iterator in MongoDB and fetching one document at a time from the DB&#8230; and after an hour or so the DB had had enough.</p>
+
+<h2>Take 2</h2>
+
+<p>It was of-course trivial to force Mongoid to load the whole dataset in one go using Model.all.to_a.each&#8230; Before thinking further I set this version going. It crashed a lot faster than the first version. The reason is that each of my objects stay in the array, and in memory, and adding anywhere from 5 to 500 MB of videodata to each quickly ate all RAM I had.</p>
+
+<h2>Take 3</h2>
+
+<p>The small and funky change fixed this, making my script both time and ram &#8220;proof&#8221;. This is how I will start out next time I have a long-running task.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:ruby </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+all = Model.all.to_a # these are just simple Rails models
+while one = all.pop # this is memory management
+    one.do_heavy_processing # this loads in a ton of crap
+end</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+
+<p>By popping them off one by one and re-using the local variable Ruby&#8217;s GC takes pretty good care of keeping the memory to a minimum.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Quick Tip: iOS and web graphics in Illustrator]]></title>
+    <link href="http://eimer.co/blog/2011/11/03/quick-tip-ios-and-web-graphics-in-illustrator/"/>
+    <updated>2011-11-03T00:00:00+01:00</updated>
+    <id>http://eimer.co/blog/2011/11/03/quick-tip-ios-and-web-graphics-in-illustrator</id>
+    <content type="html"><![CDATA[<p>I wanted to make a note of one of these things I keep forgetting in Adobe Illustrator. It is very simple, obvious and keeps me sane while drawing UI elements.</p>
+
+<p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2011/11/transform-web.png" alt="" title="Transform Pane" width="216" height="125" class="size-full wp-image-179" /></p>
+
+<p><strong>Make sure &#8220;Align to Pixel Grid&#8221; is actually selected!</strong></p>
+
+<p>That gets you out of so much trouble. Problem is, you need to keep an eye on the transform pane since this is a per-object setting. It is nog global to everything on your canvas.</p>
+
+<p>Of-course the old-school technique of placing the strokes outside (or inside) the object bounds still works and can actually help you in transferring dimensions from the canvas into CSS (which puts borders &#8220;outside&#8221; when working correctly).</p>
+
+<p>(I can&#8217;t believe they still haven&#8217;t fixed the rounding errors that randomly occur when drawing and moving objects around.)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Patents Gone Crazy]]></title>
+    <link href="http://eimer.co/blog/2011/07/26/patents-gone-crazy/"/>
+    <updated>2011-07-26T00:00:00+02:00</updated>
+    <id>http://eimer.co/blog/2011/07/26/patents-gone-crazy</id>
+    <content type="html"><![CDATA[<p>I am in the middle of some patent applications in the US at the same time as all the recent press about patent &#8220;trolls&#8221; going after small (and large) iOS developers. These things have made me think more than usual about the patent system.</p>
+
+<p>I think the root problems are the following:</p>
+
+<ol>
+    <li>Legal costs or defending your patent or yourself from someone else&#8217;s patent affect the whole patent system. And not for the better.</li>
+
+    <li>Patents were meant to protect an inventor from copycats&#8230; under the aparent assumption that nonone could independently come up with something near-identical to another invention. That is: you should really only be able to patent things where the likelihood of an independent near-identical invention are slim-to-none. There is nothing in the system that requires you to prove something is a copy&#8230; it is just assumed and this works really poorly today, especially in software, where people come up with the same thing independently all the time. </li>
+
+    <li>The key term defining what is patentable, &#8220;non-obvious to someone skilled in the arts&#8221;, has eroded significantly. I believe that both the level of &#8220;skill&#8221; and how much research is required for something to be &#8220;non-obvious&#8221; have been lowered. Sometimes to ridiculous levels.</li>
+</ol>
+
+
+<p>I believe the only long-term solution is to invalidate a whole lot of patents and to create a body doing these invalidations without the economic problems associated with lawsuits and courts. This is going to mess things up for a lot of companies and I am skeptical that we&#8217;ll ever see a significant change.</p>
+
+<p>The applications I have written should probably not be granted patents, ethically speaking. On the other hand they are no worse than many many patents already granted and the lawyers see it as a sure thing that we&#8217;ll be granted these patents.</p>
+
+<p>It is a very wired position to be in.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Transitioning to more secure passwords]]></title>
+    <link href="http://eimer.co/blog/2011/06/24/transitioning-to-more-secure-passwords/"/>
+    <updated>2011-06-24T00:00:00+02:00</updated>
+    <id>http://eimer.co/blog/2011/06/24/transitioning-to-more-secure-passwords</id>
+    <content type="html"><![CDATA[<p>With all the news of hacked databases (mostly at Sony) and the clear-text or poorly hashed passwords in their datasets, I thought I might offer my standard trick for transitioning to a more secure form of hashing.</p>
+
+<p>I think some sites don&#8217;t change passwords security for fear of annoying users or the workload involved in managing a transition. This simple technique is completely invisible to the user and very low maintenance for the developer.</p>
+
+<p>I will be giving examples from the Devise library for Rails apps, since I recently implemented it there.</p>
+
+<h2>The technique is very very simple</h2>
+
+<p>You configure your authentication to check passwords against both the old and the new form of hashed password. And when you find a match for the old hash you update your database with the version of the password encoded using the new hash. You keep this dual check in place until all (or most likely most) of your users have logged in and had their passwords changed. The unlucky few can use your password recovery feature if you have one.</p>
+
+<p>Metacode of the basic principle:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:ruby </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+if new_hash(password) == stored_password
+  // ALLOW LOGIN USING AN UP-TO-DATE PASS
+else
+  if old_hash(password) == stored_password
+    // UPDATE PASSWORD IN DB
+    // ALLOW LOGIN
+  else
+    // DISALLOW LOGIN
+  end
+end
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+
+<h2>How to implement this transition in Devise</h2>
+
+<p>I implemented this by overriding the method <strong>valid_password?</strong> injected into your User model.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:ruby </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+class User
+
+  def valid_password?(incoming_password)
+    result = super incoming_password
+    if !result
+      # try old encryptor during transition
+      digest = Devise::Encryptors::LegacyEncryptor.digest(incoming_password, self.class.stretches, self.password_salt, self.class.pepper)
+      result = Devise.secure_compare(digest, self.encrypted_password)
+      if result
+        # update password to use new encryptor when there is a match
+        self.password = incoming_password
+        self.save
+      end
+    end
+    result
+  end
+
+end
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+
+<p>Fairly simple. You may need to hard-code some parameters (salt, stretching, pepper) if they cause problems.</p>
+
+<p>If you are changing from, say, sha1 to sha256, you can easily check the character lengths of the passwords in your database to check the &#8220;adoption rate&#8221; of the new hashes.</p>
+
+<h2>Implications on Security</h2>
+
+<p>You should realize that you ARE lowering your security level slightly by effectively allowing 2 different password checks. In reality this problem is small and only really matters if you have plain passwords you are transitioning from (and you really shouldn&#8217;t have). The problem then becomes real since I could login using a stolen new (supposedly) secure hash as the given password. In this case I would definitely disallow any password of the same length as, or simple reg-ex match for, your new hashing system to avoid this hole.</p>
+
+<p>You will also not fully benefit from the new hashing system until you remove the &#8220;dual check&#8221; after a reasonable period of time.</p>
+
+<p>If you can live with that to gain the benefits of a clean migration for you and your users this is a nice technique. I know from reading and talking to developers that I am far from the only of the first to come up with something like this. Many apps and sites have used and continue to use this kind of technique to beef-up password hash-strength without bothering users.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Am I Fierce?]]></title>
+    <link href="http://eimer.co/blog/2011/05/18/am-i-fierce/"/>
+    <updated>2011-05-18T00:00:00+02:00</updated>
+    <id>http://eimer.co/blog/2011/05/18/am-i-fierce</id>
+    <content type="html"><![CDATA[<p>I love Dropbox and use it every day. I love Flipboard and use it every day.</p>
+
+<p>So imagine my reaction to seeing my (and my co-founders&#8217;) little company named as one of the 15 coolest young companies in the world next to all these great companies. That was really special.</p>
+
+<p><a href="http://www.fiercewireless.com/special-reports/great-connection-mobile-medical-wireless-startups-fierce-15-2011">Fierce Wireless about Great Connection</a></p>
+
+<p>They didn&#8217;t get all the details right but if you want to know what I am up to most of the time I have seen worse descriptions. ;)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Minimalist Wordpress Deployment]]></title>
+    <link href="http://eimer.co/blog/2011/05/17/minimalist-wordpress-deployment/"/>
+    <updated>2011-05-17T00:00:00+02:00</updated>
+    <id>http://eimer.co/blog/2011/05/17/minimalist-wordpress-deployment</id>
+    <content type="html"><![CDATA[<p>So, my &#8220;sugar daddy&#8221; datacenter is kicking me out. This is where I have been hosting absolutely free for a decade so I have nothing bad to say about them&#8230; at all. :-)</p>
+
+<p>My 4U quad-core2duo, 4GB RAM, 8TB SATA beast will soon become homeless&#8230;. Did I mention they let me host that monster for free?</p>
+
+<p>This website was a minor task for that server but last Sunday I moved it onto a minuscule &#8220;cloud&#8221; VPS at <a href="http://www.glesys.se/">Gelsys</a>. Running PHP and MySQL on 256MB of RAM (and no swap) and expecting a stable server under load did require some tinkering. I am not going to detail every little thing. I&#8217;ll only outline the basic setup.</p>
+
+<p>I have Wordpress spitting out static html files which is what is being served for 99% of all requests. PHP is only being called on to re-generate the files when the caches expire and to serve up the admin interface. In this way my mini-VPS can handle a pretty decent amount of traffic. I don&#8217;t generally get a lot of traffic but I am curious to see how the server behaves during a spike.</p>
+
+<p>Wordpress caching is handled by the excellent W3 Total Cache plugin which recently got official support for Nginx. Yay! no more custom rewrite rules. My only problem getting it running this time was that it refused to cache the index page, which is kind-of bad when it is one of the heaviest pages to render. Turned out it was a simple precedence issue. &#8220;/&#8221; is considered a folder which I caught in a rule before the caching rules had a chance to do their thing.</p>
+
+<p>Nginx is the web server. I have been running it for a few years already but for this it is absolutely essential to save on ram and get the best performance serving static files.</p>
+
+<p>PHP is called from Nginx over an unix socket and served by php-fpm. PHP is compiled with my favorite accelerator eaccelerator. It is just the simplest to get going and has shown good performance for my apps. PHP has been scaled down a lot in php.ini, reducing mainly memory usage and timeouts.</p>
+
+<p>MySQL loves memory so I had to do the equivalent here. Basically taking the standard performance tips and doing the opposite. I know I will only server Wordpress and I know I don&#8217;t have any enormous datasets so MySQl should be fine on very low memory. Also since I limit the number of php processes I consequently limit the maximum number of client connections MySQL will need to keep track of.</p>
+
+<p>The only other service running is ssh and I was surprised to find that sftp was one of the biggest memory hogs. Uploading a bunch of files of sftp and the server would immediately come dangerously close to running our of memory. In fact it did a bunch of times during my tweaking.</p>
+
+<p>I have been thinking about switching from Wordpress to some static website generator but that is for another time. This setup looks fairly smooth at the moment.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Graylog2 on Mac OS X]]></title>
+    <link href="http://eimer.co/blog/2011/01/19/graylog2-on-mac-os-x/"/>
+    <updated>2011-01-19T00:00:00+01:00</updated>
+    <id>http://eimer.co/blog/2011/01/19/graylog2-on-mac-os-x</id>
+    <content type="html"><![CDATA[<p>I have been playing with Graylog2 on my Mac today. Since the setup guides are all for Debian and not fully compatible with Mac OS X I thought I&#8217;d mention the changes I needed to make to get thing rolling smoothly.</p>
+
+<p>The guides are good, so go read them in the wikis on Github. I won&#8217;t re-iterate them, only point out the minor changes and tweaks I had to make.</p>
+
+<p>Graylog2 comes in two main parts. The server and the web interface. I&#8217;ll start with the server component.</p>
+
+<h2>Install The Server</h2>
+
+<p><a href="https://github.com/Graylog2/graylog2-server/wiki/Installing">https://github.com/Graylog2/graylog2-server/wiki/Installing</a></p>
+
+<p>Mac OS X has java bundled with the OS (for now). There is no need to install anything. The configuration file needs one non-obvious tweak.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:bash </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+
+mongodb_host = 127.0.0.1 # localhost
+
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+
+<p>Java resolves localhost to the strangest thing. It tries to connect to the Bonjour name and external IP (e.g. Martin&#8217;s Mac/192.168.0.2) instead of 127.0.0.1 which is what you want. Instead of opening MongoDB up to external access I changed the configuration to point to the loopback IP directly.</p>
+
+<h2>Starting The Server</h2>
+
+<p><a href="https://github.com/Graylog2/graylog2-server/wiki/Starting-the-server">https://github.com/Graylog2/graylog2-server/wiki/Starting-the-server</a></p>
+
+<p>I didn&#8217;t get the daemon script to start and did not investigate is since I run Graylog2 for evaluation and development and like seeing the output. Starting by running the jar file requires that you sudo.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:bash </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+
+sudo java -jar graylog2-server.jar debug
+
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+
+<p>That gets Graylog2 running and spitting out a lot of fun info so you know you are logging thing as you expect.</p>
+
+<h3>Installing The Web Interface</h3>
+
+<p><a href="https://github.com/Graylog2/graylog2-web-interface/wiki/Installing-the-web-interface-on-Debian-5.0">https://github.com/Graylog2/graylog2-web-interface/wiki/Installing-the-web-interface-on-Debian-5.0</a></p>
+
+<p>You can follow most of those steps if you don&#8217;t have rails and Bundler and that stuff installed. For testing and development, I would suggest running the interface using Passenger Standalone instead of Apache. And, you install Passenger as a gem and not apt, of-course.</p>
+
+<p><a href="http://www.modrails.com/documentation/Users%20guide%20Standalone.html">http://www.modrails.com/documentation/Users%20guide%20Standalone.html</a></p>
+
+<p>The cool thing about installing passenger standalone is that it will compile and run itself the first time you call passenger start. It will take a few minutes that first time but after that it will start instantly.</p>
+
+<h2>Logging from your Rails app</h2>
+
+<p><a href="https://github.com/Graylog2/graylog2_exceptions">https://github.com/Graylog2/graylog2_exceptions</a></p>
+
+<p>In the Rails app I want to log from I installed Graylog2 Exceptions. It is a small Rack middleware with practically no configuration. Only problem is that it has not been updated to comply with the current version of the Graylog2 server. Until it is updated, you have to modify the source for it. A very small mod. For me it is ok as long as I am still on my Mac and not a server.</p>
+
+<p>first</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:bash </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+> cd /to/my/app/dir
+> bundle open graylog2_exceptions
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+
+<p>This should get you the installed gem open in your editor.
+In the file lib/graylog2_exceptions.rb you need to add the version parameter to the notification message. Possibly this should be added to the gelf gem instead. I am not sure how that version string is supposed to be used.</p>
+
+<p>Here is the modified method that does the actual notification:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:ruby </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+  def send_to_graylog2 err
+    begin
+      notifier = GELF::Notifier.new(@args[:hostname], @args[:port])
+      puts notifier.notify!(
+        :version => "1.0",
+        :short_message => err.message, # <- this line is new!!!
+        :full_message => err.backtrace.join("\n"),
+        :level => @args[:level],
+        :host => @args[:local_app_name],
+        :file => err.backtrace[0].split(":")[0],
+        :line => err.backtrace[0].split(":")[1]
+      )
+    rescue => i_err
+      puts "Graylog2 Exception logger. Could not send message: " + i_err.message
+    end
+  end
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+
+<p>So, that is it. Finally I get all my exceptions in Graylog2. To try it out you can just raise some dummy exception – raise &#8220;Dummy Exception Error&#8221; – here and there and see them pop up in Graylog2.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Rails migration of indexes]]></title>
+    <link href="http://eimer.co/blog/2010/11/24/rails-migration-of-indexes/"/>
+    <updated>2010-11-24T00:00:00+01:00</updated>
+    <id>http://eimer.co/blog/2010/11/24/rails-migration-of-indexes</id>
+    <content type="html"><![CDATA[<p>A small gotcha when changing indexes in a migration. To change an index one has to first remove it and then add it again. Removing an index is the tricky part.</p>
+
+<p>The documentation states:
+remove_index(table_name, index_name): Removes the index specified by index_name.</p>
+
+<p>This is not strictly true as it turns out. The docs should probably say:
+remove_index(table_name, column_name)</p>
+
+<p>The crux is that one cannot use this syntax to remove a named index. Rails assumes the index is named something like &#8220;tablename_columnname_index&#8221; or something similar.</p>
+
+<p>To remove a named index one has to use the block syntax afaik:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:ruby </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+change_table :tablename do |t|
+  t.remove_index :name => :indexname
+  t.index ["columnname"], :name => "indexname", :unique => true
+end
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Offensively lazy web developers]]></title>
+    <link href="http://eimer.co/blog/2010/10/30/offensively-lazy-web-developers/"/>
+    <updated>2010-10-30T00:00:00+02:00</updated>
+    <id>http://eimer.co/blog/2010/10/30/offensively-lazy-web-developers</id>
+    <content type="html"><![CDATA[<p>There exist many websites and web applications with elements of poor usability, engineering, design and so on. Some exhibit features so poor I can only attribute them to laziness. Some actually make me feel offended that I have to jump through hoops to accommodate their laziness.</p>
+
+<p>Top of my list are form fields for postcodes, phone numbers, dates, times or any similar type of data. Simple numeric data. Easily validated and normalized. Yet I often see requirements to enter the data in a very specific format, often at odds with how humans customarily write such data. To most people (who are not developers) it can be very confusing to enter data in a perfectly normal way and have a computer tell them it is invalid. For me it is offensive since I know it is practically always the result of data not being normalized. A developer that does not normalize input data before validating it can only be described as lazy or, if you prefer, incompetent.</p>
+
+<h3>Postcodes</h3>
+
+<p>Nothing can be simpler, right. In many countries it is simply a few digits. Some through a few alphabetic characters in there. I&#8217;ll focus on local Swedish websites and Swedish postcodes. We have 5 digit postcodes. They are typically written &#8220;123 45&#8221;. So Why would any Swedish website validate that input and claim it is invalid. As a developer I know it is probably that a space is not a numeric character and that adding it also make the string 6 characters long and not 5.</p>
+
+<h3>Phone numbers</h3>
+
+<p>A phone number is a string of numeric characters. Anything else: spaces, parenthesis, dashes and other chrome, is just that: chrome. None of that is part of the data. No server at ATT, Telia, Vodafone or any other network carrier reads these thing and need them in order to route a call. Quite the opposite. Any phone network and particularly cellular networks require a very specific internationally standardized format. Guess what? It is all numeric. A Swedish cellphone might be typed &#8220;0701 - 23 45 67&#8221; in my address book but the phone sends 46701234567 to the network anytime I make a call.</p>
+
+<h3>Dates and Times</h3>
+
+<p>These are a bit more complex than the above. But the same principles apply. Then again, most web-focused programming languages have functions to parse a myriad of ways one could type a date or time and create a proper date or time object or data type. If you still find it does not work for you then, in this case, you should provide something other than a blank test field. Try googling for datepicker or timepicker. The problem will be one of choosing your favorite rather than finding anything at all.</p>
+
+<h3>Being constructive</h3>
+
+<p>I have ranted a bit now so I thought I&#8217;d put my code where my mouth is. Since I am not allowed to share my phone number normalizer code I wrote at work I thought I&#8217;d at least share the secret to all the normalizing tasks above&#8230; It&#8217;s regex. Regular Expressions.</p>
+
+<h3>Getting rid of whitespace</h3>
+
+<p>The following will &#8220;match&#8221; whitespace characters. By substituting the matches with nothing you will simply remove all whitespace from a string.
+<strong>/\s/</strong></p>
+
+<h3>Remove anything that is not a number</h3>
+
+<p>And the following will remove non digits if you substitute the matches with nothing.
+<strong>/\D/</strong></p>
+
+<h3>A very very very simple example in Ruby</h3>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:ruby </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+
+num = "(0)701 - 23 45 67".gsub(/\D/,'')
+
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+
+<p>Seriously. That is all it takes to turn an offensive web form into a more humane one.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[SOAP with Attachments in Ruby]]></title>
+    <link href="http://eimer.co/blog/2010/09/30/soap-with-attachments-in-ruby/"/>
+    <updated>2010-09-30T00:00:00+02:00</updated>
+    <id>http://eimer.co/blog/2010/09/30/soap-with-attachments-in-ruby</id>
+    <content type="html"><![CDATA[<p>I found myself once again facing SOAP. This abomination of a protocol they even have the nerve to call &#8220;web services&#8221; is not my favorite type of API to interface with (how did you guess?). I think probably the only language with any decent support is Java and possibly .net. Neither rank among my favorite languages either. Funny that.</p>
+
+<p>My bigger problem is that the service I am interfacing with is noting as simple as sending an integer and getting an integer back. It requires that I post a multipart/mime SOAP message (aka SOAP with Attachments afaik). This is something that most SOAP libraries are not too keen on supporting.</p>
+
+<h3>What are multipart SOAP messages?</h3>
+
+<p>In short they are encoded a kind-of like email messages and their attachments but sent using http to a SOAP endpoint. The normal SOAP message becomes one of the mime parts and any other parts are called attachments and usually referenced from inside the SOAP message.</p>
+
+<h3>A little history</h3>
+
+<p>A few years ago in PHP I was stuck using NuSOAP and ended up basically bypassing most of NuSOAP and encoding the attachments and doing all that myself. The code was a real mess.</p>
+
+<p>Last week I got to do it all over again. This time in Ruby. At work, we are porting our entire platform to Ruby, but detailing that process might be a post in itself. I was so happy when I found that soap4r has support for mime messages. Then I tried to use soap4r. Long story short. I liked it so much I chose to go with Savon instead&#8230; which has no mime support.</p>
+
+<h3>What I ended up with</h3>
+
+<p>The results of my efforts is not pretty by Ruby standards but a lot better than my old code in php. I patched Savon in two places. One to enable any namespace on the SOAP body (which is otherwise hard-coded to &#8220;wsdl&#8221;) and has little to do with mime messages.</p>
+
+<p>The other place was to intercept the output and check if the SOAP object had any attachments (parts) added to it. If so, it will take the intended output and encode that as a mime part and then encode the other parts and put it all together as a nice big http packet ready for posting.</p>
+
+<p>I think it best if I just show the code now.</p>
+
+<script src="https://gist.github.com/602864.js?file=savon_mime_support_patch_example.rb"></script>
+
+
+<p>Any questions posted to the gist or here will be adressed to the best of my abilities.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Kanye West - 808s & Heartbreak]]></title>
+    <link href="http://eimer.co/blog/2010/08/31/kanye-west-808s-heartbreak/"/>
+    <updated>2010-08-31T00:00:00+02:00</updated>
+    <id>http://eimer.co/blog/2010/08/31/kanye-west-808s-heartbreak</id>
+    <content type="html"><![CDATA[<p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/08/kanye-west-170x170.jpg" alt="" title="kanye-west" width="170" height="170" class="hang-2-column size-thumbnail wp-image-154" /></p>
+
+<p>Part of the series Milestones in Music</p>
+
+
+<p><em>(2008)</em></p>
+
+<p>
+This album blew my mind completely. It not only shows a personal side to Kanye as a song-writer. The coolest thing is that the album could more or less have been produced in any bedroom studio in the world. We all have the tools at home to make this album&#8230; we are just not as good as Kanye. Damn!</p>
+
+
+
+
+<p>
+That is the last milestone for now&#8230;
+</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Burial - Burial]]></title>
+    <link href="http://eimer.co/blog/2010/08/31/burial-burial/"/>
+    <updated>2010-08-31T00:00:00+02:00</updated>
+    <id>http://eimer.co/blog/2010/08/31/burial-burial</id>
+    <content type="html"><![CDATA[<p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/08/Burial-Burial.jpg" alt="" title="Burial-Burial" width="170" height="170" class="hang-2-column size-full wp-image-152" /></p>
+
+<p>Part of the series Milestones in Music</p>
+
+
+<p><em>(2006)</em></p>
+
+<p>
+I stumbled upon this album on bleep.com by mistake. What a find. So dirty. So atmospheric. Nothing like &#8220;normal&#8221; Dub Step. Really in a genre of his own. It also helped that he (William Bevan) remained very anonymous for a very long time. No interviews, no real name, nothing. The lines spoken by Benicio del Toro and Forrest Whittaker (I believe they are real samples and not re-creations) help set the spooky mood of the album.  </p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Photek - Modus Operandi]]></title>
+    <link href="http://eimer.co/blog/2010/08/29/photek-modus-operandi/"/>
+    <updated>2010-08-29T00:00:00+02:00</updated>
+    <id>http://eimer.co/blog/2010/08/29/photek-modus-operandi</id>
+    <content type="html"><![CDATA[<p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/08/modus-operandi.jpg" alt="" title="modus-operandi" width="170" height="170" class="hang-2-column size-full wp-image-146" /></p>
+
+<p>Part of the series Milestones in Music</p>
+
+
+<p><em>(1997)</em></p>
+
+<p>
+I love a lot of Rupert&#8217;s work but Modus Operandi was the one that made me take notice in the tidal wave of half-assed D&#8217;n&#8217;B from the late &#8217;90s. To get the best of Photek, though, you need to dig out the rarer tracks. My old favorites are Knightvision and Ni Ten Ichi Ryu. These days I listen to his brief stint in the more laid back arena. Halogen and Lost Blue Heaven from Solaris (the album, not the soundtrack) the tracks I am referring to. The rest of that album is not to my taste though.</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[My Reasons for Jailbreaking]]></title>
+    <link href="http://eimer.co/blog/2010/08/29/my-reasons-for-jailbreaking/"/>
+    <updated>2010-08-29T00:00:00+02:00</updated>
+    <id>http://eimer.co/blog/2010/08/29/my-reasons-for-jailbreaking</id>
+    <content type="html"><![CDATA[<p>I don&#8217;t generally use my iPhone jailbroken. But every time I go on vacation of a weekend trip I make sure I jailbreak the phone in advance. I do this to get access to only a very small number of features that really should be part of the OS.</p>
+
+<h2>Internet Sharing using MyWi</h2>
+
+<p>MyWi does something so simple and obvious. It allows my iPhone to setup a wifi hotspot and share the 3G connection with other devices, i.e. the iPad. That Apple does not provide this feature can only be described as greedy american corporate bullcrap politics. Wether it is to spare ATT from the network congestion, let them sell more data subscriptions or to just try to sell more iPad 3Gs I can&#8217;t be sure. My opinion of it stands either way since there is no justification for it based on anything like &#8220;the users best interest&#8221;.</p>
+
+<p>Why not just get an iPad 3G? I am not about to get a more expensive AND less pretty iPad 3G just so I can use the 3G connection a few weeks a year. At home or at work I have wifi but, at least in Sweden, we don&#8217;t generally find wifi hotspots in our rural countryside. Unlike the US, we do have 3G connectivity almost everywhere and Edge everywhere else. And, also unlike the US, we have no carrier restrictions on which device is allowed to take advantage of our mobile data connection.</p>
+
+<p>The Apple-approved alternative is to carry along my Macbook pro simply to act as a Wifi hotspot for the iPad by&#8230; sharing the iPhone&#8217;s 3G connection. Same result but more weight, power, bulk and complexity. Since using the iPhone as a modem for my Macbook pro is available, why not for the iPad? If not via wifi, how about a dock-to-dock cable or something? Maybe they just like me to lugg around all my Apple products :)</p>
+
+<h2>Keeping up-to-date with my podcasts</h2>
+
+<p>Podcasts are generally released on a weekly or daily schedule. But, since they are also generally over 20MB I am not allowed to download them to my iPhone without a wifi connection. Again, not a problem when I am at home, but a big problem when I am travelling. Again (again), a nonsensical and arbitrary restriction. I can understand a warning. But with so many &#8220;unlimited&#8221; dataplans for the iPhone and so many other types of data (YouTube anyone?) that exceed this limit I can&#8217;t understand the restriction. Fortunately, in Cydia I can buy and install &#8220;3G Unrestrictor&#8221; which does exactly what you&#8217;d expect. It removes the restrictions related to the mobile connection.</p>
+
+<p>That is all. The iPhone is that close to being more or less prefect. Two &#8220;missing&#8221; features that I believe are the cause of the network situation closer to Cupertino (more Wifi than 3G coverage one is almost lead to believe) and splash of arrogance and excessive greed. Neither feature is a deal breaker most of the time but both make my life a small hell when I am away for a week or two.</p>
+
+<p>There is of-course annoying things like complicated file transfer setups and other design decisions that cause problems once you start wanting to actually transfer information in or out of your phone. But those are not so easily solved :)</p>
+
+<h2>Also I should note</h2>
+
+<p>Well over 90% of the things found in Cydia are crap (my opinion). There are however a very small number of Cydia packages that I actually find useful to have on my phone. A few more are cool in a geeky way but nothing I need on my phone on a daily basis.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Cliff Martinez - Solaris OST]]></title>
+    <link href="http://eimer.co/blog/2010/08/29/cliff-martinez-solaris-ost/"/>
+    <updated>2010-08-29T00:00:00+02:00</updated>
+    <id>http://eimer.co/blog/2010/08/29/cliff-martinez-solaris-ost</id>
+    <content type="html"><![CDATA[<p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/08/solaris.jpg" alt="" title="solaris" width="170" height="170" class="hang-2-column size-full wp-image-149" /></p>
+
+<p>Part of the series Milestones in Music</p>
+
+
+<p><em>(2002)</em></p>
+
+<p>
+This soundtrack is a pure flash of genius. I&#8217;d say it has a lot to do with making the film a pretty good film and on its own the music is just as good. Watching Solaris for the first time I could not wait for the credits so I could see who had made this magical music. I love walking with this music in my headphones. It turn the most boring walk into a surreal experience.</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Lamb - Lamb]]></title>
+    <link href="http://eimer.co/blog/2010/08/15/lamb-lamb/"/>
+    <updated>2010-08-15T00:00:00+02:00</updated>
+    <id>http://eimer.co/blog/2010/08/15/lamb-lamb</id>
+    <content type="html"><![CDATA[<p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/08/Lamb-Lamb.jpg" alt="" title="Lamb - Lamb" width="170" height="170" class="hang-2-column size-full wp-image-142" /></p>
+
+<p>Part of the series Milestones in Music</p>
+
+
+<p><em>(1997)</em></p>
+
+<p>
+The first I heard of Lamb was a remix of Gold on a Future Music cover CD. Lamb also have some great tracks on their later albums, but never managed to equal their debut. D&#8217;n&#8217;B with real vocals and real instruments&#8230; and on top of this in 3/4 and 7/8 and whatever else Andy and Lou could come up with. Inspiring and still sounds fresh today. This is the kind of music I which I could and repeatedly fail in attempting to make. Notable mention goes to Lullaby from Fear of Fours. Fantastic track.</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[DJ Shadow - Endtroducing.....]]></title>
+    <link href="http://eimer.co/blog/2010/08/15/dj-shadow-endtroducing/"/>
+    <updated>2010-08-15T00:00:00+02:00</updated>
+    <id>http://eimer.co/blog/2010/08/15/dj-shadow-endtroducing</id>
+    <content type="html"><![CDATA[<p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/08/DJ-Shadow-Endtroducing.jpg" alt="" title="DJ Shadow - Endtroducing" width="170" height="170" class="hang-2-column size-full wp-image-140" /></p>
+
+<p>Part of the series Milestones in Music</p>
+
+
+<p><em>(1996)</em></p>
+
+<p>
+Compiling this list I cannot now recall how I first came in contact with this album. I was tending bar and DJing at university at the time so possibly from a fellow barman/DJ. Endtroducing&#8230; was one of a few albums that really gave me the MPC bug. I felt I had to have one of those one day! And now I do. Don&#8217;t use it much. Thinking of selling it. C&#8217;est la vie. This album is still very much a favorite though. The cinematic samples, the eclectic soundscapes and intricate sample editing&#8230; mastery of his craft, no doubt.
+</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Nginx + Wordpress caching that actually works]]></title>
+    <link href="http://eimer.co/blog/2010/08/11/nginx-wordpress-caching-that-actually-works/"/>
+    <updated>2010-08-11T00:00:00+02:00</updated>
+    <id>http://eimer.co/blog/2010/08/11/nginx-wordpress-caching-that-actually-works</id>
+    <content type="html"><![CDATA[<p>I spent a lot of time yesterday trying to enable WP Super Cache, and subsequently W3 Total Cache for this website. SInce none of the hits I got on Google did the trick I thought I&#8217;d post my working settings for page caching with W3 Total Cache.</p>
+
+<p>I went with this plugin mainly because it uses a logical hierarchy of readable folders and files. WP Super Cache did not which is why I eventually dropped it and tried the Total Cache plugin.</p>
+
+<p>I have Nginx and PHP FastCGI. No Apache. The &#8220;problem&#8221; with this setup is the rewrite rules needed to point visitors to cached pages if they exist. Installing the plugin is as simple as anything in WP these days so I wont go into that.</p>
+
+<p>Here it is:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+## W3 Total CACHE BEGIN
+set $totalcache_file '';
+set $totalcache_uri $request_uri;
+
+if ($request_method = POST) {
+  set $totalcache_uri '';
+}
+
+# Using pretty permalinks, so bypass the cache for any query string
+if ($query_string) {
+  set $totalcache_uri '';
+}
+
+if ($http_cookie ~* "comment_author_|wordpress|wp-postpass_" ) {
+  set $totalcache_uri '';
+}
+
+# if we haven't bypassed the cache, specify our totalcache file
+if ($totalcache_uri ~ ^(.+)$) {
+  set $totalcache_file /wp-content/w3tc/pgcache/$1/_index.html;
+}
+
+# only rewrite to the totalcache file if it actually exists
+if (-f $document_root$totalcache_file) {
+  rewrite ^(.*)$ $totalcache_file;
+  break;
+}                 
+
+##W3 Total CACHE END
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+
+<p>If you are wondering what to do with these lined of code&#8230; I did not come up with them myself. I did a minor change to make them work with the current version of WP Total Cache and my installation.</p>
+
+<p>The blueprint came from here:
+<a href="http://wpveda.com/nginx-rewrite-rules-for-w3-total-cache-plugin/">http://wpveda.com/nginx-rewrite-rules-for-w3-total-cache-plugin/</a></p>
+
+<p>What I did was to change the filename. Also. If you, like me, have wp in a folder you would add that to the path as well.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+set $totalcache_file /wp-content/w3tc/pgcache/$1/_index.html;
+set $totalcache_file /your-wp-folder/wp-content/w3tc/pgcache/$1/_index.html;
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+
+<p>There are a dozen other sites with variations on this code. None worked for me straight away&#8230; If you have similar experience, maybe my version will work for you.</p>
+
+<p>When, or if, I get some of the other rewrite-dependent features working I&#8217;ll add another post.</p>
+]]></content>
+  </entry>
+  
+</feed>

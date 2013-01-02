@@ -1,0 +1,787 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>My New Home</title>
+  <meta name="author" content="Martin Westin">
+
+  
+  <meta name="description" content="There exist many websites and web applications with elements of poor usability, engineering, design and so on. Some exhibit features so poor I can &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://eimer.co/blog/page/2">
+  <link href="/favicon.ico" rel="icon">
+
+  <link href="/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+  <link href="/atom.xml" rel="alternate" title="My New Home" type="application/atom+xml">
+  
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-11893308-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body    data-spy="scroll">
+
+  <div class="container">
+    <header class="jumbotron subhead" id="overview">
+      
+<div class="subscribe">
+  <table>
+    <tr>
+      <td><span>Get Updates: &nbsp;</span></td>
+      
+      
+      <td><a href="/atom.xml" class="btn"><i class="icon-cog"></i> By RSS</a></td>
+      
+      
+      <td><a href="http://twitter.com/eimer" class="btn"><i class="icon-twitter-sign"></i> On Twitter</a></td>
+      
+    </tr>
+  </table>
+</div>
+
+<h1 class="title">My New Home</h1>
+
+  <p class="lead">migrated from the 10 year-old eimermusic.com</p>
+
+
+      <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container" style="width: auto;">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <div class="nav-collapse">
+                <ul class="nav">
+          <li><a href="/">Home</a></li>
+          <li><a href="/music">Music</a></li>
+          <li><a href="/photos">Photos</a></li>
+          <li><a href="/portfolio">Portfolio</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+
+        
+          <form action="http://google.com/search" method="get" class="navbar-search pull-left">
+            <fieldset role="search">
+              <input type="hidden" name="q" value="site:eimer.co" />
+              <input type="text" name="q" results="0" placeholder="Search" class="search-query span2" />
+            </fieldset>
+          </form>
+        
+        
+      </div><!-- /.nav-collapse -->
+    </div>
+  </div><!-- /navbar-inner -->
+</div>
+
+    </header>
+    <div id="main">
+      <div id="content">
+        <div class="row">
+  
+  <div class="span8 blog-index">
+    
+    
+    
+      <article>
+        
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/10/30/offensively-lazy-web-developers/">Offensively Lazy Web Developers</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-10-30T00:00:00+02:00" pubdate data-updated="true">Oct 30<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>There exist many websites and web applications with elements of poor usability, engineering, design and so on. Some exhibit features so poor I can only attribute them to laziness. Some actually make me feel offended that I have to jump through hoops to accommodate their laziness.</p>
+
+<p>Top of my list are form fields for postcodes, phone numbers, dates, times or any similar type of data. Simple numeric data. Easily validated and normalized. Yet I often see requirements to enter the data in a very specific format, often at odds with how humans customarily write such data. To most people (who are not developers) it can be very confusing to enter data in a perfectly normal way and have a computer tell them it is invalid. For me it is offensive since I know it is practically always the result of data not being normalized. A developer that does not normalize input data before validating it can only be described as lazy or, if you prefer, incompetent.</p>
+
+<h3>Postcodes</h3>
+
+<p>Nothing can be simpler, right. In many countries it is simply a few digits. Some through a few alphabetic characters in there. I&#8217;ll focus on local Swedish websites and Swedish postcodes. We have 5 digit postcodes. They are typically written &#8220;123 45&#8221;. So Why would any Swedish website validate that input and claim it is invalid. As a developer I know it is probably that a space is not a numeric character and that adding it also make the string 6 characters long and not 5.</p>
+
+<h3>Phone numbers</h3>
+
+<p>A phone number is a string of numeric characters. Anything else: spaces, parenthesis, dashes and other chrome, is just that: chrome. None of that is part of the data. No server at ATT, Telia, Vodafone or any other network carrier reads these thing and need them in order to route a call. Quite the opposite. Any phone network and particularly cellular networks require a very specific internationally standardized format. Guess what? It is all numeric. A Swedish cellphone might be typed &#8220;0701 - 23 45 67&#8221; in my address book but the phone sends 46701234567 to the network anytime I make a call.</p>
+
+<h3>Dates and Times</h3>
+
+<p>These are a bit more complex than the above. But the same principles apply. Then again, most web-focused programming languages have functions to parse a myriad of ways one could type a date or time and create a proper date or time object or data type. If you still find it does not work for you then, in this case, you should provide something other than a blank test field. Try googling for datepicker or timepicker. The problem will be one of choosing your favorite rather than finding anything at all.</p>
+
+<h3>Being constructive</h3>
+
+<p>I have ranted a bit now so I thought I&#8217;d put my code where my mouth is. Since I am not allowed to share my phone number normalizer code I wrote at work I thought I&#8217;d at least share the secret to all the normalizing tasks above&#8230; It&#8217;s regex. Regular Expressions.</p>
+
+<h3>Getting rid of whitespace</h3>
+
+<p>The following will &#8220;match&#8221; whitespace characters. By substituting the matches with nothing you will simply remove all whitespace from a string.
+<strong>/\s/</strong></p>
+
+<h3>Remove anything that is not a number</h3>
+
+<p>And the following will remove non digits if you substitute the matches with nothing.
+<strong>/\D/</strong></p>
+
+<h3>A very very very simple example in Ruby</h3>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:ruby </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+
+num = "(0)701 - 23 45 67".gsub(/\D/,'')
+
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+
+<p>Seriously. That is all it takes to turn an offensive web form into a more humane one.</p>
+</div>
+  
+  
+
+
+      </article>
+    
+    
+      <article>
+        
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/09/30/soap-with-attachments-in-ruby/">SOAP With Attachments in Ruby</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-09-30T00:00:00+02:00" pubdate data-updated="true">Sep 30<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I found myself once again facing SOAP. This abomination of a protocol they even have the nerve to call &#8220;web services&#8221; is not my favorite type of API to interface with (how did you guess?). I think probably the only language with any decent support is Java and possibly .net. Neither rank among my favorite languages either. Funny that.</p>
+
+<p>My bigger problem is that the service I am interfacing with is noting as simple as sending an integer and getting an integer back. It requires that I post a multipart/mime SOAP message (aka SOAP with Attachments afaik). This is something that most SOAP libraries are not too keen on supporting.</p>
+
+<h3>What are multipart SOAP messages?</h3>
+
+<p>In short they are encoded a kind-of like email messages and their attachments but sent using http to a SOAP endpoint. The normal SOAP message becomes one of the mime parts and any other parts are called attachments and usually referenced from inside the SOAP message.</p>
+
+<h3>A little history</h3>
+
+<p>A few years ago in PHP I was stuck using NuSOAP and ended up basically bypassing most of NuSOAP and encoding the attachments and doing all that myself. The code was a real mess.</p>
+
+<p>Last week I got to do it all over again. This time in Ruby. At work, we are porting our entire platform to Ruby, but detailing that process might be a post in itself. I was so happy when I found that soap4r has support for mime messages. Then I tried to use soap4r. Long story short. I liked it so much I chose to go with Savon instead&#8230; which has no mime support.</p>
+
+<h3>What I ended up with</h3>
+
+<p>The results of my efforts is not pretty by Ruby standards but a lot better than my old code in php. I patched Savon in two places. One to enable any namespace on the SOAP body (which is otherwise hard-coded to &#8220;wsdl&#8221;) and has little to do with mime messages.</p>
+
+<p>The other place was to intercept the output and check if the SOAP object had any attachments (parts) added to it. If so, it will take the intended output and encode that as a mime part and then encode the other parts and put it all together as a nice big http packet ready for posting.</p>
+
+<p>I think it best if I just show the code now.</p>
+
+<script src="https://gist.github.com/602864.js?file=savon_mime_support_patch_example.rb"></script>
+
+
+<p>Any questions posted to the gist or here will be adressed to the best of my abilities.</p>
+</div>
+  
+  
+
+
+      </article>
+    
+    
+      <article>
+        
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/08/31/kanye-west-808s-heartbreak/">Kanye West - 808s & Heartbreak</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-08-31T00:00:00+02:00" pubdate data-updated="true">Aug 31<span>st</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/08/kanye-west-170x170.jpg" alt="" title="kanye-west" width="170" height="170" class="hang-2-column size-thumbnail wp-image-154" /></p>
+
+<p>Part of the series Milestones in Music</p>
+
+
+<p><em>(2008)</em></p>
+
+<p>
+This album blew my mind completely. It not only shows a personal side to Kanye as a song-writer. The coolest thing is that the album could more or less have been produced in any bedroom studio in the world. We all have the tools at home to make this album&#8230; we are just not as good as Kanye. Damn!</p>
+
+
+
+
+<p>
+That is the last milestone for now&#8230;
+</p>
+
+</div>
+  
+  
+
+
+      </article>
+    
+    
+      <article>
+        
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/08/31/burial-burial/">Burial - Burial</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-08-31T00:00:00+02:00" pubdate data-updated="true">Aug 31<span>st</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/08/Burial-Burial.jpg" alt="" title="Burial-Burial" width="170" height="170" class="hang-2-column size-full wp-image-152" /></p>
+
+<p>Part of the series Milestones in Music</p>
+
+
+<p><em>(2006)</em></p>
+
+<p>
+I stumbled upon this album on bleep.com by mistake. What a find. So dirty. So atmospheric. Nothing like &#8220;normal&#8221; Dub Step. Really in a genre of his own. It also helped that he (William Bevan) remained very anonymous for a very long time. No interviews, no real name, nothing. The lines spoken by Benicio del Toro and Forrest Whittaker (I believe they are real samples and not re-creations) help set the spooky mood of the album.  </p>
+
+</div>
+  
+  
+
+
+      </article>
+    
+    
+      <article>
+        
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/08/29/photek-modus-operandi/">Photek - Modus Operandi</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-08-29T00:00:00+02:00" pubdate data-updated="true">Aug 29<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/08/modus-operandi.jpg" alt="" title="modus-operandi" width="170" height="170" class="hang-2-column size-full wp-image-146" /></p>
+
+<p>Part of the series Milestones in Music</p>
+
+
+<p><em>(1997)</em></p>
+
+<p>
+I love a lot of Rupert&#8217;s work but Modus Operandi was the one that made me take notice in the tidal wave of half-assed D&#8217;n&#8217;B from the late &#8217;90s. To get the best of Photek, though, you need to dig out the rarer tracks. My old favorites are Knightvision and Ni Ten Ichi Ryu. These days I listen to his brief stint in the more laid back arena. Halogen and Lost Blue Heaven from Solaris (the album, not the soundtrack) the tracks I am referring to. The rest of that album is not to my taste though.</p>
+
+</div>
+  
+  
+
+
+      </article>
+    
+    
+      <article>
+        
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/08/29/my-reasons-for-jailbreaking/">My Reasons for Jailbreaking</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-08-29T00:00:00+02:00" pubdate data-updated="true">Aug 29<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I don&#8217;t generally use my iPhone jailbroken. But every time I go on vacation of a weekend trip I make sure I jailbreak the phone in advance. I do this to get access to only a very small number of features that really should be part of the OS.</p>
+
+<h2>Internet Sharing using MyWi</h2>
+
+<p>MyWi does something so simple and obvious. It allows my iPhone to setup a wifi hotspot and share the 3G connection with other devices, i.e. the iPad. That Apple does not provide this feature can only be described as greedy american corporate bullcrap politics. Wether it is to spare ATT from the network congestion, let them sell more data subscriptions or to just try to sell more iPad 3Gs I can&#8217;t be sure. My opinion of it stands either way since there is no justification for it based on anything like &#8220;the users best interest&#8221;.</p>
+
+<p>Why not just get an iPad 3G? I am not about to get a more expensive AND less pretty iPad 3G just so I can use the 3G connection a few weeks a year. At home or at work I have wifi but, at least in Sweden, we don&#8217;t generally find wifi hotspots in our rural countryside. Unlike the US, we do have 3G connectivity almost everywhere and Edge everywhere else. And, also unlike the US, we have no carrier restrictions on which device is allowed to take advantage of our mobile data connection.</p>
+
+<p>The Apple-approved alternative is to carry along my Macbook pro simply to act as a Wifi hotspot for the iPad by&#8230; sharing the iPhone&#8217;s 3G connection. Same result but more weight, power, bulk and complexity. Since using the iPhone as a modem for my Macbook pro is available, why not for the iPad? If not via wifi, how about a dock-to-dock cable or something? Maybe they just like me to lugg around all my Apple products :)</p>
+
+<h2>Keeping up-to-date with my podcasts</h2>
+
+<p>Podcasts are generally released on a weekly or daily schedule. But, since they are also generally over 20MB I am not allowed to download them to my iPhone without a wifi connection. Again, not a problem when I am at home, but a big problem when I am travelling. Again (again), a nonsensical and arbitrary restriction. I can understand a warning. But with so many &#8220;unlimited&#8221; dataplans for the iPhone and so many other types of data (YouTube anyone?) that exceed this limit I can&#8217;t understand the restriction. Fortunately, in Cydia I can buy and install &#8220;3G Unrestrictor&#8221; which does exactly what you&#8217;d expect. It removes the restrictions related to the mobile connection.</p>
+
+<p>That is all. The iPhone is that close to being more or less prefect. Two &#8220;missing&#8221; features that I believe are the cause of the network situation closer to Cupertino (more Wifi than 3G coverage one is almost lead to believe) and splash of arrogance and excessive greed. Neither feature is a deal breaker most of the time but both make my life a small hell when I am away for a week or two.</p>
+
+<p>There is of-course annoying things like complicated file transfer setups and other design decisions that cause problems once you start wanting to actually transfer information in or out of your phone. But those are not so easily solved :)</p>
+
+<h2>Also I should note</h2>
+
+<p>Well over 90% of the things found in Cydia are crap (my opinion). There are however a very small number of Cydia packages that I actually find useful to have on my phone. A few more are cool in a geeky way but nothing I need on my phone on a daily basis.</p>
+</div>
+  
+  
+
+
+      </article>
+    
+    
+      <article>
+        
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/08/29/cliff-martinez-solaris-ost/">Cliff Martinez - Solaris OST</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-08-29T00:00:00+02:00" pubdate data-updated="true">Aug 29<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/08/solaris.jpg" alt="" title="solaris" width="170" height="170" class="hang-2-column size-full wp-image-149" /></p>
+
+<p>Part of the series Milestones in Music</p>
+
+
+<p><em>(2002)</em></p>
+
+<p>
+This soundtrack is a pure flash of genius. I&#8217;d say it has a lot to do with making the film a pretty good film and on its own the music is just as good. Watching Solaris for the first time I could not wait for the credits so I could see who had made this magical music. I love walking with this music in my headphones. It turn the most boring walk into a surreal experience.</p>
+
+</div>
+  
+  
+
+
+      </article>
+    
+    
+      <article>
+        
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/08/15/lamb-lamb/">Lamb - Lamb</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-08-15T00:00:00+02:00" pubdate data-updated="true">Aug 15<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/08/Lamb-Lamb.jpg" alt="" title="Lamb - Lamb" width="170" height="170" class="hang-2-column size-full wp-image-142" /></p>
+
+<p>Part of the series Milestones in Music</p>
+
+
+<p><em>(1997)</em></p>
+
+<p>
+The first I heard of Lamb was a remix of Gold on a Future Music cover CD. Lamb also have some great tracks on their later albums, but never managed to equal their debut. D&#8217;n&#8217;B with real vocals and real instruments&#8230; and on top of this in 3/4 and 7/8 and whatever else Andy and Lou could come up with. Inspiring and still sounds fresh today. This is the kind of music I which I could and repeatedly fail in attempting to make. Notable mention goes to Lullaby from Fear of Fours. Fantastic track.</p>
+
+</div>
+  
+  
+
+
+      </article>
+    
+    
+      <article>
+        
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/08/15/dj-shadow-endtroducing/">DJ Shadow - Endtroducing&#8230;..</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-08-15T00:00:00+02:00" pubdate data-updated="true">Aug 15<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/08/DJ-Shadow-Endtroducing.jpg" alt="" title="DJ Shadow - Endtroducing" width="170" height="170" class="hang-2-column size-full wp-image-140" /></p>
+
+<p>Part of the series Milestones in Music</p>
+
+
+<p><em>(1996)</em></p>
+
+<p>
+Compiling this list I cannot now recall how I first came in contact with this album. I was tending bar and DJing at university at the time so possibly from a fellow barman/DJ. Endtroducing&#8230; was one of a few albums that really gave me the MPC bug. I felt I had to have one of those one day! And now I do. Don&#8217;t use it much. Thinking of selling it. C&#8217;est la vie. This album is still very much a favorite though. The cinematic samples, the eclectic soundscapes and intricate sample editing&#8230; mastery of his craft, no doubt.
+</p>
+
+</div>
+  
+  
+
+
+      </article>
+    
+    
+      <article>
+        
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/08/11/nginx-wordpress-caching-that-actually-works/">Nginx + Wordpress Caching That Actually Works</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-08-11T00:00:00+02:00" pubdate data-updated="true">Aug 11<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I spent a lot of time yesterday trying to enable WP Super Cache, and subsequently W3 Total Cache for this website. SInce none of the hits I got on Google did the trick I thought I&#8217;d post my working settings for page caching with W3 Total Cache.</p>
+
+<p>I went with this plugin mainly because it uses a logical hierarchy of readable folders and files. WP Super Cache did not which is why I eventually dropped it and tried the Total Cache plugin.</p>
+
+<p>I have Nginx and PHP FastCGI. No Apache. The &#8220;problem&#8221; with this setup is the rewrite rules needed to point visitors to cached pages if they exist. Installing the plugin is as simple as anything in WP these days so I wont go into that.</p>
+
+<p>Here it is:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+## W3 Total CACHE BEGIN
+set $totalcache_file '';
+set $totalcache_uri $request_uri;
+
+if ($request_method = POST) {
+  set $totalcache_uri '';
+}
+
+# Using pretty permalinks, so bypass the cache for any query string
+if ($query_string) {
+  set $totalcache_uri '';
+}
+
+if ($http_cookie ~* "comment_author_|wordpress|wp-postpass_" ) {
+  set $totalcache_uri '';
+}
+
+# if we haven't bypassed the cache, specify our totalcache file
+if ($totalcache_uri ~ ^(.+)$) {
+  set $totalcache_file /wp-content/w3tc/pgcache/$1/_index.html;
+}
+
+# only rewrite to the totalcache file if it actually exists
+if (-f $document_root$totalcache_file) {
+  rewrite ^(.*)$ $totalcache_file;
+  break;
+}                 
+
+##W3 Total CACHE END
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+
+<p>If you are wondering what to do with these lined of code&#8230; I did not come up with them myself. I did a minor change to make them work with the current version of WP Total Cache and my installation.</p>
+
+<p>The blueprint came from here:
+<a href="http://wpveda.com/nginx-rewrite-rules-for-w3-total-cache-plugin/">http://wpveda.com/nginx-rewrite-rules-for-w3-total-cache-plugin/</a></p>
+
+<p>What I did was to change the filename. Also. If you, like me, have wp in a folder you would add that to the path as well.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+set $totalcache_file /wp-content/w3tc/pgcache/$1/_index.html;
+set $totalcache_file /your-wp-folder/wp-content/w3tc/pgcache/$1/_index.html;
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+
+<p>There are a dozen other sites with variations on this code. None worked for me straight away&#8230; If you have similar experience, maybe my version will work for you.</p>
+
+<p>When, or if, I get some of the other rewrite-dependent features working I&#8217;ll add another post.</p>
+</div>
+  
+  
+
+
+      </article>
+    
+    <div class="pagination">
+      
+        <a class="prev" href="/blog/page/3/">&larr; Older</a>
+      
+      <a href="/blog/archives">Blog Archives</a>
+      
+      <a class="next" href="/">Newer &rarr;</a>
+      
+    </div>
+  </div>
+
+  
+  <div class="span4 sidebar">
+    <div class="well">
+      
+        <section>
+  <h2>Recent Posts</h2>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/07/17/shelling-out-from-a-ruby-app-to-a-ruby-app-without-bundler-conflicts/">Shelling out from a ruby app to a ruby app without bundler conflicts</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/29/winning-two-gsma-global-mobile-awards/">Winning Two GSMA Global Mobile Awards</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/11/09/looping-through-large-and-slow-datasets-in-ruby/">Looping through large and slow datasets in Ruby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/11/03/quick-tip-ios-and-web-graphics-in-illustrator/">Quick Tip: iOS and web graphics in Illustrator</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/07/26/patents-gone-crazy/">Patents Gone Crazy</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h2>GitHub Repos</h2>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/eimermusic">@eimermusic</a> on GitHub
+  
+  <script type="text/javascript">
+    $(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'eimermusic',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h2>Latest Tweets</h2>
+  <ul id="tweets">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+    <a href="http://twitter.com/eimer" class="twitter-follow-button" data-show-count="false">Follow @eimer</a>
+  
+</section>
+
+
+
+
+
+      
+    </div>
+  </div>
+
+
+
+</div>
+      </div>
+    </div>
+    <footer class="footer"><p>
+  Copyright &copy; 2013 - Martin Westin -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span> -
+  
+    <span class="credit">Theme by <a href="http://brianarmstrong.org">Brian Armstrong</a></span>
+  
+</p>
+</footer>
+    <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+
+
+
+
+
+
+
+
+  </div>
+</body>
+</html>
