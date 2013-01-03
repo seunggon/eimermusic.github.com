@@ -9,7 +9,7 @@
   <meta name="author" content="Martin Westin">
 
   
-  <meta name="description" content="This is slightly modified from something I found @ http://www.kirupa.com/forum/archive/index.php/t-263260.html Using high-score lists or similar you &hellip;">
+  <meta name="description" content="Dealing with configurations for multiple domains (environments) is always a topic for discussion. I wanted to share my way of dealing with this &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -26,7 +26,7 @@
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
-  <link href="/atom.xml" rel="alternate" title="My New Home" type="application/atom+xml">
+  <link href="" rel="alternate" title="My New Home" type="application/atom+xml">
   
   
   <script type="text/javascript">
@@ -48,23 +48,7 @@
 
   <div class="container">
     <header class="jumbotron subhead" id="overview">
-      
-<div class="subscribe">
-  <table>
-    <tr>
-      <td><span>Get Updates: &nbsp;</span></td>
-      
-      
-      <td><a href="/atom.xml" class="btn"><i class="icon-cog"></i> By RSS</a></td>
-      
-      
-      <td><a href="http://twitter.com/eimer" class="btn"><i class="icon-twitter-sign"></i> On Twitter</a></td>
-      
-    </tr>
-  </table>
-</div>
-
-<h1 class="title">My New Home</h1>
+      <h1 class="title">My New Home</h1>
 
   <p class="lead">migrated from the 10 year-old eimermusic.com</p>
 
@@ -100,6 +84,9 @@
   </div><!-- /navbar-inner -->
 </div>
 
+      <section class="well">
+  <a class="label" href="/tag/character set">character set (3)</a> <a class="label" href="/tag/collation">collation (3)</a> <a class="label" href="/tag/mysql">mysql (8)</a> <a class="label" href="/tag/bash">bash (1)</a> <a class="label" href="/tag/command">command (1)</a> <a class="label" href="/tag/rm">rm (1)</a> <a class="label" href="/tag/svn">svn (1)</a> <a class="label" href="/tag/convert">convert (1)</a> <a class="label" href="/tag/characters">characters (1)</a> <a class="label" href="/tag/replace">replace (1)</a> <a class="label" href="/tag/insert">insert (1)</a> <a class="label" href="/tag/select">select (1)</a> <a class="label" href="/tag/copy">copy (1)</a> <a class="label" href="/tag/permissions">permissions (1)</a> <a class="label" href="/tag/duplicates">duplicates (1)</a> <a class="label" href="/tag/cakephp">cakephp (5)</a> <a class="label" href="/tag/guide">guide (1)</a> <a class="label" href="/tag/migration">migration (1)</a> <a class="label" href="/tag/authentication">authentication (1)</a> <a class="label" href="/tag/http">http (1)</a> <a class="label" href="/tag/security">security (2)</a> <a class="label" href="/tag/find">find (1)</a> <a class="label" href="/tag/position">position (1)</a> <a class="label" href="/tag/vhosts">vhosts (1)</a> <a class="label" href="/tag/olap">olap (1)</a> <a class="label" href="/tag/reporting">reporting (1)</a> <a class="label" href="/tag/schema">schema (1)</a> <a class="label" href="/tag/star">star (1)</a> <a class="label" href="/tag/javascript">javascript (1)</a> <a class="label" href="/tag/scope">scope (1)</a> <a class="label" href="/tag/variables">variables (1)</a> <a class="label" href="/tag/design">design (2)</a> <a class="label" href="/tag/modular">modular (1)</a> <a class="label" href="/tag/plugins">plugins (1)</a> <a class="label" href="/tag/array">array (1)</a> <a class="label" href="/tag/php">php (2)</a> <a class="label" href="/tag/css">css (1)</a> <a class="label" href="/tag/projekktor">projekktor (1)</a> <a class="label" href="/tag/espresso">espresso (2)</a> <a class="label" href="/tag/extraction">extraction (3)</a> <a class="label" href="/tag/iphone">iphone (5)</a> <a class="label" href="/tag/bugs">bugs (1)</a> <a class="label" href="/tag/memory warning">memory warning (1)</a> <a class="label" href="/tag/nginx">nginx (2)</a> <a class="label" href="/tag/wordpress">wordpress (2)</a> <a class="label" href="/tag/mime">mime (1)</a> <a class="label" href="/tag/ruby">ruby (4)</a> <a class="label" href="/tag/savon">savon (1)</a> <a class="label" href="/tag/soap">soap (1)</a> <a class="label" href="/tag/rails">rails (2)</a> <a class="label" href="/tag/devise">devise (1)</a> 
+</section>
     </header>
     <div id="main">
       <div id="content">
@@ -107,6 +94,422 @@
   
   <div class="span8 blog-index">
     
+    
+    
+      <article>
+        
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/02/18/one-core-one-app-multiple-domains-for-cakephp/">One Core, One App, Multiple Domains for CakePHP</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-02-18T00:00:00+01:00" pubdate data-updated="true">Feb 18<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>
+Dealing with configurations for multiple domains (environments) is always a topic for discussion. I wanted to share my way of dealing with this common problem. This will not be right for all, which is the point. If this does not suit you, there are a few links at the bottom.
+</p>
+
+
+<h3>What will this do?</h3>
+
+<p>
+Simplify updates using SCM (git pull anyone?).<br />
+Ability to run a single vhost setting, single cake core, single app directory for multiple subdomains.<br />
+Each subdomain is it&#8217;s own application not simply an alias.<br />
+Can run domain-sensitive shell tasks.
+</p>
+
+
+<h3>Apache first.</h3>
+
+<p>
+(or whatever you use)<br />
+Just create a vhost and keep adding aliases for each new domain. 
+</p>
+
+
+<pre lang="">
+ServerName client1.example.com
+ServerAlias client2.example.com
+ServerAlias client3.example.com
+</pre>
+
+
+<p>
+(I don&#8217;t like wildcards here since I want any non-existing sub-domains to point to a non-cake &#8220;error site&#8221;)
+</p>
+
+
+<h3>Now Cake.</h3>
+
+<p>
+The domain switching is handled in bootstrap.php by looking at the HTTP_HOST environment variable. THis is not perfect. But I think it&#8217;s preferable to something like using &#8220;SetEnv&#8221; in htaccess or the vhost. This is simply because that if Apache isn&#8217;t providing the server name then you probably can&#8217;t see the set parameter either.
+Shell access, you say? Well, that is where the first of the two if clauses in bootstrap.php comes in. More on that in a minute.
+</p>
+
+
+
+
+<h4>bootstrap.php</h4>
+
+
+<pre lang="php">
+&lt;?php
+// Initial defaults go at the top, for example:
+Configure::write('Config.language', 'swe');
+
+
+// Load domain-specific config
+if ( isset($_SERVER['HTTP_HOST']) ) { // web
+    $bootstrap = CONFIGS .'domains'.DS.$_SERVER['HTTP_HOST'].'.php';
+} elseif ( count($_SERVER['argv']) ) { // cli
+    $_SERVER['HTTP_HOST'] = $_SERVER['argv'][count($_SERVER['argv'])-1];
+    $bootstrap = CONFIGS .'domains'.DS.$_SERVER['argv'][count($_SERVER['argv'])-1].'.php';
+}
+if ( file_exists($bootstrap) ) {
+    require($bootstrap); 
+} else {
+    echo 'No configuration could be loaded for domain '.$_SERVER['HTTP_HOST'].'. Exiting...';
+    exit;
+}   
+
+
+// At the bottom you can override configurations if you found you had to.
+// This is also where you define defaults for constants. (keeps the if out of the domain file)
+if ( !defined('CLIENT_NAME') ) {
+    define('CLIENT_NAME', 'No Client');
+}
+
+</pre>
+
+
+
+
+<h4>Domain files</h4>
+
+
+<p>
+In <b>app/config/</b> I create a folder called <b>domains</b>. In it, I keep each domain-specific configuration file named after each domain.
+</p>
+
+
+<pre lang="">
+client1.example.com.php
+client2.example.com.php
+client3.example.com.php
+myapp.site.php  <-- my local dev setup also gets it's own file.
+myapp.local.php  <-- someone elses local setup.
+</pre>
+
+
+
+
+<h4> client1.example.com.php</h4>
+
+
+<pre lang="php">
+&lt;?php
+// this file will mostly contain modifications of the defaults from bootstrap.php
+Configure::write('Config.language', 'eng');
+define('CLIENT_NAME', 'Client One');
+
+
+// But this is important. I set the database setting here!
+Configure::write('Database.config', array(
+    'default' => array(
+        'driver' => 'mysqli_ex',
+        'persistent' => false,
+        'host' => 'localhost',
+        'port' => '',
+        'login' => 'client1',
+        'password' => 'client1',
+        'database' => 'client1',
+        'schema' => '',
+        'prefix' => '',
+        'encoding' => 'utf8'
+    ),
+    'test' => array(
+        'driver' => 'mysqli_ex',
+        'persistent' => false,
+        'host' => 'localhost',
+        'port' => '',
+        'login' => 'testing',
+        'password' => 'testing',
+        'database' => 'probably not',
+        'schema' => '',
+        'prefix' => '',
+        'encoding' => 'utf8'
+    )
+));
+
+</pre>
+
+
+
+
+<h4>Database settings</h4>
+
+
+<p>
+As you can see I set the database configuration in the domain file. I prefer this to having a long list of database settings in database.php or a second file for each domain in the domains folder. The database settings are loaded like this:
+</p>
+
+
+
+
+<pre lang="php">
+&lt;?php
+class DATABASE_CONFIG {
+    var $default = array(
+        'driver' => 'mysqli_ex',
+        'persistent' => false,
+        'host' => 'localhost',
+        'port' => '',
+        'login' => 'root',
+        'password' => '',
+        'database' => 'default',
+        'schema' => '',
+        'prefix' => '',
+        'encoding' => 'utf8'
+    );
+
+    function __construct () {       
+        $config = Configure::read('Database.config');
+        if ( !is_array($config) ) {
+            // screaming exit here?
+            return;
+        }
+        foreach ( $config as $name=>$data ) {
+            $this->$name = $data;
+        }
+    }
+    
+}
+
+</pre>
+
+
+
+
+<p>
+The database file dynamically creates the attributes (class-variables) from the keys in the domain-specific file. This is probably illegal php by some strict setting but I still sleep well at night. The reason I do this and not, like some other people, simply set the &#8220;default&#8221; to whatever I have in the domain-file (see links at the bottom) is that I sometimes need several databases accessible from the application. This way I can dynamically create as many as I like.
+</p>
+
+
+<h3>And there shall be a shell.</h3>
+
+<p>
+The shell access is always a problem. You have no server-environment available and no Cake-magic to fake it, as far as I know. The fix is simple but also the least robust part of this setup. Bootstrap is set to accept the domain as a shell argument. 
+</p>
+
+
+<h4>part of bootstrap.php again</h4>
+
+
+<pre lang="php">
+&lt;?php
+
+if ( isset($_SERVER['HTTP_HOST']) ) { // normal web access
+    $bootstrap = CONFIGS .'domains'.DS.$_SERVER['HTTP_HOST'].'.php';
+} elseif ( count($_SERVER['argv']) ) { // we need a cli agrument (argv will always exist so this is a bit pointless)
+    $_SERVER['HTTP_HOST'] = $_SERVER['argv'][count($_SERVER['argv'])-1];
+    $bootstrap = CONFIGS .'domains'.DS.$_SERVER['argv'][count($_SERVER['argv'])-1].'.php';
+}
+
+
+</pre>
+
+
+<p>
+These lines set the server name and the include file from the last shell argument. That is the less robust part and something you may wish to modify if you find it breaks your shells.
+</p>
+
+
+<br />
+
+
+<p>
+My hourly script is runs like this:
+</p>
+
+
+<pre lang="">
+/path/to/cake/cake/console/cake hourly client1.example.com
+</pre>
+
+
+<p>
+And from cron that would be:
+</p>
+
+
+<pre lang="">
+/path/to/cake/cake/console/cake -app /path/to/cake/app/ hourly client1.example.com
+</pre>
+
+
+<p>
+I have even verified that the HTTP_HOST survives a requestAction(), good old requesrtAction ;)
+</p>
+
+
+<h3>Anything to look out for?</h3>
+
+<p>
+This technique works. I have used a variation of this on a live application for almost 3 years. Before devising this tweaked and updated version I looked at the suggestions from blogs and posts around the web. For my purposes this is the best I have seen. But it is not without it&#8217;s potential problems.
+</p>
+
+
+<br />
+
+
+<p>
+Caching is not exhaustively tested. I can say that Cake&#8217;s default caching of models and &#8220;persistent&#8221; things are not adversely affected. Other caching, I don&#8217;t know. You can specify &#8220;domains&#8221; for cache files which would be a way to get around problems.
+</p>
+
+
+<br />
+
+
+<p>
+Logs will be jumbled together. I have so far had to patch the CakePHP core to achieve domain-specific logs. See update below.
+</p>
+
+
+<br />
+
+
+<p>
+Uploaded files should be pointed to domain-specific folders. You don&#8217;t want a file called trade-secrets.doc to be accessed by the wrong domain!
+</p>
+
+
+<h3>That&#8217;s it</h3>
+
+<p>
+Thanks for reading. If you are not bored yet below are a few blog posts that I used as inspiration and reference in varying amounts.
+<br /><br />
+<a href="http://rafaelbandeira3.wordpress.com/2008/12/05/handling-multiple-enviroments-on-cakephp/">http://rafaelbandeira3.wordpress.com/2008/12/05/handling-multiple-enviroments-on-cakephp/</a><br />
+<a href="http://www.littlehart.net/atthekeyboard/2008/11/28/handling-multiple-environments-in-your-php-application/">http://www.littlehart.net/atthekeyboard/2008/11/28/handling-multiple-environments-in-your-php-application/</a><br />
+<a href="http://edwardawebb.com/programming/php-programming/cakephp/automatically-choose-database-connections-cakephp">http://edwardawebb.com/programming/php-programming/cakephp/automatically-choose-database-connections-cakephp</a>
+</p>
+
+
+<br /><br />
+
+
+<h3>Update: Hacking the core to redirect the tmp folder</h3>
+
+<p>
+I did a minimal patch to the CakePHP (via git, updates are very painless with simple patches).
+</p>
+
+
+
+
+<pre lang="xml">
+diff --git a/cake/config/paths.php b/cake/config/paths.php  
+index 6a6449f..075313a 100644  
+--- a/cake/config/paths.php  
++++ b/cake/config/paths.php  
+@@ -46,6 +46,9 @@  
+ if (!defined('APP')) {  
+        define('APP', ROOT.DS.APP_DIR.DS);  
+ }  
++if (file_exists(APP . 'config' . DS . 'paths.php')) {  
++       include_once APP . 'config' . DS . 'paths.php';  
++}  
+ /**  
+  * Path to the application's models directory.  
+  */
+</pre>
+
+
+
+
+<p>
+I then add the necessary file app/config/paths.php and put this into it:
+</p>
+
+
+
+
+<pre lang="php">
+if ( !isset($_SERVER['SERVER_NAME']) ) { 
+    if ( count($_SERVER['argv']) ) { // cli 
+        $_SERVER['SERVER_NAME'] = $_SERVER['argv'][count($_SERVER['argv'])-1]; 
+    } else { 
+        echo 'No server name is available. Halting...'; 
+        exit; 
+    } 
+} 
+
+$tmp = APP.'tmp'.DS .'domains'.DS.$_SERVER['SERVER_NAME'].DS; 
+    //print_r($tmp); 
+if ( !is_dir($tmp) ) { 
+    $old = umask(0);     
+    @mkdir($tmp,0777,true); 
+    @mkdir($tmp.'logs'.DS,0777,true); 
+    @mkdir($tmp.'cache'.DS.'models'.DS,0777,true); 
+    @mkdir($tmp.'cache'.DS.'persistent'.DS,0777,true); 
+    @mkdir($tmp.'cache'.DS.'views'.DS,0777,true); 
+    @mkdir($tmp.'sessions'.DS,0777,true); 
+    umask($old); 
+    if ( is_dir($tmp) ) { 
+        if (!defined('TMP')) { 
+            define('TMP', $tmp); 
+        } 
+    } else { 
+        echo 'Specific temporary folder does not exist: '.$tmp.' - Halting...'; // ROOT.DS.APP_DIR.DS 
+        exit; 
+    } 
+} else { 
+    if (!defined('TMP')) { 
+        define('TMP', $tmp); 
+    } 
+}
+</pre>
+
+
+
+
+<p>
+This code will check that a domain-tmp exists or try to create it if it does not. Finally it defines TMP. I have kept the permissions very loose in this example. I suggest tightening it up before going public.
+</p>
+
+
+<p>
+I had to hack the core, but that puts me into deployment nirvana. One source-tree on the server while keeping separate logs, cache, uploads and anything else kept in tmp.
+</p>
+
+
+<p style="font-size:11px;">published @ <a href="http://bakery.cakephp.org/articles/view/one-core-one-app-multiple-domains">http://bakery.cakephp.org/articles/view/one-core-one-app-multiple-domains</a>
+</p>
+
+</div>
+  
+  
+
+
+      </article>
     
     
       <article>
@@ -141,7 +544,7 @@
 <p>Using high-score lists or similar you often have a large number of rows where you want to know who is in 7th place or how well is id:254 doing.
 This eliminates the slow looping in php of big result-sets by making a sub-query in MySQL.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:sql </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="sql">
 SET @rownum := 0;
 
 SELECT * FROM (
@@ -149,7 +552,7 @@ SELECT @rownum := @rownum+1 AS rank, id, points
 FROM highscores 
 ORDER BY points DESC
 ) AS highscores WHERE id = 254;
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 </div>
   
@@ -229,7 +632,7 @@ Here is all the relevant code.
 </p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 class MyController extends AppController {
 
     var $components = array('Security','RequestHandler');
@@ -263,7 +666,7 @@ class MyController extends AppController {
         // this is a protected function now
     }
 }
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <h3>A quick walkthrough</h3>
@@ -432,16 +835,16 @@ The current language was one of the ones I switched over. See below about i18n.
 <p>The few routes I had defined only needed to call the method statically to continue to work. For example:</p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 $Route->connect ('/', array('controller'=>'efs', 'action'=>'index'));
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>became:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 Router::connect('/', array('controller' => 'efs', 'action' => 'index'));
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 
@@ -480,14 +883,14 @@ Router::connect('/', array('controller' => 'efs', 'action' => 'index'));
 
 <p>In AppController::beforeFilter:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 $this->Auth->authenticate =& $this->Auth->getModel();
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>And in models/user.php I added:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 function hashPasswords($data) {
     if (is_array($data) && isset($data[$this->alias])) {
         if (isset($data[$this->alias]['email']) && isset($data[$this->alias]['pass'])) {
@@ -496,7 +899,7 @@ function hashPasswords($data) {
     }
     return $data;
 }
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 
@@ -517,16 +920,16 @@ function hashPasswords($data) {
 </p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 vendor('Archive/Tar');
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>now reads:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 App::import('Vendor','Archive/Tar');
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 
@@ -534,9 +937,9 @@ App::import('Vendor','Archive/Tar');
 <p>The component dealing with syncing with the filesystem nor loads the needed models in a single call, like this:</p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 App::import('Model',array('Project','EfsFile'));
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <h3>Removing requestAction()</h3>
@@ -557,7 +960,7 @@ App::import('Model',array('Project','EfsFile'));
 
 <p>This is straight out of manual as it was a while ago:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 class User extends AppModel {
     var $name = 'User';
     var $hasMany = array(
@@ -571,12 +974,12 @@ class User extends AppModel {
         )
     );
 }
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>And this is the small but important change:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 class User extends AppModel {
     var $name = 'User';
     var $hasMany = array(
@@ -590,21 +993,21 @@ class User extends AppModel {
         )
     );
 }
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>I believe even empty conditions can cause you problems:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 'conditions' => '',
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>it should be:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 'conditions' => array(),
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>I am not certain about that last bit but better safe than sorry, right?</p>
@@ -622,27 +1025,27 @@ class User extends AppModel {
 <p>The Model methods find(), findAll() and so on have changed a lot. This required a lot of manual work, but since I could optimize thing at the same time and speed up the application noticeably I didn&#8217;t really mind the work. I also thing this new syntax is a lot easier to use.</p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 $allProj = $this->Project->findAll(null,null,'Project.title ASC');
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>should now read:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 $allProj = $this->Project->find('all',array(
     'order' => 'Project.title ASC'
 ));
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>or better yet:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 $allProj = $this->Project->find('all',array(
     'order' => array('Project.title' => 'ASC')
 ));
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p><em>Note: Keeping &#8220;ASC&#8221; in my example is not necessary but I like to have it there so I know at a glance what is going on.</em></p>
@@ -655,11 +1058,11 @@ $allProj = $this->Project->find('all',array(
 </p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 $result = $this->deleteAll( array(
     $this->alias.'.created <' => $deadline
 ));
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>Notice that the comparison operator is on the left side. This is new since CakePHP 1.2 RC2, I think.</p>
@@ -669,9 +1072,9 @@ $result = $this->deleteAll( array(
 <p>Am am bursting with joy! Containable behavior is one of my favorite features in CakePHP 1.2. Containable is like find() on steroids.  It is like associations on acid. It is like&#8230; ok enough! The basic first step is to simple add this to the relevant models.</p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 var $actsAs = array('Containable');
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 
@@ -688,7 +1091,7 @@ These three models can easily cause a lot of unnecessary data to be loaded since
 </p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 $data = $this->User->find('first', array(
     'conditions' => array('User.id'=>$this->userData['User']['id']),
     'contain' => array(
@@ -699,7 +1102,7 @@ $data = $this->User->find('first', array(
         )
     )
 ));
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 
@@ -719,18 +1122,18 @@ $data = $this->User->find('first', array(
 </p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 var $validate = array(
     'name'=>VALID_NOT_EMPTY,
     'login'=>VALID_NOT_EMPTY,
     'email'=>VALID_EMAIL
 );
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>now reads:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 var $validate = array(
     'name' => array(
         'rule' => 'notEmpty',
@@ -747,7 +1150,7 @@ var $validate = array(
         )
     )
 );
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>The error messages above have been replaced to make them more readable. They are in the form of translation keys in the real code.</p>
@@ -762,7 +1165,7 @@ var $validate = array(
 </p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 foreach ( $system as $sysFile ) {
     foreach ( $data as $dataFile ) {
         if ( $sysFile['EfsFile']['filename'] == $dataFile['EfsFile']['filename'] ) {
@@ -770,7 +1173,7 @@ foreach ( $system as $sysFile ) {
         }
     }
 }
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 
@@ -783,7 +1186,7 @@ foreach ( $system as $sysFile ) {
 </p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 foreach ( $system as $sysFile ) {
     $this->EfsFile->contain();
     $found = $this->EfsFile->find('first', array(
@@ -796,7 +1199,7 @@ foreach ( $system as $sysFile ) {
         // OK, this file exists already
     }
 }
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <h3>Filesystem case sensitivity</h3>
@@ -807,14 +1210,14 @@ foreach ( $system as $sysFile ) {
 
 <p>in config/bootstrap.php</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 define('EFS_FILESYSTEM_TYPE', 'ci'); // filesystem is set to case insensitive
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>in vendors/basics.php (my file of small handy global functions)</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 // returns a filename or foldername in the correct case for comparison
 function file_case($str) {
     if ( EFS_FILESYSTEM_TYPE == 'ci' ) {
@@ -823,7 +1226,7 @@ function file_case($str) {
         return $str; // Filesystem in case sensitive
     }
 }
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 
@@ -833,7 +1236,7 @@ in vendors/basics.php (my file of small handy global functions)
 </p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 // returns a filename or foldername in the correct case for comparison
 function file_case($str) {
     if ( !defined('EFS_FILESYSTEM_TYPE') ) {
@@ -850,7 +1253,7 @@ function file_case($str) {
         return $str; // Filesystem in case sensitive
     }
 }
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 
@@ -883,14 +1286,14 @@ function file_case($str) {
 </p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 $labels = array();
 
 //--  login page
 $labels['login_username']  = 'Login Id';
 $labels['login_password']  = 'Password';
 $labels['login_login']     = 'Login';
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 
@@ -899,7 +1302,7 @@ $labels['login_login']     = 'Login';
 </p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 # login page
 msgid "login_username"
 msgstr "Login Id"
@@ -909,7 +1312,7 @@ msgstr "Password"
 
 msgid "login_login"
 msgstr "Login"
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>These files were put into the relevant folders. E.g. locale/eng/LC_MESSAGES/default.po</p>
@@ -918,11 +1321,11 @@ msgstr "Login"
 </p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 function ___($singular, $return = true) {
     return __($singular, $return);
 }
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>I managed to change all the calls to $lang->show(&#8216;some_string&#8217;) to ___(&#8216;some_string&#8217;) in one glorious find and replace. That&#8217;s my kind of migration.
@@ -933,7 +1336,7 @@ function ___($singular, $return = true) {
 </p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 if (isset($_COOKIE['EFS_LANG'])) {
     //define('EFS_LANG', $_COOKIE['EFS_LANG']);
     Configure::write('Config.language', $_COOKIE['EFS_LANG']);
@@ -941,7 +1344,7 @@ if (isset($_COOKIE['EFS_LANG'])) {
     //define('EFS_LANG', 'sv');
     Configure::write('Config.language', 'sv');
 }
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <h3>Changing all view-files to use .ctp extension</h3>
@@ -960,25 +1363,25 @@ if (isset($_COOKIE['EFS_LANG'])) {
 </p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 <label for="UserLogin"><?php echo $lang->show('login_username'); ?></label>
 <?php
 $html->input('User/login',array(
     'style'=>"width:150px;"
 ));
 ?>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>now reads:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 $form->input('User.email',array(
     'label'=>___('login_username'), 
     'div' => false, 
     'style'=>'width:150px;'
 ));
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>This is one area where the new helpers really shine. Just setting the label property IS simpler than writing the whole tag manually. since my layout did not have divs before I simply set that key to false to avoid the default div around my text field.
@@ -1005,16 +1408,16 @@ $form->input('User.email',array(
 </p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 '/users/edit'
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>becomes:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 array('controller'=>'users', 'action'=>'edit')
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 
@@ -1027,16 +1430,16 @@ array('controller'=>'users', 'action'=>'edit')
 </p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 <a href="<?php echo $html->url('/'); ?>"><?php echo $html->image('fileshifter_logo_bar.gif',array('alt'=>'Fileshifter logo'))?></a>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>could be written like this:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 <?php echo $html->image('fileshifter_logo_bar.gif',array('alt'=>'Fileshifter logo', 'url'=>'/')); ?>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 
@@ -1059,24 +1462,24 @@ array('controller'=>'users', 'action'=>'edit')
 </p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 --base.ctp--
 ...lots of html for menu and header...
 
 <?php echo $content_for_layout; ?>
 
 ...some more html for the footer...
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>And then I created two other layouts of this kind (this is the most simple one):</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 --default.ctp--
 <?php
 echo $this->renderLayout('<div id="container">'.$content_for_layout.'</div>','base');
 ?>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>This layout simply wraps the content in a container div and passes it along to the base layout. The other layout had a lot more html around the content but that would be less clear to display like this.
@@ -1135,9 +1538,9 @@ echo $this->renderLayout('<div id="container">'.$content_for_layout.'</div>','ba
 
   <div class="entry-content"><p>This is another MySQL trick I keep coming back to.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:bash </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="bash">
 mysqldump -u root --password=pass db1 | mysql -u root --password=pass db2
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>found @ http://mywheel.net/blog/index.php/2006/01/05/mysql-duplicate-database-quick-tip/</p>
@@ -1182,10 +1585,10 @@ mysqldump -u root --password=pass db1 | mysql -u root --password=pass db2
 
 <p>Comparing the results from these two queries will show what effect, if any, an change in collation will have.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:sql </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="sql">
 SELECT id, keyword as key, count(*) as num FROM keywords GROUP BY key having num > 1;
 SELECT id, keyword COLLATE utf8_unicode_ci as key, count(*) as num FROM keywords GROUP BY key having num > 1;
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 </div>
   
@@ -1224,11 +1627,11 @@ SELECT id, keyword COLLATE utf8_unicode_ci as key, count(*) as num FROM keywords
 
   <div class="entry-content"><p>The unix cp command makes you the owner of the copied files. You can set flags but this is supposedly a more complete way to keep any attributes.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang: </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="">
 mkdir /var/backup/michael
 cd /home/michael
 tar cf - . | (cd /var/backup/michael && tar xBfp -)
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>found @
@@ -1270,10 +1673,10 @@ tar cf - . | (cd /var/backup/michael && tar xBfp -)
 
   <div class="entry-content"><p>Quite simple but something I can never seem to remember:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:sql </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="sql">
 INSERT INTO files_users (file_id, user_id) 
 SELECT id, '2' FROM efs.files;
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>found @ <a href="http://mysql-tips.blogspot.com/2005/04/mysql-insert-select-example.html">http://mysql-tips.blogspot.com/2005/04/mysql-insert-select-example.html</a></p>
@@ -1316,7 +1719,7 @@ SELECT id, '2' FROM efs.files;
 
 <p>This example will correct swedish accented characters in a uft8 - latin1 mixup.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:sql </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="sql">
 UPDATE my_table
 set my_field = replace(my_field,'Ã¥','å');
 
@@ -1335,7 +1738,7 @@ set my_field = replace(my_field,'Ã„','Ä');
 
 UPDATE my_table
 set my_field = replace(my_field,'Ã–','Ö');
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>(Yes, you can concatenate them if you like but they become very hard to read.)</p>
@@ -1388,119 +1791,6 @@ For data that will be sorted and that can be given a &#8220;language&#8221; I pr
 
       </article>
     
-    
-      <article>
-        
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2008/06/24/fixing-existing-data-when-switching-character-set-in-mysql/">Fixing Existing Data When Switching Character Set in MySQL</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-06-24T00:00:00+02:00" pubdate data-updated="true">Jun 24<span>th</span>, 2008</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>When altering a database, table or field from one character set to another, existing data will probably look garbled since it is expected to be in the new character set. To &#8220;convert&#8221; existing data is not always easy. This method (found in the comments of a blog entry I have lost the url for) works as long as you can keep the database &#8220;locked&#8221; when you do this. Otherwise you will convert any new data entered and make that data look garbled.</p>
-
-<p>If your content is latin1 but should be read as utf8 you would do the following to convert existing data.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:sql </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
-ALTER TABLE my_table CHANGE my_field my_field TEXT CHARACTER SET latin1;
-
-ALTER TABLE my_table CHANGE my_field my_field BLOB;
-
-ALTER TABLE my_table CHANGE my_field my_field TEXT CHARACTER SET utf8;
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-
-<p>The important bit is the use of the BLOB datatype. Since it is a binary datatype it has no character set. The datatype you start and end with can be any char, varchar, text or similar datatype.</p>
-
-<p>A full test case to play with:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:sql </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
-# case where data was enterd correctly as latin1 and later needs conversion to utf8
-
-SET NAMES latin1;
-
-drop table people;
-
-CREATE TABLE people (
-  id int(11) unsigned NOT NULL auto_increment,
-  name varchar(64) default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
-INSERT INTO people VALUES 
-  (1,'user_a'),
-  (2,'user_å'),
-  (3,'user_ä');
-
-select * from people;
-
-SET NAMES utf8;
-ALTER TABLE people engine=MyISAM default character set utf8;
-ALTER TABLE people CHANGE name name BLOB;
-ALTER TABLE people CHANGE name name varchar(64) CHARACTER SET utf8;
-
-select * from people;
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-
-
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:sql </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
-# case where utf8 data was enterd into a table with latin1 and later needs conversion to utf8
-
-SET NAMES latin1;
-
-drop table people;
-
-CREATE TABLE people (
-  id int(11) unsigned NOT NULL auto_increment,
-  name varchar(64) default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
-SET NAMES utf8;
-
-INSERT INTO people VALUES 
-  (1,'user_a'),
-  (2,'user_å'),
-  (3,'user_ä');
-
-select * from people;
-
-ALTER TABLE people engine=MyISAM default character set utf8;
-ALTER TABLE people CHANGE name name BLOB;
-ALTER TABLE people CHANGE name name varchar(64) CHARACTER SET latin1;
-ALTER TABLE people CHANGE name name varchar(64) CHARACTER SET utf8;
-
-select * from people;
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-</div>
-  
-  
-
-
-      </article>
-    
     <div class="pagination">
       
         <a class="prev" href="/blog/page/6/">&larr; Older</a>
@@ -1542,6 +1832,10 @@ select * from people;
     
   </ul>
 </section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/blog/categories/articles'>Articles (8)</a></li><li><a href='/blog/categories/code'>Code (12)</a></li><li><a href='/blog/categories/general-interest'>General Interest (10)</a></li><li><a href='/blog/categories/milestones-in-music'>Milestones in Music (15)</a></li><li><a href='/blog/categories/the-pensive'>The Pensive (17)</a></li></ul>
+</section>
 
 <section>
   <h2>GitHub Repos</h2>
@@ -1582,9 +1876,6 @@ select * from people;
     <a href="http://twitter.com/eimer" class="twitter-follow-button" data-show-count="false">Follow @eimer</a>
   
 </section>
-
-
-
 
 
       

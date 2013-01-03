@@ -26,7 +26,7 @@
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
-  <link href="/atom.xml" rel="alternate" title="My New Home" type="application/atom+xml">
+  <link href="" rel="alternate" title="My New Home" type="application/atom+xml">
   
   
   <script type="text/javascript">
@@ -48,23 +48,7 @@
 
   <div class="container">
     <header class="jumbotron subhead" id="overview">
-      
-<div class="subscribe">
-  <table>
-    <tr>
-      <td><span>Get Updates: &nbsp;</span></td>
-      
-      
-      <td><a href="/atom.xml" class="btn"><i class="icon-cog"></i> By RSS</a></td>
-      
-      
-      <td><a href="http://twitter.com/eimer" class="btn"><i class="icon-twitter-sign"></i> On Twitter</a></td>
-      
-    </tr>
-  </table>
-</div>
-
-<h1 class="title">My New Home</h1>
+      <h1 class="title">My New Home</h1>
 
   <p class="lead">migrated from the 10 year-old eimermusic.com</p>
 
@@ -100,6 +84,9 @@
   </div><!-- /navbar-inner -->
 </div>
 
+      <section class="well">
+  <a class="label" href="/tag/character set">character set (3)</a> <a class="label" href="/tag/collation">collation (3)</a> <a class="label" href="/tag/mysql">mysql (8)</a> <a class="label" href="/tag/bash">bash (1)</a> <a class="label" href="/tag/command">command (1)</a> <a class="label" href="/tag/rm">rm (1)</a> <a class="label" href="/tag/svn">svn (1)</a> <a class="label" href="/tag/convert">convert (1)</a> <a class="label" href="/tag/characters">characters (1)</a> <a class="label" href="/tag/replace">replace (1)</a> <a class="label" href="/tag/insert">insert (1)</a> <a class="label" href="/tag/select">select (1)</a> <a class="label" href="/tag/copy">copy (1)</a> <a class="label" href="/tag/permissions">permissions (1)</a> <a class="label" href="/tag/duplicates">duplicates (1)</a> <a class="label" href="/tag/cakephp">cakephp (5)</a> <a class="label" href="/tag/guide">guide (1)</a> <a class="label" href="/tag/migration">migration (1)</a> <a class="label" href="/tag/authentication">authentication (1)</a> <a class="label" href="/tag/http">http (1)</a> <a class="label" href="/tag/security">security (2)</a> <a class="label" href="/tag/find">find (1)</a> <a class="label" href="/tag/position">position (1)</a> <a class="label" href="/tag/vhosts">vhosts (1)</a> <a class="label" href="/tag/olap">olap (1)</a> <a class="label" href="/tag/reporting">reporting (1)</a> <a class="label" href="/tag/schema">schema (1)</a> <a class="label" href="/tag/star">star (1)</a> <a class="label" href="/tag/javascript">javascript (1)</a> <a class="label" href="/tag/scope">scope (1)</a> <a class="label" href="/tag/variables">variables (1)</a> <a class="label" href="/tag/design">design (2)</a> <a class="label" href="/tag/modular">modular (1)</a> <a class="label" href="/tag/plugins">plugins (1)</a> <a class="label" href="/tag/array">array (1)</a> <a class="label" href="/tag/php">php (2)</a> <a class="label" href="/tag/css">css (1)</a> <a class="label" href="/tag/projekktor">projekktor (1)</a> <a class="label" href="/tag/espresso">espresso (2)</a> <a class="label" href="/tag/extraction">extraction (3)</a> <a class="label" href="/tag/iphone">iphone (5)</a> <a class="label" href="/tag/bugs">bugs (1)</a> <a class="label" href="/tag/memory warning">memory warning (1)</a> <a class="label" href="/tag/nginx">nginx (2)</a> <a class="label" href="/tag/wordpress">wordpress (2)</a> <a class="label" href="/tag/mime">mime (1)</a> <a class="label" href="/tag/ruby">ruby (4)</a> <a class="label" href="/tag/savon">savon (1)</a> <a class="label" href="/tag/soap">soap (1)</a> <a class="label" href="/tag/rails">rails (2)</a> <a class="label" href="/tag/devise">devise (1)</a> 
+</section>
     </header>
     <div id="main">
       <div id="content">
@@ -204,7 +191,7 @@ I found this extended DBO a long time ago. Credit should go where credit is due 
 </p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 require_once (LIBS . 'model' . DS . 'datasources' . DS . 'dbo' . DS . 'dbo_mysql.php');
 // app/models/datasources//dbo/dbo_mysql_ex.php
 class DboMysqlEx extends DboMysql {
@@ -235,7 +222,7 @@ class DboMysqlEx extends DboMysql {
         }
     }
 }
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <h3>Fact Model</h3>
@@ -252,7 +239,7 @@ FactModel implements a few custom methods that are common among fact models. fin
 
 <p></p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 /*
  *  Abstract super-model for Facts
  */
@@ -364,7 +351,7 @@ class FactModel extends AppModel {
         return $fields;
     }
 }
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <h3>Example FactSentSms</h3>
@@ -381,7 +368,7 @@ Notice that the fact table contains a field referencing the original primary key
 </p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:sql </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="sql">
 CREATE TABLE `fact_sent_smses` (
   `dimension_time_id` int(11) unsigned NOT NULL,
   `dimension_client_id` int(11) unsigned NOT NULL,
@@ -393,10 +380,10 @@ CREATE TABLE `fact_sent_smses` (
   `tarif_total` int(11) default '0',
   UNIQUE KEY `dimension_time_id` (`dimension_time_id`,`dimension_client_id`,`dimension_type_id`,`outgoing_id`,`dimension_module_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_binary
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 /*
  *  Tracks outgoing messages with daily grain.
  */
@@ -457,7 +444,7 @@ class FactSentSms extends FactModel {
         }// end big while
     }
 }
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <h3>Dimension Models</h3>
@@ -476,7 +463,7 @@ The following example is a time dimension with a daily grain. I.E. the smallest 
 This example also implements the most basic form of caching. Since the dimensions usually contain a very limited number of records caching each one in memory will dramatically increase the performance of the gathering process. Say you have the price dimension with 10 prices (that is 10 records) and 800&#8217;000 transactions to map. Evenly distributed, each price record will be queried 80&#8217;000 times. 79&#8217;999 times to many. So by caching the queries you save your database 799&#8217;990 redundant queries just for a single dimension. My simple cache is a lot faster than using cacheQueries, probably because it is so very basic. When it is all that is needed I will gladly take the performance boost.
 <p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:sql </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="sql">
 
 CREATE TABLE `dimension_time` (
     `id` int(11) unsigned NOT NULL auto_increment,
@@ -491,9 +478,9 @@ CREATE TABLE `dimension_time` (
     PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=52 DEFAULT CHARSET=utf8 COLLATE=utf8_binary;
 
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 <br />
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 /*
  *  Time dimension with daily grain
  */
@@ -550,7 +537,7 @@ class DimensionTime extends AppModel {
     }
     
 }
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 <p>
 Then just rinse and repeat. Each dimension is very similar in its design. You just have to figure out what key values you need to store to define the desired &#8220;grain&#8221;. Often this is a simple as using the categories a product can be in or the different status codes returned for a message.
@@ -570,7 +557,7 @@ Group takes on a slightly special meaning here. It is used to define the dimensi
 <p>
 Mapped is a nifty little thing that replaces numerical array keys (0-n) with meaningful keys like: monday-sunday or 1-7 for day of week and  1-31 for day of month. It is a bit like findList() in that it prepares your data for the table or graph in the view.
 </p>
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 class ReportsController extends AppController {
     var $name = 'Reports';
     var $uses = array('FactSentSms');
@@ -618,7 +605,7 @@ class ReportsController extends AppController {
         $this->set('responses',$responses);
     }
 }
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 ### Conclusion  
 <p>
@@ -657,6 +644,12 @@ If you design your dimensions cleverly they can be re-used for many fact tables.
 
 <time datetime="2009-06-04T00:00:00+02:00" pubdate data-updated="true">Jun 4<span>th</span>, 2009</time>
         
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/articles/'>Articles</a>, <a class='category' href='/blog/categories/code/'>Code</a>
+  
+</span>
 
 
       </p>
@@ -715,6 +708,10 @@ If you design your dimensions cleverly they can be re-used for many fact tables.
     
   </ul>
 </section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/blog/categories/articles'>Articles (8)</a></li><li><a href='/blog/categories/code'>Code (12)</a></li><li><a href='/blog/categories/general-interest'>General Interest (10)</a></li><li><a href='/blog/categories/milestones-in-music'>Milestones in Music (15)</a></li><li><a href='/blog/categories/the-pensive'>The Pensive (17)</a></li></ul>
+</section>
 
 <section>
   <h2>GitHub Repos</h2>
@@ -755,9 +752,6 @@ If you design your dimensions cleverly they can be re-used for many fact tables.
     <a href="http://twitter.com/eimer" class="twitter-follow-button" data-show-count="false">Follow @eimer</a>
   
 </section>
-
-
-
 
 
       

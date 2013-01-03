@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Code | My New Home]]></title>
+  <link href="http://eimer.co/blog/categories/code/atom.xml" rel="self"/>
+  <link href="http://eimer.co/"/>
+  <updated>2013-01-03T22:29:58+01:00</updated>
+  <id>http://eimer.co/</id>
+  <author>
+    <name><![CDATA[Martin Westin]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Looping through large and slow datasets in Ruby]]></title>
+    <link href="http://eimer.co/blog/2011/11/09/looping-through-large-and-slow-datasets-in-ruby/"/>
+    <updated>2011-11-09T00:00:00+01:00</updated>
+    <id>http://eimer.co/blog/2011/11/09/looping-through-large-and-slow-datasets-in-ruby</id>
+    <content type="html"><![CDATA[<p>I recently had the pleasure of needing to load 30'000 records from MongoDB and then performing slow and memory intensive processing on them. Basically you can imagine it as a database of videos and MongoDB was holding the metadata and other bits but the actual video files were on disk somewhere. My parsing involved loading in the entire video in memory and doing "stuff" with it as part of my model object.</p>
+
+<p>This is how I did it.</p>
+
+<h2>Take 1</h2>
+
+<p>At first I just did the normal Model.all.each... This worked fine for smaller datasets but on larger sets the whole thing would crash after 40 to 60 minutes (I never timed this in detail). MongoDB had timed out and I figured out that my ODM (Mongoid) was keeping an open iterator in MongoDB and fetching one document at a time from the DB... and after an hour or so the DB had had enough.</p>
+
+<h2>Take 2</h2>
+
+<p>It was of-course trivial to force Mongoid to load the whole dataset in one go using Model.all.to_a.each... Before thinking further I set this version going. It crashed a lot faster than the first version. The reason is that each of my objects stay in the array, and in memory, and adding anywhere from 5 to 500 MB of videodata to each quickly ate all RAM I had.</p>
+
+<h2>Take 3</h2>
+
+<p>The small and funky change fixed this, making my script both time and ram "proof". This is how I will start out next time I have a long-running task.</p>
+
+<pre lang="ruby">
+all = Model.all.to_a # these are just simple Rails models
+while one = all.pop # this is memory management
+    one.do_heavy_processing # this loads in a ton of crap
+end</pre>
+
+
+<p>By popping them off one by one and re-using the local variable Ruby's GC takes pretty good care of keeping the memory to a minimum.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Transitioning to more secure passwords]]></title>
+    <link href="http://eimer.co/blog/2011/06/24/transitioning-to-more-secure-passwords/"/>
+    <updated>2011-06-24T00:00:00+02:00</updated>
+    <id>http://eimer.co/blog/2011/06/24/transitioning-to-more-secure-passwords</id>
+    <content type="html"><![CDATA[<p>With all the news of hacked databases (mostly at Sony) and the clear-text or poorly hashed passwords in their datasets, I thought I might offer my standard trick for transitioning to a more secure form of hashing.</p>
+
+<p>I think some sites don't change passwords security for fear of annoying users or the workload involved in managing a transition. This simple technique is completely invisible to the user and very low maintenance for the developer.</p>
+
+<p>I will be giving examples from the Devise library for Rails apps, since I recently implemented it there.</p>
+
+<h2>The technique is very very simple</h2>
+
+<p>You configure your authentication to check passwords against both the old and the new form of hashed password. And when you find a match for the old hash you update your database with the version of the password encoded using the new hash. You keep this dual check in place until all (or most likely most) of your users have logged in and had their passwords changed. The unlucky few can use your password recovery feature if you have one.</p>
+
+<p>Metacode of the basic principle:</p>
+
+<pre lang="ruby">
+if new_hash(password) == stored_password
+  // ALLOW LOGIN USING AN UP-TO-DATE PASS
+else
+  if old_hash(password) == stored_password
+    // UPDATE PASSWORD IN DB
+    // ALLOW LOGIN
+  else
+    // DISALLOW LOGIN
+  end
+end
+</pre>
+
+
+<h2>How to implement this transition in Devise</h2>
+
+<p>I implemented this by overriding the method <strong>valid_password?</strong> injected into your User model.</p>
+
+<pre lang="ruby">
+class User
+
+  def valid_password?(incoming_password)
+    result = super incoming_password
+    if !result
+      # try old encryptor during transition
+      digest = Devise::Encryptors::LegacyEncryptor.digest(incoming_password, self.class.stretches, self.password_salt, self.class.pepper)
+      result = Devise.secure_compare(digest, self.encrypted_password)
+      if result
+        # update password to use new encryptor when there is a match
+        self.password = incoming_password
+        self.save
+      end
+    end
+    result
+  end
+
+end
+</pre>
+
+
+<p>Fairly simple. You may need to hard-code some parameters (salt, stretching, pepper) if they cause problems.</p>
+
+<p>If you are changing from, say, sha1 to sha256, you can easily check the character lengths of the passwords in your database to check the "adoption rate" of the new hashes.</p>
+
+<h2>Implications on Security</h2>
+
+<p>You should realize that you ARE lowering your security level slightly by effectively allowing 2 different password checks. In reality this problem is small and only really matters if you have plain passwords you are transitioning from (and you really shouldn't have). The problem then becomes real since I could login using a stolen new (supposedly) secure hash as the given password. In this case I would definitely disallow any password of the same length as, or simple reg-ex match for, your new hashing system to avoid this hole.</p>
+
+<p>You will also not fully benefit from the new hashing system until you remove the "dual check" after a reasonable period of time.</p>
+
+<p>If you can live with that to gain the benefits of a clean migration for you and your users this is a nice technique. I know from reading and talking to developers that I am far from the only of the first to come up with something like this. Many apps and sites have used and continue to use this kind of technique to beef-up password hash-strength without bothering users.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Graylog2 on Mac OS X]]></title>
+    <link href="http://eimer.co/blog/2011/01/19/graylog2-on-mac-os-x/"/>
+    <updated>2011-01-19T00:00:00+01:00</updated>
+    <id>http://eimer.co/blog/2011/01/19/graylog2-on-mac-os-x</id>
+    <content type="html"><![CDATA[<p>I have been playing with Graylog2 on my Mac today. Since the setup guides are all for Debian and not fully compatible with Mac OS X I thought I'd mention the changes I needed to make to get thing rolling smoothly.</p>
+
+<p>The guides are good, so go read them in the wikis on Github. I won't re-iterate them, only point out the minor changes and tweaks I had to make.</p>
+
+<p>Graylog2 comes in two main parts. The server and the web interface. I'll start with the server component.</p>
+
+<h2>Install The Server</h2>
+
+<p><a href="https://github.com/Graylog2/graylog2-server/wiki/Installing">https://github.com/Graylog2/graylog2-server/wiki/Installing</a></p>
+
+<p>Mac OS X has java bundled with the OS (for now). There is no need to install anything. The configuration file needs one non-obvious tweak.</p>
+
+<pre lang="bash">
+
+mongodb_host = 127.0.0.1 # localhost
+
+</pre>
+
+
+<p>Java resolves localhost to the strangest thing. It tries to connect to the Bonjour name and external IP (e.g. Martin's Mac/192.168.0.2) instead of 127.0.0.1 which is what you want. Instead of opening MongoDB up to external access I changed the configuration to point to the loopback IP directly.</p>
+
+<h2>Starting The Server</h2>
+
+<p><a href="https://github.com/Graylog2/graylog2-server/wiki/Starting-the-server">https://github.com/Graylog2/graylog2-server/wiki/Starting-the-server</a></p>
+
+<p>I didn't get the daemon script to start and did not investigate is since I run Graylog2 for evaluation and development and like seeing the output. Starting by running the jar file requires that you sudo.</p>
+
+<pre lang="bash">
+
+sudo java -jar graylog2-server.jar debug
+
+</pre>
+
+
+<p>That gets Graylog2 running and spitting out a lot of fun info so you know you are logging thing as you expect.</p>
+
+<h3>Installing The Web Interface</h3>
+
+<p><a href="https://github.com/Graylog2/graylog2-web-interface/wiki/Installing-the-web-interface-on-Debian-5.0">https://github.com/Graylog2/graylog2-web-interface/wiki/Installing-the-web-interface-on-Debian-5.0</a></p>
+
+<p>You can follow most of those steps if you don't have rails and Bundler and that stuff installed. For testing and development, I would suggest running the interface using Passenger Standalone instead of Apache. And, you install Passenger as a gem and not apt, of-course.</p>
+
+<p><a href="http://www.modrails.com/documentation/Users%20guide%20Standalone.html">http://www.modrails.com/documentation/Users%20guide%20Standalone.html</a></p>
+
+<p>The cool thing about installing passenger standalone is that it will compile and run itself the first time you call passenger start. It will take a few minutes that first time but after that it will start instantly.</p>
+
+<h2>Logging from your Rails app</h2>
+
+<p><a href="https://github.com/Graylog2/graylog2_exceptions">https://github.com/Graylog2/graylog2_exceptions</a></p>
+
+<p>In the Rails app I want to log from I installed Graylog2 Exceptions. It is a small Rack middleware with practically no configuration. Only problem is that it has not been updated to comply with the current version of the Graylog2 server. Until it is updated, you have to modify the source for it. A very small mod. For me it is ok as long as I am still on my Mac and not a server.</p>
+
+<p>first</p>
+
+<pre lang="bash">
+> cd /to/my/app/dir
+> bundle open graylog2_exceptions
+</pre>
+
+
+<p>This should get you the installed gem open in your editor.
+In the file lib/graylog2_exceptions.rb you need to add the version parameter to the notification message. Possibly this should be added to the gelf gem instead. I am not sure how that version string is supposed to be used.</p>
+
+<p>Here is the modified method that does the actual notification:</p>
+
+<pre lang="ruby">
+  def send_to_graylog2 err
+    begin
+      notifier = GELF::Notifier.new(@args[:hostname], @args[:port])
+      puts notifier.notify!(
+        :version => "1.0",
+        :short_message => err.message, # <- this line is new!!!
+        :full_message => err.backtrace.join("\n"),
+        :level => @args[:level],
+        :host => @args[:local_app_name],
+        :file => err.backtrace[0].split(":")[0],
+        :line => err.backtrace[0].split(":")[1]
+      )
+    rescue => i_err
+      puts "Graylog2 Exception logger. Could not send message: " + i_err.message
+    end
+  end
+</pre>
+
+
+<p>So, that is it. Finally I get all my exceptions in Graylog2. To try it out you can just raise some dummy exception – raise "Dummy Exception Error" – here and there and see them pop up in Graylog2.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Rails migration of indexes]]></title>
+    <link href="http://eimer.co/blog/2010/11/24/rails-migration-of-indexes/"/>
+    <updated>2010-11-24T00:00:00+01:00</updated>
+    <id>http://eimer.co/blog/2010/11/24/rails-migration-of-indexes</id>
+    <content type="html"><![CDATA[<p>A small gotcha when changing indexes in a migration. To change an index one has to first remove it and then add it again. Removing an index is the tricky part.</p>
+
+<p>The documentation states:
+remove_index(table_name, index_name): Removes the index specified by index_name.</p>
+
+<p>This is not strictly true as it turns out. The docs should probably say:
+remove_index(table_name, column_name)</p>
+
+<p>The crux is that one cannot use this syntax to remove a named index. Rails assumes the index is named something like "tablename_columnname_index" or something similar.</p>
+
+<p>To remove a named index one has to use the block syntax afaik:</p>
+
+<pre lang="ruby">
+change_table :tablename do |t|
+  t.remove_index :name => :indexname
+  t.index ["columnname"], :name => "indexname", :unique => true
+end
+</pre>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Offensively lazy web developers]]></title>
+    <link href="http://eimer.co/blog/2010/10/30/offensively-lazy-web-developers/"/>
+    <updated>2010-10-30T00:00:00+02:00</updated>
+    <id>http://eimer.co/blog/2010/10/30/offensively-lazy-web-developers</id>
+    <content type="html"><![CDATA[<p>There exist many websites and web applications with elements of poor usability, engineering, design and so on. Some exhibit features so poor I can only attribute them to laziness. Some actually make me feel offended that I have to jump through hoops to accommodate their laziness.</p>
+
+<p>Top of my list are form fields for postcodes, phone numbers, dates, times or any similar type of data. Simple numeric data. Easily validated and normalized. Yet I often see requirements to enter the data in a very specific format, often at odds with how humans customarily write such data. To most people (who are not developers) it can be very confusing to enter data in a perfectly normal way and have a computer tell them it is invalid. For me it is offensive since I know it is practically always the result of data not being normalized. A developer that does not normalize input data before validating it can only be described as lazy or, if you prefer, incompetent.</p>
+
+<h3>Postcodes</h3>
+
+<p>Nothing can be simpler, right. In many countries it is simply a few digits. Some through a few alphabetic characters in there. I'll focus on local Swedish websites and Swedish postcodes. We have 5 digit postcodes. They are typically written "123 45". So Why would any Swedish website validate that input and claim it is invalid. As a developer I know it is probably that a space is not a numeric character and that adding it also make the string 6 characters long and not 5.</p>
+
+<h3>Phone numbers</h3>
+
+<p>A phone number is a string of numeric characters. Anything else: spaces, parenthesis, dashes and other chrome, is just that: chrome. None of that is part of the data. No server at ATT, Telia, Vodafone or any other network carrier reads these thing and need them in order to route a call. Quite the opposite. Any phone network and particularly cellular networks require a very specific internationally standardized format. Guess what? It is all numeric. A Swedish cellphone might be typed "0701 - 23 45 67" in my address book but the phone sends 46701234567 to the network anytime I make a call.</p>
+
+<h3>Dates and Times</h3>
+
+<p>These are a bit more complex than the above. But the same principles apply. Then again, most web-focused programming languages have functions to parse a myriad of ways one could type a date or time and create a proper date or time object or data type. If you still find it does not work for you then, in this case, you should provide something other than a blank test field. Try googling for datepicker or timepicker. The problem will be one of choosing your favorite rather than finding anything at all.</p>
+
+<h3>Being constructive</h3>
+
+<p>I have ranted a bit now so I thought I'd put my code where my mouth is. Since I am not allowed to share my phone number normalizer code I wrote at work I thought I'd at least share the secret to all the normalizing tasks above... It's regex. Regular Expressions.</p>
+
+<h3>Getting rid of whitespace</h3>
+
+<p>The following will "match" whitespace characters. By substituting the matches with nothing you will simply remove all whitespace from a string.
+<strong>/\s/</strong></p>
+
+<h3>Remove anything that is not a number</h3>
+
+<p>And the following will remove non digits if you substitute the matches with nothing.
+<strong>/\D/</strong></p>
+
+<h3>A very very very simple example in Ruby</h3>
+
+<pre lang="ruby">
+
+num = "(0)701 - 23 45 67".gsub(/\D/,'')
+
+</pre>
+
+
+<p>Seriously. That is all it takes to turn an offensive web form into a more humane one.</p>
+]]></content>
+  </entry>
+  
+</feed>

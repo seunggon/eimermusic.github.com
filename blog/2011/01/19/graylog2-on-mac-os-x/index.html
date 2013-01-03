@@ -26,7 +26,7 @@
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
-  <link href="/atom.xml" rel="alternate" title="My New Home" type="application/atom+xml">
+  <link href="" rel="alternate" title="My New Home" type="application/atom+xml">
   
   
   <script type="text/javascript">
@@ -48,23 +48,7 @@
 
   <div class="container">
     <header class="jumbotron subhead" id="overview">
-      
-<div class="subscribe">
-  <table>
-    <tr>
-      <td><span>Get Updates: &nbsp;</span></td>
-      
-      
-      <td><a href="/atom.xml" class="btn"><i class="icon-cog"></i> By RSS</a></td>
-      
-      
-      <td><a href="http://twitter.com/eimer" class="btn"><i class="icon-twitter-sign"></i> On Twitter</a></td>
-      
-    </tr>
-  </table>
-</div>
-
-<h1 class="title">My New Home</h1>
+      <h1 class="title">My New Home</h1>
 
   <p class="lead">migrated from the 10 year-old eimermusic.com</p>
 
@@ -100,6 +84,9 @@
   </div><!-- /navbar-inner -->
 </div>
 
+      <section class="well">
+  <a class="label" href="/tag/character set">character set (3)</a> <a class="label" href="/tag/collation">collation (3)</a> <a class="label" href="/tag/mysql">mysql (8)</a> <a class="label" href="/tag/bash">bash (1)</a> <a class="label" href="/tag/command">command (1)</a> <a class="label" href="/tag/rm">rm (1)</a> <a class="label" href="/tag/svn">svn (1)</a> <a class="label" href="/tag/convert">convert (1)</a> <a class="label" href="/tag/characters">characters (1)</a> <a class="label" href="/tag/replace">replace (1)</a> <a class="label" href="/tag/insert">insert (1)</a> <a class="label" href="/tag/select">select (1)</a> <a class="label" href="/tag/copy">copy (1)</a> <a class="label" href="/tag/permissions">permissions (1)</a> <a class="label" href="/tag/duplicates">duplicates (1)</a> <a class="label" href="/tag/cakephp">cakephp (5)</a> <a class="label" href="/tag/guide">guide (1)</a> <a class="label" href="/tag/migration">migration (1)</a> <a class="label" href="/tag/authentication">authentication (1)</a> <a class="label" href="/tag/http">http (1)</a> <a class="label" href="/tag/security">security (2)</a> <a class="label" href="/tag/find">find (1)</a> <a class="label" href="/tag/position">position (1)</a> <a class="label" href="/tag/vhosts">vhosts (1)</a> <a class="label" href="/tag/olap">olap (1)</a> <a class="label" href="/tag/reporting">reporting (1)</a> <a class="label" href="/tag/schema">schema (1)</a> <a class="label" href="/tag/star">star (1)</a> <a class="label" href="/tag/javascript">javascript (1)</a> <a class="label" href="/tag/scope">scope (1)</a> <a class="label" href="/tag/variables">variables (1)</a> <a class="label" href="/tag/design">design (2)</a> <a class="label" href="/tag/modular">modular (1)</a> <a class="label" href="/tag/plugins">plugins (1)</a> <a class="label" href="/tag/array">array (1)</a> <a class="label" href="/tag/php">php (2)</a> <a class="label" href="/tag/css">css (1)</a> <a class="label" href="/tag/projekktor">projekktor (1)</a> <a class="label" href="/tag/espresso">espresso (2)</a> <a class="label" href="/tag/extraction">extraction (3)</a> <a class="label" href="/tag/iphone">iphone (5)</a> <a class="label" href="/tag/bugs">bugs (1)</a> <a class="label" href="/tag/memory warning">memory warning (1)</a> <a class="label" href="/tag/nginx">nginx (2)</a> <a class="label" href="/tag/wordpress">wordpress (2)</a> <a class="label" href="/tag/mime">mime (1)</a> <a class="label" href="/tag/ruby">ruby (4)</a> <a class="label" href="/tag/savon">savon (1)</a> <a class="label" href="/tag/soap">soap (1)</a> <a class="label" href="/tag/rails">rails (2)</a> <a class="label" href="/tag/devise">devise (1)</a> 
+</section>
     </header>
     <div id="main">
       <div id="content">
@@ -146,11 +133,11 @@
 
 <p>Mac OS X has java bundled with the OS (for now). There is no need to install anything. The configuration file needs one non-obvious tweak.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:bash </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="bash">
 
 mongodb_host = 127.0.0.1 # localhost
 
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>Java resolves localhost to the strangest thing. It tries to connect to the Bonjour name and external IP (e.g. Martin&#8217;s Mac/192.168.0.2) instead of 127.0.0.1 which is what you want. Instead of opening MongoDB up to external access I changed the configuration to point to the loopback IP directly.</p>
@@ -161,11 +148,11 @@ mongodb_host = 127.0.0.1 # localhost
 
 <p>I didn&#8217;t get the daemon script to start and did not investigate is since I run Graylog2 for evaluation and development and like seeing the output. Starting by running the jar file requires that you sudo.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:bash </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="bash">
 
 sudo java -jar graylog2-server.jar debug
 
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>That gets Graylog2 running and spitting out a lot of fun info so you know you are logging thing as you expect.</p>
@@ -188,10 +175,10 @@ sudo java -jar graylog2-server.jar debug
 
 <p>first</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:bash </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="bash">
 > cd /to/my/app/dir
 > bundle open graylog2_exceptions
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>This should get you the installed gem open in your editor.
@@ -199,7 +186,7 @@ In the file lib/graylog2_exceptions.rb you need to add the version parameter to 
 
 <p>Here is the modified method that does the actual notification:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:ruby </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="ruby">
   def send_to_graylog2 err
     begin
       notifier = GELF::Notifier.new(@args[:hostname], @args[:port])
@@ -216,7 +203,7 @@ In the file lib/graylog2_exceptions.rb you need to add the version parameter to 
       puts "Graylog2 Exception logger. Could not send message: " + i_err.message
     end
   end
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>So, that is it. Finally I get all my exceptions in Graylog2. To try it out you can just raise some dummy exception – raise &#8220;Dummy Exception Error&#8221; – here and there and see them pop up in Graylog2.</p>
@@ -246,6 +233,12 @@ In the file lib/graylog2_exceptions.rb you need to add the version parameter to 
 
 <time datetime="2011-01-19T00:00:00+01:00" pubdate data-updated="true">Jan 19<span>th</span>, 2011</time>
         
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/code/'>Code</a>
+  
+</span>
 
 
       </p>
@@ -304,6 +297,10 @@ In the file lib/graylog2_exceptions.rb you need to add the version parameter to 
     
   </ul>
 </section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/blog/categories/articles'>Articles (8)</a></li><li><a href='/blog/categories/code'>Code (12)</a></li><li><a href='/blog/categories/general-interest'>General Interest (10)</a></li><li><a href='/blog/categories/milestones-in-music'>Milestones in Music (15)</a></li><li><a href='/blog/categories/the-pensive'>The Pensive (17)</a></li></ul>
+</section>
 
 <section>
   <h2>GitHub Repos</h2>
@@ -344,9 +341,6 @@ In the file lib/graylog2_exceptions.rb you need to add the version parameter to 
     <a href="http://twitter.com/eimer" class="twitter-follow-button" data-show-count="false">Follow @eimer</a>
   
 </section>
-
-
-
 
 
       

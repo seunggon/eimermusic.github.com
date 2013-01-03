@@ -26,7 +26,7 @@
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
-  <link href="/atom.xml" rel="alternate" title="My New Home" type="application/atom+xml">
+  <link href="" rel="alternate" title="My New Home" type="application/atom+xml">
   
   
   <script type="text/javascript">
@@ -48,23 +48,7 @@
 
   <div class="container">
     <header class="jumbotron subhead" id="overview">
-      
-<div class="subscribe">
-  <table>
-    <tr>
-      <td><span>Get Updates: &nbsp;</span></td>
-      
-      
-      <td><a href="/atom.xml" class="btn"><i class="icon-cog"></i> By RSS</a></td>
-      
-      
-      <td><a href="http://twitter.com/eimer" class="btn"><i class="icon-twitter-sign"></i> On Twitter</a></td>
-      
-    </tr>
-  </table>
-</div>
-
-<h1 class="title">My New Home</h1>
+      <h1 class="title">My New Home</h1>
 
   <p class="lead">migrated from the 10 year-old eimermusic.com</p>
 
@@ -100,6 +84,9 @@
   </div><!-- /navbar-inner -->
 </div>
 
+      <section class="well">
+  <a class="label" href="/tag/character set">character set (3)</a> <a class="label" href="/tag/collation">collation (3)</a> <a class="label" href="/tag/mysql">mysql (8)</a> <a class="label" href="/tag/bash">bash (1)</a> <a class="label" href="/tag/command">command (1)</a> <a class="label" href="/tag/rm">rm (1)</a> <a class="label" href="/tag/svn">svn (1)</a> <a class="label" href="/tag/convert">convert (1)</a> <a class="label" href="/tag/characters">characters (1)</a> <a class="label" href="/tag/replace">replace (1)</a> <a class="label" href="/tag/insert">insert (1)</a> <a class="label" href="/tag/select">select (1)</a> <a class="label" href="/tag/copy">copy (1)</a> <a class="label" href="/tag/permissions">permissions (1)</a> <a class="label" href="/tag/duplicates">duplicates (1)</a> <a class="label" href="/tag/cakephp">cakephp (5)</a> <a class="label" href="/tag/guide">guide (1)</a> <a class="label" href="/tag/migration">migration (1)</a> <a class="label" href="/tag/authentication">authentication (1)</a> <a class="label" href="/tag/http">http (1)</a> <a class="label" href="/tag/security">security (2)</a> <a class="label" href="/tag/find">find (1)</a> <a class="label" href="/tag/position">position (1)</a> <a class="label" href="/tag/vhosts">vhosts (1)</a> <a class="label" href="/tag/olap">olap (1)</a> <a class="label" href="/tag/reporting">reporting (1)</a> <a class="label" href="/tag/schema">schema (1)</a> <a class="label" href="/tag/star">star (1)</a> <a class="label" href="/tag/javascript">javascript (1)</a> <a class="label" href="/tag/scope">scope (1)</a> <a class="label" href="/tag/variables">variables (1)</a> <a class="label" href="/tag/design">design (2)</a> <a class="label" href="/tag/modular">modular (1)</a> <a class="label" href="/tag/plugins">plugins (1)</a> <a class="label" href="/tag/array">array (1)</a> <a class="label" href="/tag/php">php (2)</a> <a class="label" href="/tag/css">css (1)</a> <a class="label" href="/tag/projekktor">projekktor (1)</a> <a class="label" href="/tag/espresso">espresso (2)</a> <a class="label" href="/tag/extraction">extraction (3)</a> <a class="label" href="/tag/iphone">iphone (5)</a> <a class="label" href="/tag/bugs">bugs (1)</a> <a class="label" href="/tag/memory warning">memory warning (1)</a> <a class="label" href="/tag/nginx">nginx (2)</a> <a class="label" href="/tag/wordpress">wordpress (2)</a> <a class="label" href="/tag/mime">mime (1)</a> <a class="label" href="/tag/ruby">ruby (4)</a> <a class="label" href="/tag/savon">savon (1)</a> <a class="label" href="/tag/soap">soap (1)</a> <a class="label" href="/tag/rails">rails (2)</a> <a class="label" href="/tag/devise">devise (1)</a> 
+</section>
     </header>
     <div id="main">
       <div id="content">
@@ -208,16 +195,16 @@ The current language was one of the ones I switched over. See below about i18n.
 <p>The few routes I had defined only needed to call the method statically to continue to work. For example:</p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 $Route->connect ('/', array('controller'=>'efs', 'action'=>'index'));
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>became:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 Router::connect('/', array('controller' => 'efs', 'action' => 'index'));
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 
@@ -256,14 +243,14 @@ Router::connect('/', array('controller' => 'efs', 'action' => 'index'));
 
 <p>In AppController::beforeFilter:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 $this->Auth->authenticate =& $this->Auth->getModel();
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>And in models/user.php I added:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 function hashPasswords($data) {
     if (is_array($data) && isset($data[$this->alias])) {
         if (isset($data[$this->alias]['email']) && isset($data[$this->alias]['pass'])) {
@@ -272,7 +259,7 @@ function hashPasswords($data) {
     }
     return $data;
 }
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 
@@ -293,16 +280,16 @@ function hashPasswords($data) {
 </p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 vendor('Archive/Tar');
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>now reads:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 App::import('Vendor','Archive/Tar');
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 
@@ -310,9 +297,9 @@ App::import('Vendor','Archive/Tar');
 <p>The component dealing with syncing with the filesystem nor loads the needed models in a single call, like this:</p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 App::import('Model',array('Project','EfsFile'));
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <h3>Removing requestAction()</h3>
@@ -333,7 +320,7 @@ App::import('Model',array('Project','EfsFile'));
 
 <p>This is straight out of manual as it was a while ago:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 class User extends AppModel {
     var $name = 'User';
     var $hasMany = array(
@@ -347,12 +334,12 @@ class User extends AppModel {
         )
     );
 }
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>And this is the small but important change:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 class User extends AppModel {
     var $name = 'User';
     var $hasMany = array(
@@ -366,21 +353,21 @@ class User extends AppModel {
         )
     );
 }
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>I believe even empty conditions can cause you problems:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 'conditions' => '',
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>it should be:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 'conditions' => array(),
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>I am not certain about that last bit but better safe than sorry, right?</p>
@@ -398,27 +385,27 @@ class User extends AppModel {
 <p>The Model methods find(), findAll() and so on have changed a lot. This required a lot of manual work, but since I could optimize thing at the same time and speed up the application noticeably I didn&#8217;t really mind the work. I also thing this new syntax is a lot easier to use.</p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 $allProj = $this->Project->findAll(null,null,'Project.title ASC');
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>should now read:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 $allProj = $this->Project->find('all',array(
     'order' => 'Project.title ASC'
 ));
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>or better yet:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 $allProj = $this->Project->find('all',array(
     'order' => array('Project.title' => 'ASC')
 ));
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p><em>Note: Keeping &#8220;ASC&#8221; in my example is not necessary but I like to have it there so I know at a glance what is going on.</em></p>
@@ -431,11 +418,11 @@ $allProj = $this->Project->find('all',array(
 </p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 $result = $this->deleteAll( array(
     $this->alias.'.created <' => $deadline
 ));
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>Notice that the comparison operator is on the left side. This is new since CakePHP 1.2 RC2, I think.</p>
@@ -445,9 +432,9 @@ $result = $this->deleteAll( array(
 <p>Am am bursting with joy! Containable behavior is one of my favorite features in CakePHP 1.2. Containable is like find() on steroids.  It is like associations on acid. It is like&#8230; ok enough! The basic first step is to simple add this to the relevant models.</p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 var $actsAs = array('Containable');
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 
@@ -464,7 +451,7 @@ These three models can easily cause a lot of unnecessary data to be loaded since
 </p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 $data = $this->User->find('first', array(
     'conditions' => array('User.id'=>$this->userData['User']['id']),
     'contain' => array(
@@ -475,7 +462,7 @@ $data = $this->User->find('first', array(
         )
     )
 ));
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 
@@ -495,18 +482,18 @@ $data = $this->User->find('first', array(
 </p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 var $validate = array(
     'name'=>VALID_NOT_EMPTY,
     'login'=>VALID_NOT_EMPTY,
     'email'=>VALID_EMAIL
 );
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>now reads:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 var $validate = array(
     'name' => array(
         'rule' => 'notEmpty',
@@ -523,7 +510,7 @@ var $validate = array(
         )
     )
 );
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>The error messages above have been replaced to make them more readable. They are in the form of translation keys in the real code.</p>
@@ -538,7 +525,7 @@ var $validate = array(
 </p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 foreach ( $system as $sysFile ) {
     foreach ( $data as $dataFile ) {
         if ( $sysFile['EfsFile']['filename'] == $dataFile['EfsFile']['filename'] ) {
@@ -546,7 +533,7 @@ foreach ( $system as $sysFile ) {
         }
     }
 }
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 
@@ -559,7 +546,7 @@ foreach ( $system as $sysFile ) {
 </p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 foreach ( $system as $sysFile ) {
     $this->EfsFile->contain();
     $found = $this->EfsFile->find('first', array(
@@ -572,7 +559,7 @@ foreach ( $system as $sysFile ) {
         // OK, this file exists already
     }
 }
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <h3>Filesystem case sensitivity</h3>
@@ -583,14 +570,14 @@ foreach ( $system as $sysFile ) {
 
 <p>in config/bootstrap.php</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 define('EFS_FILESYSTEM_TYPE', 'ci'); // filesystem is set to case insensitive
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>in vendors/basics.php (my file of small handy global functions)</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 // returns a filename or foldername in the correct case for comparison
 function file_case($str) {
     if ( EFS_FILESYSTEM_TYPE == 'ci' ) {
@@ -599,7 +586,7 @@ function file_case($str) {
         return $str; // Filesystem in case sensitive
     }
 }
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 
@@ -609,7 +596,7 @@ in vendors/basics.php (my file of small handy global functions)
 </p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 // returns a filename or foldername in the correct case for comparison
 function file_case($str) {
     if ( !defined('EFS_FILESYSTEM_TYPE') ) {
@@ -626,7 +613,7 @@ function file_case($str) {
         return $str; // Filesystem in case sensitive
     }
 }
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 
@@ -659,14 +646,14 @@ function file_case($str) {
 </p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 $labels = array();
 
 //--  login page
 $labels['login_username']  = 'Login Id';
 $labels['login_password']  = 'Password';
 $labels['login_login']     = 'Login';
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 
@@ -675,7 +662,7 @@ $labels['login_login']     = 'Login';
 </p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 # login page
 msgid "login_username"
 msgstr "Login Id"
@@ -685,7 +672,7 @@ msgstr "Password"
 
 msgid "login_login"
 msgstr "Login"
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>These files were put into the relevant folders. E.g. locale/eng/LC_MESSAGES/default.po</p>
@@ -694,11 +681,11 @@ msgstr "Login"
 </p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 function ___($singular, $return = true) {
     return __($singular, $return);
 }
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>I managed to change all the calls to $lang->show(&#8216;some_string&#8217;) to ___(&#8216;some_string&#8217;) in one glorious find and replace. That&#8217;s my kind of migration.
@@ -709,7 +696,7 @@ function ___($singular, $return = true) {
 </p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 if (isset($_COOKIE['EFS_LANG'])) {
     //define('EFS_LANG', $_COOKIE['EFS_LANG']);
     Configure::write('Config.language', $_COOKIE['EFS_LANG']);
@@ -717,7 +704,7 @@ if (isset($_COOKIE['EFS_LANG'])) {
     //define('EFS_LANG', 'sv');
     Configure::write('Config.language', 'sv');
 }
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <h3>Changing all view-files to use .ctp extension</h3>
@@ -736,25 +723,25 @@ if (isset($_COOKIE['EFS_LANG'])) {
 </p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 <label for="UserLogin"><?php echo $lang->show('login_username'); ?></label>
 <?php
 $html->input('User/login',array(
     'style'=>"width:150px;"
 ));
 ?>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>now reads:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 $form->input('User.email',array(
     'label'=>___('login_username'), 
     'div' => false, 
     'style'=>'width:150px;'
 ));
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>This is one area where the new helpers really shine. Just setting the label property IS simpler than writing the whole tag manually. since my layout did not have divs before I simply set that key to false to avoid the default div around my text field.
@@ -781,16 +768,16 @@ $form->input('User.email',array(
 </p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 '/users/edit'
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>becomes:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 array('controller'=>'users', 'action'=>'edit')
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 
@@ -803,16 +790,16 @@ array('controller'=>'users', 'action'=>'edit')
 </p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 <a href="<?php echo $html->url('/'); ?>"><?php echo $html->image('fileshifter_logo_bar.gif',array('alt'=>'Fileshifter logo'))?></a>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>could be written like this:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 <?php echo $html->image('fileshifter_logo_bar.gif',array('alt'=>'Fileshifter logo', 'url'=>'/')); ?>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 
@@ -835,24 +822,24 @@ array('controller'=>'users', 'action'=>'edit')
 </p>
 
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 --base.ctp--
 ...lots of html for menu and header...
 
 <?php echo $content_for_layout; ?>
 
 ...some more html for the footer...
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>And then I created two other layouts of this kind (this is the most simple one):</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 --default.ctp--
 <?php
 echo $this->renderLayout('<div id="container">'.$content_for_layout.'</div>','base');
 ?>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>This layout simply wraps the content in a container div and passes it along to the base layout. The other layout had a lot more html around the content but that would be less clear to display like this.
@@ -900,6 +887,12 @@ echo $this->renderLayout('<div id="container">'.$content_for_layout.'</div>','ba
 
 <time datetime="2008-11-04T00:00:00+01:00" pubdate data-updated="true">Nov 4<span>th</span>, 2008</time>
         
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/articles/'>Articles</a>
+  
+</span>
 
 
       </p>
@@ -958,6 +951,10 @@ echo $this->renderLayout('<div id="container">'.$content_for_layout.'</div>','ba
     
   </ul>
 </section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/blog/categories/articles'>Articles (8)</a></li><li><a href='/blog/categories/code'>Code (12)</a></li><li><a href='/blog/categories/general-interest'>General Interest (10)</a></li><li><a href='/blog/categories/milestones-in-music'>Milestones in Music (15)</a></li><li><a href='/blog/categories/the-pensive'>The Pensive (17)</a></li></ul>
+</section>
 
 <section>
   <h2>GitHub Repos</h2>
@@ -998,9 +995,6 @@ echo $this->renderLayout('<div id="container">'.$content_for_layout.'</div>','ba
     <a href="http://twitter.com/eimer" class="twitter-follow-button" data-show-count="false">Follow @eimer</a>
   
 </section>
-
-
-
 
 
       

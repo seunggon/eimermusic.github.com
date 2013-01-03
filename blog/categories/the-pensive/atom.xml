@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: The Pensive | My New Home]]></title>
+  <link href="http://eimer.co/blog/categories/the-pensive/atom.xml" rel="self"/>
+  <link href="http://eimer.co/"/>
+  <updated>2013-01-03T22:29:58+01:00</updated>
+  <id>http://eimer.co/</id>
+  <author>
+    <name><![CDATA[Martin Westin]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Shelling out from a ruby app to a ruby app without bundler conflicts]]></title>
+    <link href="http://eimer.co/blog/2012/07/17/shelling-out-from-a-ruby-app-to-a-ruby-app-without-bundler-conflicts/"/>
+    <updated>2012-07-17T00:00:00+02:00</updated>
+    <id>http://eimer.co/blog/2012/07/17/shelling-out-from-a-ruby-app-to-a-ruby-app-without-bundler-conflicts</id>
+    <content type="html"><![CDATA[<p>My case is that I have a Rails app. It uses Bundler to manage its Gems.</p>
+
+<p>I also need to run some processing using an old version of one of my own libraries which also has dependencies and gems that need resolving. I chose to make this a small command line app with an executable ruby file. This little tool uses Bundler to manage its Gems.</p>
+
+<p>I will shell out to this executable from my Rails app. Simple, right? I thought it would, but there was a gotcha. The Rails app executes the external ruby file within the same "bundle" as the Rails app. I.E. I got the current versions of my lib and all gems.</p>
+
+<p>After much Googling I combined one Stack Overflow answer with a note on some blog (lost both references).</p>
+
+<pre lang="ruby">
+some_result_value = ""
+Bundler.with_clean_env do
+  Dir.chdir "/path/to/rubytool"
+  some_result_value = `./bin/rubytool param1 param2`
+end
+</pre>
+
+
+<p>The key details here are the clean environment AND that I change directory before executing. I don't understand why changing the folder would be significant. It may even have been bad late-night mojo.</p>
+
+<p>Anyway, as long as the command line tool being called uses bundler correctly it works ar intended. It is run with its own bundle of gems.</p>
+
+<p>I would like to find a way to control this from the receiving ruby script but I have not looked into that yet.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Looping through large and slow datasets in Ruby]]></title>
+    <link href="http://eimer.co/blog/2011/11/09/looping-through-large-and-slow-datasets-in-ruby/"/>
+    <updated>2011-11-09T00:00:00+01:00</updated>
+    <id>http://eimer.co/blog/2011/11/09/looping-through-large-and-slow-datasets-in-ruby</id>
+    <content type="html"><![CDATA[<p>I recently had the pleasure of needing to load 30'000 records from MongoDB and then performing slow and memory intensive processing on them. Basically you can imagine it as a database of videos and MongoDB was holding the metadata and other bits but the actual video files were on disk somewhere. My parsing involved loading in the entire video in memory and doing "stuff" with it as part of my model object.</p>
+
+<p>This is how I did it.</p>
+
+<h2>Take 1</h2>
+
+<p>At first I just did the normal Model.all.each... This worked fine for smaller datasets but on larger sets the whole thing would crash after 40 to 60 minutes (I never timed this in detail). MongoDB had timed out and I figured out that my ODM (Mongoid) was keeping an open iterator in MongoDB and fetching one document at a time from the DB... and after an hour or so the DB had had enough.</p>
+
+<h2>Take 2</h2>
+
+<p>It was of-course trivial to force Mongoid to load the whole dataset in one go using Model.all.to_a.each... Before thinking further I set this version going. It crashed a lot faster than the first version. The reason is that each of my objects stay in the array, and in memory, and adding anywhere from 5 to 500 MB of videodata to each quickly ate all RAM I had.</p>
+
+<h2>Take 3</h2>
+
+<p>The small and funky change fixed this, making my script both time and ram "proof". This is how I will start out next time I have a long-running task.</p>
+
+<pre lang="ruby">
+all = Model.all.to_a # these are just simple Rails models
+while one = all.pop # this is memory management
+    one.do_heavy_processing # this loads in a ton of crap
+end</pre>
+
+
+<p>By popping them off one by one and re-using the local variable Ruby's GC takes pretty good care of keeping the memory to a minimum.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Quick Tip: iOS and web graphics in Illustrator]]></title>
+    <link href="http://eimer.co/blog/2011/11/03/quick-tip-ios-and-web-graphics-in-illustrator/"/>
+    <updated>2011-11-03T00:00:00+01:00</updated>
+    <id>http://eimer.co/blog/2011/11/03/quick-tip-ios-and-web-graphics-in-illustrator</id>
+    <content type="html"><![CDATA[<p>I wanted to make a note of one of these things I keep forgetting in Adobe Illustrator. It is very simple, obvious and keeps me sane while drawing UI elements.</p>
+
+<p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2011/11/transform-web.png" alt="" title="Transform Pane" width="216" height="125" class="size-full wp-image-179" /></p>
+
+<p><strong>Make sure "Align to Pixel Grid" is actually selected!</strong></p>
+
+<p>That gets you out of so much trouble. Problem is, you need to keep an eye on the transform pane since this is a per-object setting. It is nog global to everything on your canvas.</p>
+
+<p>Of-course the old-school technique of placing the strokes outside (or inside) the object bounds still works and can actually help you in transferring dimensions from the canvas into CSS (which puts borders "outside" when working correctly).</p>
+
+<p>(I can't believe they still haven't fixed the rounding errors that randomly occur when drawing and moving objects around.)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Rails migration of indexes]]></title>
+    <link href="http://eimer.co/blog/2010/11/24/rails-migration-of-indexes/"/>
+    <updated>2010-11-24T00:00:00+01:00</updated>
+    <id>http://eimer.co/blog/2010/11/24/rails-migration-of-indexes</id>
+    <content type="html"><![CDATA[<p>A small gotcha when changing indexes in a migration. To change an index one has to first remove it and then add it again. Removing an index is the tricky part.</p>
+
+<p>The documentation states:
+remove_index(table_name, index_name): Removes the index specified by index_name.</p>
+
+<p>This is not strictly true as it turns out. The docs should probably say:
+remove_index(table_name, column_name)</p>
+
+<p>The crux is that one cannot use this syntax to remove a named index. Rails assumes the index is named something like "tablename_columnname_index" or something similar.</p>
+
+<p>To remove a named index one has to use the block syntax afaik:</p>
+
+<pre lang="ruby">
+change_table :tablename do |t|
+  t.remove_index :name => :indexname
+  t.index ["columnname"], :name => "indexname", :unique => true
+end
+</pre>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Nginx + Wordpress caching that actually works]]></title>
+    <link href="http://eimer.co/blog/2010/08/11/nginx-wordpress-caching-that-actually-works/"/>
+    <updated>2010-08-11T00:00:00+02:00</updated>
+    <id>http://eimer.co/blog/2010/08/11/nginx-wordpress-caching-that-actually-works</id>
+    <content type="html"><![CDATA[<p>I spent a lot of time yesterday trying to enable WP Super Cache, and subsequently W3 Total Cache for this website. SInce none of the hits I got on Google did the trick I thought I'd post my working settings for page caching with W3 Total Cache.</p>
+
+<p>I went with this plugin mainly because it uses a logical hierarchy of readable folders and files. WP Super Cache did not which is why I eventually dropped it and tried the Total Cache plugin.</p>
+
+<p>I have Nginx and PHP FastCGI. No Apache. The "problem" with this setup is the rewrite rules needed to point visitors to cached pages if they exist. Installing the plugin is as simple as anything in WP these days so I wont go into that.</p>
+
+<p>Here it is:</p>
+
+<pre lang="php">
+## W3 Total CACHE BEGIN
+set $totalcache_file '';
+set $totalcache_uri $request_uri;
+
+if ($request_method = POST) {
+  set $totalcache_uri '';
+}
+
+# Using pretty permalinks, so bypass the cache for any query string
+if ($query_string) {
+  set $totalcache_uri '';
+}
+
+if ($http_cookie ~* "comment_author_|wordpress|wp-postpass_" ) {
+  set $totalcache_uri '';
+}
+
+# if we haven't bypassed the cache, specify our totalcache file
+if ($totalcache_uri ~ ^(.+)$) {
+  set $totalcache_file /wp-content/w3tc/pgcache/$1/_index.html;
+}
+
+# only rewrite to the totalcache file if it actually exists
+if (-f $document_root$totalcache_file) {
+  rewrite ^(.*)$ $totalcache_file;
+  break;
+}                 
+
+##W3 Total CACHE END
+</pre>
+
+
+<p>If you are wondering what to do with these lined of code... I did not come up with them myself. I did a minor change to make them work with the current version of WP Total Cache and my installation.</p>
+
+<p>The blueprint came from here:
+<a href="http://wpveda.com/nginx-rewrite-rules-for-w3-total-cache-plugin/">http://wpveda.com/nginx-rewrite-rules-for-w3-total-cache-plugin/</a></p>
+
+<p>What I did was to change the filename. Also. If you, like me, have wp in a folder you would add that to the path as well.</p>
+
+<pre lang="php">
+set $totalcache_file /wp-content/w3tc/pgcache/$1/_index.html;
+set $totalcache_file /your-wp-folder/wp-content/w3tc/pgcache/$1/_index.html;
+</pre>
+
+
+<p>There are a dozen other sites with variations on this code. None worked for me straight away... If you have similar experience, maybe my version will work for you.</p>
+
+<p>When, or if, I get some of the other rewrite-dependent features working I'll add another post.</p>
+]]></content>
+  </entry>
+  
+</feed>

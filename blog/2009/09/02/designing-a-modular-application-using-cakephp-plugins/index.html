@@ -26,7 +26,7 @@
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
-  <link href="/atom.xml" rel="alternate" title="My New Home" type="application/atom+xml">
+  <link href="" rel="alternate" title="My New Home" type="application/atom+xml">
   
   
   <script type="text/javascript">
@@ -48,23 +48,7 @@
 
   <div class="container">
     <header class="jumbotron subhead" id="overview">
-      
-<div class="subscribe">
-  <table>
-    <tr>
-      <td><span>Get Updates: &nbsp;</span></td>
-      
-      
-      <td><a href="/atom.xml" class="btn"><i class="icon-cog"></i> By RSS</a></td>
-      
-      
-      <td><a href="http://twitter.com/eimer" class="btn"><i class="icon-twitter-sign"></i> On Twitter</a></td>
-      
-    </tr>
-  </table>
-</div>
-
-<h1 class="title">My New Home</h1>
+      <h1 class="title">My New Home</h1>
 
   <p class="lead">migrated from the 10 year-old eimermusic.com</p>
 
@@ -100,6 +84,9 @@
   </div><!-- /navbar-inner -->
 </div>
 
+      <section class="well">
+  <a class="label" href="/tag/character set">character set (3)</a> <a class="label" href="/tag/collation">collation (3)</a> <a class="label" href="/tag/mysql">mysql (8)</a> <a class="label" href="/tag/bash">bash (1)</a> <a class="label" href="/tag/command">command (1)</a> <a class="label" href="/tag/rm">rm (1)</a> <a class="label" href="/tag/svn">svn (1)</a> <a class="label" href="/tag/convert">convert (1)</a> <a class="label" href="/tag/characters">characters (1)</a> <a class="label" href="/tag/replace">replace (1)</a> <a class="label" href="/tag/insert">insert (1)</a> <a class="label" href="/tag/select">select (1)</a> <a class="label" href="/tag/copy">copy (1)</a> <a class="label" href="/tag/permissions">permissions (1)</a> <a class="label" href="/tag/duplicates">duplicates (1)</a> <a class="label" href="/tag/cakephp">cakephp (5)</a> <a class="label" href="/tag/guide">guide (1)</a> <a class="label" href="/tag/migration">migration (1)</a> <a class="label" href="/tag/authentication">authentication (1)</a> <a class="label" href="/tag/http">http (1)</a> <a class="label" href="/tag/security">security (2)</a> <a class="label" href="/tag/find">find (1)</a> <a class="label" href="/tag/position">position (1)</a> <a class="label" href="/tag/vhosts">vhosts (1)</a> <a class="label" href="/tag/olap">olap (1)</a> <a class="label" href="/tag/reporting">reporting (1)</a> <a class="label" href="/tag/schema">schema (1)</a> <a class="label" href="/tag/star">star (1)</a> <a class="label" href="/tag/javascript">javascript (1)</a> <a class="label" href="/tag/scope">scope (1)</a> <a class="label" href="/tag/variables">variables (1)</a> <a class="label" href="/tag/design">design (2)</a> <a class="label" href="/tag/modular">modular (1)</a> <a class="label" href="/tag/plugins">plugins (1)</a> <a class="label" href="/tag/array">array (1)</a> <a class="label" href="/tag/php">php (2)</a> <a class="label" href="/tag/css">css (1)</a> <a class="label" href="/tag/projekktor">projekktor (1)</a> <a class="label" href="/tag/espresso">espresso (2)</a> <a class="label" href="/tag/extraction">extraction (3)</a> <a class="label" href="/tag/iphone">iphone (5)</a> <a class="label" href="/tag/bugs">bugs (1)</a> <a class="label" href="/tag/memory warning">memory warning (1)</a> <a class="label" href="/tag/nginx">nginx (2)</a> <a class="label" href="/tag/wordpress">wordpress (2)</a> <a class="label" href="/tag/mime">mime (1)</a> <a class="label" href="/tag/ruby">ruby (4)</a> <a class="label" href="/tag/savon">savon (1)</a> <a class="label" href="/tag/soap">soap (1)</a> <a class="label" href="/tag/rails">rails (2)</a> <a class="label" href="/tag/devise">devise (1)</a> 
+</section>
     </header>
     <div id="main">
       <div id="content">
@@ -171,7 +158,7 @@ A subscriptions module and many others.</p>
 <p>This is the simple and obvious bit. A plugin can very simply just extend or associate itself with some resource in the main application.
 As an example (finally some code!), a subscriber model would look like this.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 <?php  
 class SubsSubscriber extends SubsAppModel { 
     var $name = 'SubsSubscriber';     
@@ -184,12 +171,12 @@ class SubsSubscriber extends SubsAppModel {
     ); 
 } 
 ?>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>Not only does the subscriber belong to a subscription, it also belongs to a phone. Creating a Subscriber involves registering the subscriber&#8217;s phone number with the Phone model. This ensures that there are no duplicate numbers, that any restrictions put on a certain phone is retained across the app. Things like that. The Phone model implements this registration method.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 function register($number) { 
     $number = clean_phone($number); // utility function to normalize number formatting 
 
@@ -222,7 +209,7 @@ function register($number) {
         return false; 
     }     
 }
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>That is really the basics behind how plugins interact with the main application. Similarly when a plugin needs to send an SMS, this is done using the SendSmsComponent in the main application. This component abstracts all the messy SOAP garbage phone-operators implement. :) Me, cranky? You bet!</p>
@@ -239,14 +226,14 @@ function register($number) {
 
 <p>The application does this via the much debated requestAction:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 $this->requestAction('/'.$module['Module']['name'].'/on_incoming_sms/'.$saved['IncomingSms']['id'], array('return')); 
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>And each plugin would implement this method to do something with the message. This is done in the &#8220;PluginnameController&#8221; as the request goes to /pluginname/on_incoming_sms/123. There is a positive side-effect to this. If I want some core feature to be called in this way I can make add a controller to the table of &#8220;modules&#8221; and requestAction will never know the difference. (This is why I still use a string url.)</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 function on_incoming_sms($id = null) { 
     $this->autoRender = false; 
     if ( !isset($this->params['requested']) || empty($id) ) { // check that we are contacted "from within" 
@@ -255,7 +242,7 @@ function on_incoming_sms($id = null) {
     // do something useful here and return the id as confirmation 
     return $id; 
 }
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>Now I feel the need to get a bit on the defensive. I can almost hear people shouting about thin controllers, fat models and the evil of requestAction. This is communication. that is the exactly what controllers are meant to do. In Cake this is usually between the browser and the models but in this case it is between the app and it&#8217;s plugins. I don&#8217;t have any such logical reason for using requestAction except that is is by far the most convenient way of achieving this kind of communication. Since these calls are usually done from either an API call (incoming sms) or from a cron shell any increase in request time is not a great priority. People get annoyed by an extra 0.4sec, a cron job doesn&#8217;t :)</p>
@@ -266,7 +253,7 @@ function on_incoming_sms($id = null) {
 
 <p>This is an example of such a shell</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 class HourlyShell extends Shell { 
 
     var $tasks = array('LogRotation'); 
@@ -296,19 +283,19 @@ class HourlyShell extends Shell {
         } 
     } 
 }
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>The method being called will typically just pass the call along to one or more parts of the module that need to do something periodic. For example:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 function on_hourly_update() {
     // the template in AppController can be used to check that the call is legitimate.
     if ( parent::on_hourly_update() ) {
         $this->SubsSubscription->deleteExpired();
     }
 }
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <h2>A bonus trick</h2>
@@ -364,6 +351,12 @@ The main application can pass events and information to plugins via the Pluginna
 <time datetime="2009-09-02T00:00:00+02:00" pubdate data-updated="true">Sep 2<span>nd</span>, 2009</time>
         
 
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/articles/'>Articles</a>
+  
+</span>
+
 
       </p>
       
@@ -382,7 +375,7 @@ The main application can pass events and information to plugins via the Pluginna
           <a class="basic-alignment pull-left" href="/blog/2009/06/29/javascript-variable-definitions/" title="Previous Post: Javascript variable definitions">&laquo; Javascript variable definitions</a>
         
         
-          <a class="basic-alignment pull-right" href="/blog/2009/12/04/why-isset-in-php-can-be-misleading/" title="Next Post: Why isset() in PHP can be misleading">Why isset() in PHP can be misleading &raquo;</a>
+          <a class="basic-alignment pull-right" href="/blog/2009/11/30/why-i-switched-to-wordpress/" title="Next Post: Why I switched to Wordpress">Why I switched to Wordpress &raquo;</a>
         
       </p>
     </footer>
@@ -420,6 +413,10 @@ The main application can pass events and information to plugins via the Pluginna
       </li>
     
   </ul>
+</section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/blog/categories/articles'>Articles (8)</a></li><li><a href='/blog/categories/code'>Code (12)</a></li><li><a href='/blog/categories/general-interest'>General Interest (10)</a></li><li><a href='/blog/categories/milestones-in-music'>Milestones in Music (15)</a></li><li><a href='/blog/categories/the-pensive'>The Pensive (17)</a></li></ul>
 </section>
 
 <section>
@@ -461,9 +458,6 @@ The main application can pass events and information to plugins via the Pluginna
     <a href="http://twitter.com/eimer" class="twitter-follow-button" data-show-count="false">Follow @eimer</a>
   
 </section>
-
-
-
 
 
       

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: General Interest | My New Home]]></title>
+  <link href="http://eimer.co/blog/categories/general-interest/atom.xml" rel="self"/>
+  <link href="http://eimer.co/"/>
+  <updated>2013-01-03T22:29:58+01:00</updated>
+  <id>http://eimer.co/</id>
+  <author>
+    <name><![CDATA[Martin Westin]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Winning Two GSMA Global Mobile Awards]]></title>
+    <link href="http://eimer.co/blog/2012/02/29/winning-two-gsma-global-mobile-awards/"/>
+    <updated>2012-02-29T00:00:00+01:00</updated>
+    <id>http://eimer.co/blog/2012/02/29/winning-two-gsma-global-mobile-awards</id>
+    <content type="html"><![CDATA[<p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2012/02/logo_02.png" alt="" title="GSMA Global Awards 2012" width="380" height="100" class="size-full wp-image-186" /></p>
+
+<p>Yesterday, Feb 28 2012, <a href="http://www.greatconnection.se/" title="Great Connection Inc">Great Connection Inc</a>, the company I co-founded and work for, won two <a href="http://www.globalmobileawards.com/winners2012.php">GSMA Global Mobile Awards</a>. We won both categories relating to healthcare and both our nominations. As this is the equivalent to an Oscar or a Grammy in our industry, but far less glamourous, it's pretty awesome.</p>
+
+<p>We won for <a href="http://www.globalmobileawards.com/winners2012.php#cat_id15">Best Mobile Health Innovation</a> and <a href="http://www.globalmobileawards.com/winners2012.php#cat_id12">mWomen Best Mobile Product or Service for Women in Emerging Markets</a>. As the product designer, lead developer and inventor I am most touched by the the fact that the Judges comments seem to recognize the work of my co-developer and myself.</p>
+
+<blockquote>Good initiative concerning maternal health. Nice convergence of a number of technologies in a critical area of need.</blockquote>
+
+
+<p>It is not easy to grasp a technical system and product like ours. Mobile Baby spans two very different industries: healthcare and mobile, and also cross many "glass walls". Professional and consumer, men and women, rural and urban and many others. We have built a product that is irreverent towards pre-conceived notions in both healthcare IT and mobile communications and struggle to be understood and accepted in either industry.</p>
+
+<p>The TL;DR or what Mobile Baby is that we connect medical imaging equipment, mainly ultrasound, to the internet and run a hosted "cloud" system tailored to making geography and time a non-issue in the healthcare workflow. Images are available in clinical grade formats online in our web-based application and can be downloaded and opened in Imaging workstation software on iPhones, iPads or "real" computers.</p>
+
+<p>The feature that most people can relate to is the systems ability to provide expecting parents with high-rez images and videos in consumer-friendly digital formats for viewing at home and forwarding to family and friends. The same messaging features that give parents images on their phones is also used to alert doctors of new cases and examinations.</p>
+
+<p>Anyway. I am proud, both for myself but most for my colleges and partners at Qualcomm and Etisalat. Without all these people (too many to mention) and their ability to connect with people and generate interest, hype and trust, I would still be designing this product in even more obscurity than today. :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Patents Gone Crazy]]></title>
+    <link href="http://eimer.co/blog/2011/07/26/patents-gone-crazy/"/>
+    <updated>2011-07-26T00:00:00+02:00</updated>
+    <id>http://eimer.co/blog/2011/07/26/patents-gone-crazy</id>
+    <content type="html"><![CDATA[<p>I am in the middle of some patent applications in the US at the same time as all the recent press about patent "trolls" going after small (and large) iOS developers. These things have made me think more than usual about the patent system.</p>
+
+<p>I think the root problems are the following:</p>
+
+<ol>
+    <li>Legal costs or defending your patent or yourself from someone else's patent affect the whole patent system. And not for the better.</li>
+
+    <li>Patents were meant to protect an inventor from copycats... under the aparent assumption that nonone could independently come up with something near-identical to another invention. That is: you should really only be able to patent things where the likelihood of an independent near-identical invention are slim-to-none. There is nothing in the system that requires you to prove something is a copy... it is just assumed and this works really poorly today, especially in software, where people come up with the same thing independently all the time. </li>
+
+    <li>The key term defining what is patentable, "non-obvious to someone skilled in the arts", has eroded significantly. I believe that both the level of "skill" and how much research is required for something to be "non-obvious" have been lowered. Sometimes to ridiculous levels.</li>
+</ol>
+
+
+<p>I believe the only long-term solution is to invalidate a whole lot of patents and to create a body doing these invalidations without the economic problems associated with lawsuits and courts. This is going to mess things up for a lot of companies and I am skeptical that we'll ever see a significant change.</p>
+
+<p>The applications I have written should probably not be granted patents, ethically speaking. On the other hand they are no worse than many many patents already granted and the lawyers see it as a sure thing that we'll be granted these patents.</p>
+
+<p>It is a very wired position to be in.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Am I Fierce?]]></title>
+    <link href="http://eimer.co/blog/2011/05/18/am-i-fierce/"/>
+    <updated>2011-05-18T00:00:00+02:00</updated>
+    <id>http://eimer.co/blog/2011/05/18/am-i-fierce</id>
+    <content type="html"><![CDATA[<p>I love Dropbox and use it every day. I love Flipboard and use it every day.</p>
+
+<p>So imagine my reaction to seeing my (and my co-founders') little company named as one of the 15 coolest young companies in the world next to all these great companies. That was really special.</p>
+
+<p><a href="http://www.fiercewireless.com/special-reports/great-connection-mobile-medical-wireless-startups-fierce-15-2011">Fierce Wireless about Great Connection</a></p>
+
+<p>They didn't get all the details right but if you want to know what I am up to most of the time I have seen worse descriptions. ;)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Minimalist Wordpress Deployment]]></title>
+    <link href="http://eimer.co/blog/2011/05/17/minimalist-wordpress-deployment/"/>
+    <updated>2011-05-17T00:00:00+02:00</updated>
+    <id>http://eimer.co/blog/2011/05/17/minimalist-wordpress-deployment</id>
+    <content type="html"><![CDATA[<p>So, my "sugar daddy" datacenter is kicking me out. This is where I have been hosting absolutely free for a decade so I have nothing bad to say about them... at all. :-)</p>
+
+<p>My 4U quad-core2duo, 4GB RAM, 8TB SATA beast will soon become homeless.... Did I mention they let me host that monster for free?</p>
+
+<p>This website was a minor task for that server but last Sunday I moved it onto a minuscule "cloud" VPS at <a href="http://www.glesys.se/">Gelsys</a>. Running PHP and MySQL on 256MB of RAM (and no swap) and expecting a stable server under load did require some tinkering. I am not going to detail every little thing. I'll only outline the basic setup.</p>
+
+<p>I have Wordpress spitting out static html files which is what is being served for 99% of all requests. PHP is only being called on to re-generate the files when the caches expire and to serve up the admin interface. In this way my mini-VPS can handle a pretty decent amount of traffic. I don't generally get a lot of traffic but I am curious to see how the server behaves during a spike.</p>
+
+<p>Wordpress caching is handled by the excellent W3 Total Cache plugin which recently got official support for Nginx. Yay! no more custom rewrite rules. My only problem getting it running this time was that it refused to cache the index page, which is kind-of bad when it is one of the heaviest pages to render. Turned out it was a simple precedence issue. "/" is considered a folder which I caught in a rule before the caching rules had a chance to do their thing.</p>
+
+<p>Nginx is the web server. I have been running it for a few years already but for this it is absolutely essential to save on ram and get the best performance serving static files.</p>
+
+<p>PHP is called from Nginx over an unix socket and served by php-fpm. PHP is compiled with my favorite accelerator eaccelerator. It is just the simplest to get going and has shown good performance for my apps. PHP has been scaled down a lot in php.ini, reducing mainly memory usage and timeouts.</p>
+
+<p>MySQL loves memory so I had to do the equivalent here. Basically taking the standard performance tips and doing the opposite. I know I will only server Wordpress and I know I don't have any enormous datasets so MySQl should be fine on very low memory. Also since I limit the number of php processes I consequently limit the maximum number of client connections MySQL will need to keep track of.</p>
+
+<p>The only other service running is ssh and I was surprised to find that sftp was one of the biggest memory hogs. Uploading a bunch of files of sftp and the server would immediately come dangerously close to running our of memory. In fact it did a bunch of times during my tweaking.</p>
+
+<p>I have been thinking about switching from Wordpress to some static website generator but that is for another time. This setup looks fairly smooth at the moment.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Offensively lazy web developers]]></title>
+    <link href="http://eimer.co/blog/2010/10/30/offensively-lazy-web-developers/"/>
+    <updated>2010-10-30T00:00:00+02:00</updated>
+    <id>http://eimer.co/blog/2010/10/30/offensively-lazy-web-developers</id>
+    <content type="html"><![CDATA[<p>There exist many websites and web applications with elements of poor usability, engineering, design and so on. Some exhibit features so poor I can only attribute them to laziness. Some actually make me feel offended that I have to jump through hoops to accommodate their laziness.</p>
+
+<p>Top of my list are form fields for postcodes, phone numbers, dates, times or any similar type of data. Simple numeric data. Easily validated and normalized. Yet I often see requirements to enter the data in a very specific format, often at odds with how humans customarily write such data. To most people (who are not developers) it can be very confusing to enter data in a perfectly normal way and have a computer tell them it is invalid. For me it is offensive since I know it is practically always the result of data not being normalized. A developer that does not normalize input data before validating it can only be described as lazy or, if you prefer, incompetent.</p>
+
+<h3>Postcodes</h3>
+
+<p>Nothing can be simpler, right. In many countries it is simply a few digits. Some through a few alphabetic characters in there. I'll focus on local Swedish websites and Swedish postcodes. We have 5 digit postcodes. They are typically written "123 45". So Why would any Swedish website validate that input and claim it is invalid. As a developer I know it is probably that a space is not a numeric character and that adding it also make the string 6 characters long and not 5.</p>
+
+<h3>Phone numbers</h3>
+
+<p>A phone number is a string of numeric characters. Anything else: spaces, parenthesis, dashes and other chrome, is just that: chrome. None of that is part of the data. No server at ATT, Telia, Vodafone or any other network carrier reads these thing and need them in order to route a call. Quite the opposite. Any phone network and particularly cellular networks require a very specific internationally standardized format. Guess what? It is all numeric. A Swedish cellphone might be typed "0701 - 23 45 67" in my address book but the phone sends 46701234567 to the network anytime I make a call.</p>
+
+<h3>Dates and Times</h3>
+
+<p>These are a bit more complex than the above. But the same principles apply. Then again, most web-focused programming languages have functions to parse a myriad of ways one could type a date or time and create a proper date or time object or data type. If you still find it does not work for you then, in this case, you should provide something other than a blank test field. Try googling for datepicker or timepicker. The problem will be one of choosing your favorite rather than finding anything at all.</p>
+
+<h3>Being constructive</h3>
+
+<p>I have ranted a bit now so I thought I'd put my code where my mouth is. Since I am not allowed to share my phone number normalizer code I wrote at work I thought I'd at least share the secret to all the normalizing tasks above... It's regex. Regular Expressions.</p>
+
+<h3>Getting rid of whitespace</h3>
+
+<p>The following will "match" whitespace characters. By substituting the matches with nothing you will simply remove all whitespace from a string.
+<strong>/\s/</strong></p>
+
+<h3>Remove anything that is not a number</h3>
+
+<p>And the following will remove non digits if you substitute the matches with nothing.
+<strong>/\D/</strong></p>
+
+<h3>A very very very simple example in Ruby</h3>
+
+<pre lang="ruby">
+
+num = "(0)701 - 23 45 67".gsub(/\D/,'')
+
+</pre>
+
+
+<p>Seriously. That is all it takes to turn an offensive web form into a more humane one.</p>
+]]></content>
+  </entry>
+  
+</feed>

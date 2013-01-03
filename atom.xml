@@ -4,7 +4,7 @@
   <title><![CDATA[My New Home]]></title>
   <link href="http://eimer.co/atom.xml" rel="self"/>
   <link href="http://eimer.co/"/>
-  <updated>2013-01-02T19:15:08+01:00</updated>
+  <updated>2013-01-03T22:29:58+01:00</updated>
   <id>http://eimer.co/</id>
   <author>
     <name><![CDATA[Martin Westin]]></name>
@@ -26,17 +26,13 @@
 
 <p>After much Googling I combined one Stack Overflow answer with a note on some blog (lost both references).</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">some_result_value</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span class='line'><span class="no">Bundler</span><span class="o">.</span><span class="n">with_clean_env</span> <span class="k">do</span>
-</span><span class='line'>  <span class="no">Dir</span><span class="o">.</span><span class="n">chdir</span> <span class="s2">&quot;/path/to/rubytool&quot;</span>
-</span><span class='line'>  <span class="n">some_result_value</span> <span class="o">=</span> <span class="sb">`./bin/rubytool param1 param2`</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
+<pre lang="ruby">
+some_result_value = ""
+Bundler.with_clean_env do
+  Dir.chdir "/path/to/rubytool"
+  some_result_value = `./bin/rubytool param1 param2`
+end
+</pre>
 
 
 <p>The key details here are the clean environment AND that I change directory before executing. I don&#8217;t understand why changing the folder would be significant. It may even have been bad late-night mojo.</p>
@@ -92,11 +88,11 @@
 
 <p>The small and funky change fixed this, making my script both time and ram &#8220;proof&#8221;. This is how I will start out next time I have a long-running task.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:ruby </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="ruby">
 all = Model.all.to_a # these are just simple Rails models
 while one = all.pop # this is memory management
     one.do_heavy_processing # this loads in a ton of crap
-end</span></code></pre></td></tr></table></div></figure></notextile></div>
+end</pre>
 
 
 <p>By popping them off one by one and re-using the local variable Ruby&#8217;s GC takes pretty good care of keeping the memory to a minimum.</p>
@@ -165,7 +161,7 @@ end</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>Metacode of the basic principle:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:ruby </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="ruby">
 if new_hash(password) == stored_password
   // ALLOW LOGIN USING AN UP-TO-DATE PASS
 else
@@ -176,14 +172,14 @@ else
     // DISALLOW LOGIN
   end
 end
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <h2>How to implement this transition in Devise</h2>
 
 <p>I implemented this by overriding the method <strong>valid_password?</strong> injected into your User model.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:ruby </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="ruby">
 class User
 
   def valid_password?(incoming_password)
@@ -202,7 +198,7 @@ class User
   end
 
 end
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>Fairly simple. You may need to hard-code some parameters (salt, stretching, pepper) if they cause problems.</p>
@@ -278,11 +274,11 @@ end
 
 <p>Mac OS X has java bundled with the OS (for now). There is no need to install anything. The configuration file needs one non-obvious tweak.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:bash </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="bash">
 
 mongodb_host = 127.0.0.1 # localhost
 
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>Java resolves localhost to the strangest thing. It tries to connect to the Bonjour name and external IP (e.g. Martin&#8217;s Mac/192.168.0.2) instead of 127.0.0.1 which is what you want. Instead of opening MongoDB up to external access I changed the configuration to point to the loopback IP directly.</p>
@@ -293,11 +289,11 @@ mongodb_host = 127.0.0.1 # localhost
 
 <p>I didn&#8217;t get the daemon script to start and did not investigate is since I run Graylog2 for evaluation and development and like seeing the output. Starting by running the jar file requires that you sudo.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:bash </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="bash">
 
 sudo java -jar graylog2-server.jar debug
 
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>That gets Graylog2 running and spitting out a lot of fun info so you know you are logging thing as you expect.</p>
@@ -320,10 +316,10 @@ sudo java -jar graylog2-server.jar debug
 
 <p>first</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:bash </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="bash">
 > cd /to/my/app/dir
 > bundle open graylog2_exceptions
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>This should get you the installed gem open in your editor.
@@ -331,7 +327,7 @@ In the file lib/graylog2_exceptions.rb you need to add the version parameter to 
 
 <p>Here is the modified method that does the actual notification:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:ruby </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="ruby">
   def send_to_graylog2 err
     begin
       notifier = GELF::Notifier.new(@args[:hostname], @args[:port])
@@ -348,7 +344,7 @@ In the file lib/graylog2_exceptions.rb you need to add the version parameter to 
       puts "Graylog2 Exception logger. Could not send message: " + i_err.message
     end
   end
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>So, that is it. Finally I get all my exceptions in Graylog2. To try it out you can just raise some dummy exception – raise &#8220;Dummy Exception Error&#8221; – here and there and see them pop up in Graylog2.</p>
@@ -372,12 +368,12 @@ remove_index(table_name, column_name)</p>
 
 <p>To remove a named index one has to use the block syntax afaik:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:ruby </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="ruby">
 change_table :tablename do |t|
   t.remove_index :name => :indexname
   t.index ["columnname"], :name => "indexname", :unique => true
 end
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 ]]></content>
   </entry>
@@ -419,11 +415,11 @@ end
 
 <h3>A very very very simple example in Ruby</h3>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:ruby </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="ruby">
 
 num = "(0)701 - 23 45 67".gsub(/\D/,'')
 
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>Seriously. That is all it takes to turn an offensive web form into a more humane one.</p>
@@ -622,7 +618,7 @@ Compiling this list I cannot now recall how I first came in contact with this al
 
 <p>Here it is:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 ## W3 Total CACHE BEGIN
 set $totalcache_file '';
 set $totalcache_uri $request_uri;
@@ -652,7 +648,7 @@ if (-f $document_root$totalcache_file) {
 }                 
 
 ##W3 Total CACHE END
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>If you are wondering what to do with these lined of code&#8230; I did not come up with them myself. I did a minor change to make them work with the current version of WP Total Cache and my installation.</p>
@@ -662,10 +658,10 @@ if (-f $document_root$totalcache_file) {
 
 <p>What I did was to change the filename. Also. If you, like me, have wp in a folder you would add that to the path as well.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>lang:php </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span></pre></td><td class="code"><pre><code class=><span class="line">
+<pre lang="php">
 set $totalcache_file /wp-content/w3tc/pgcache/$1/_index.html;
 set $totalcache_file /your-wp-folder/wp-content/w3tc/pgcache/$1/_index.html;
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre>
 
 
 <p>There are a dozen other sites with variations on this code. None worked for me straight away&#8230; If you have similar experience, maybe my version will work for you.</p>
