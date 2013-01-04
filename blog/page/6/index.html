@@ -9,7 +9,7 @@
   <meta name="author" content="Martin Westin">
 
   
-  <meta name="description" content="When altering a database, table or field from one character set to another, existing data will probably look garbled since it is expected to be in &hellip;">
+  <meta name="description" content="Part of the series Milestones in Music (1994) I heard Better Things on the cover-CD from some magazine. I forget which. Tracy&#8217;s voice and the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -23,6 +23,7 @@
 
   <link href="/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
+  <link href="/assets/js/prettify.css" rel="stylesheet" type="text/css">
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
@@ -100,7 +101,7 @@
         
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2008/06/24/fixing-existing-data-when-switching-character-set-in-mysql/">Fixing Existing Data When Switching Character Set in MySQL</a></h1>
+      <h1 class="entry-title"><a href="/blog/2010/07/08/massive-attack-protection/">Massive Attack - Protection</a></h1>
     
     
       <p class="meta">
@@ -116,90 +117,23 @@
   
 
 
-<time datetime="2008-06-24T00:00:00+02:00" pubdate data-updated="true">Jun 24<span>th</span>, 2008</time>
+<time datetime="2010-07-08T00:00:00+02:00" pubdate data-updated="true">Jul 8<span>th</span>, 2010</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>When altering a database, table or field from one character set to another, existing data will probably look garbled since it is expected to be in the new character set. To &#8220;convert&#8221; existing data is not always easy. This method (found in the comments of a blog entry I have lost the url for) works as long as you can keep the database &#8220;locked&#8221; when you do this. Otherwise you will convert any new data entered and make that data look garbled.</p>
+  <div class="entry-content"><p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/07/massive_attack-protection.jpg" alt="" title="Massive Attack - Protection" width="170" height="170" class="hang-2-column size-full wp-image-126" /></p>
 
-<p>If your content is latin1 but should be read as utf8 you would do the following to convert existing data.</p>
-
-<pre lang="sql">
-ALTER TABLE my_table CHANGE my_field my_field TEXT CHARACTER SET latin1;
-
-ALTER TABLE my_table CHANGE my_field my_field BLOB;
-
-ALTER TABLE my_table CHANGE my_field my_field TEXT CHARACTER SET utf8;
-</pre>
+<p>Part of the series Milestones in Music</p>
 
 
-<p>The important bit is the use of the BLOB datatype. Since it is a binary datatype it has no character set. The datatype you start and end with can be any char, varchar, text or similar datatype.</p>
+<p><em>(1994)</em></p>
 
-<p>A full test case to play with:</p>
-
-<pre lang="sql">
-# case where data was enterd correctly as latin1 and later needs conversion to utf8
-
-SET NAMES latin1;
-
-drop table people;
-
-CREATE TABLE people (
-  id int(11) unsigned NOT NULL auto_increment,
-  name varchar(64) default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
-INSERT INTO people VALUES 
-  (1,'user_a'),
-  (2,'user_å'),
-  (3,'user_ä');
-
-select * from people;
-
-SET NAMES utf8;
-ALTER TABLE people engine=MyISAM default character set utf8;
-ALTER TABLE people CHANGE name name BLOB;
-ALTER TABLE people CHANGE name name varchar(64) CHARACTER SET utf8;
-
-select * from people;
-</pre>
-
-
-
-
-<pre lang="sql">
-# case where utf8 data was enterd into a table with latin1 and later needs conversion to utf8
-
-SET NAMES latin1;
-
-drop table people;
-
-CREATE TABLE people (
-  id int(11) unsigned NOT NULL auto_increment,
-  name varchar(64) default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
-SET NAMES utf8;
-
-INSERT INTO people VALUES 
-  (1,'user_a'),
-  (2,'user_å'),
-  (3,'user_ä');
-
-select * from people;
-
-ALTER TABLE people engine=MyISAM default character set utf8;
-ALTER TABLE people CHANGE name name BLOB;
-ALTER TABLE people CHANGE name name varchar(64) CHARACTER SET latin1;
-ALTER TABLE people CHANGE name name varchar(64) CHARACTER SET utf8;
-
-select * from people;
-</pre>
+<p>
+I heard Better Things on the cover-CD from some magazine. I forget which. Tracy&#8217;s voice and the very stylized music gripped me instantly. Protection is probably still my favorite album by Massive Attack. It sets itself apart from all other albums they have made by the very clean production and of-course: Tracy.
+</p>
 
 </div>
   
@@ -213,7 +147,7 @@ select * from people;
         
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2008/06/24/delete-all-svn-folders-from-a-project/">Delete All .svn Folders From a Project</a></h1>
+      <h1 class="entry-title"><a href="/blog/2010/07/04/massive-attack-unfinished-sympathy/">Massive Attack - Unfinished Sympathy</a></h1>
     
     
       <p class="meta">
@@ -229,20 +163,24 @@ select * from people;
   
 
 
-<time datetime="2008-06-24T00:00:00+02:00" pubdate data-updated="true">Jun 24<span>th</span>, 2008</time>
+<time datetime="2010-07-04T00:00:00+02:00" pubdate data-updated="true">Jul 4<span>th</span>, 2010</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><pre lang="">
-find ./ -name ".svn" -exec rm -rf {} \;
-</pre>
+  <div class="entry-content"><p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/07/MassiveAttack-UnfinishedSympathy.jpg" alt="" title="Massive Attack - Unfinished Sympathy" width="170" height="128" class="hang-2-column size-full wp-image-121" /></p>
+
+<p>Part of the series Milestones in Music</p>
 
 
-<p>found @
-<a href="http://cephas.net/blog/2007/04/06/command-line-script-to-delete-svn-files-folders/">http://cephas.net/blog/2007/04/06/command-line-script-to-delete-svn-files-folders/</a></p>
+<p><em>(1991)</em></p>
+
+<p>
+This song was a mystery to me for a long time. I would see part of the fantastic video on MTV every now and then. Awestruck every time. Both by the one-take video, the singing and the music. It was only after buying Protection that I realised Massive Attack had made this track. 
+</p>
+
 </div>
   
   
@@ -255,7 +193,7 @@ find ./ -name ".svn" -exec rm -rf {} \;
         
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2008/06/24/altering-character-set-and-collation-of-tables-in-mysql/">Altering Character Set and Collation of Tables in MySQL</a></h1>
+      <h1 class="entry-title"><a href="/blog/2010/07/04/enigma-mcmxc-a-d/">Enigma - MCMXC a.D.</a></h1>
     
     
       <p class="meta">
@@ -271,21 +209,118 @@ find ./ -name ".svn" -exec rm -rf {} \;
   
 
 
-<time datetime="2008-06-24T00:00:00+02:00" pubdate data-updated="true">Jun 24<span>th</span>, 2008</time>
+<time datetime="2010-07-04T00:00:00+02:00" pubdate data-updated="true">Jul 4<span>th</span>, 2010</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Altering the character set and collation of a table is sometimes not enough. You may have to alter the actual fields in the table to get MySQL to comply in some cases. I don&#8217;t know why or when MySQL does this.</p>
+  <div class="entry-content"><p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/07/ENIGMA-MCMXCAD.jpg" alt="" title="Enigma - MCMXC a.D." width="170" height="170" class="hang-2-column size-full wp-image-119" /></p>
 
-<pre lang="sql">
-ALTER TABLE my_table DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
+<p>Part of the series Milestones in Music</p>
 
-ALTER TABLE my_table MODIFY my_field varchar(255) CHARACTER SET utf8 COLLATE utf8_swedish_ci;
-</pre>
 
+<p><em>(1990)</em></p>
+
+<p>
+This album was really one of a kind at the time. I think it turned me towards a lot of &#8220;Chillout&#8221; -type music and was one of the albums that inspired me technically. Samplers could make evocative tunes? Who knew?
+</p>
+
+</div>
+  
+  
+
+
+      </article>
+    
+    
+      <article>
+        
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/07/03/public-enemy-fear-of-a-black-planet/">Public Enemy - Fear of a Black Planet</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-07-03T00:00:00+02:00" pubdate data-updated="true">Jul 3<span>rd</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/07/fear-of-a-black-planet.jpg" alt="" title="Fear of a Black Planet" width="170" height="170" class="hang-2-column size-full wp-image-117" /></p>
+
+<p>Part of the series Milestones in Music</p>
+
+
+<p><em>(1990)</em></p>
+
+<p>
+This was the first CDs I ever bought. I always liked Public Enemy but this is one of the few albums of theirs I&#8217;ve bought. I know every sound, every beat and every rhyme by heart. Epic Hip Hop.
+</p>
+
+</div>
+  
+  
+
+
+      </article>
+    
+    
+      <article>
+        
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/07/03/pink-floyd-the-wall/">Pink Floyd - the Wall</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-07-03T00:00:00+02:00" pubdate data-updated="true">Jul 3<span>rd</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/07/pink-floyd-the-wall1.gif" alt="" title="Pink Floyd - The Wall" width="170" height="128" class="hang-2-column size-full wp-image-112" /></p>
+
+<p>Part of the series Milestones in Music</p>
+
+
+<p><em>(1979)</em></p>
+
+<p>
+My favorite album during early childhood. I still listen to this one a lot. I just never got bored with it. I remember thinking the album was about Star Wars. The marching on Waiting For The Worms and The Trial were storm troopers and &#8220;the defendant&#8221; in The Trial was Luke Skywalker.
+</p>
+
+
+<p><em>(Remember: I am not from an English speaking country so I did not understand a word of it before the age of at least 10 or 11.)</em></p>
 </div>
   
   
@@ -294,6 +329,8 @@ ALTER TABLE my_table MODIFY my_field varchar(255) CHARACTER SET utf8 COLLATE utf
       </article>
     
     <div class="pagination">
+      
+        <a class="prev" href="/blog/page/7/">&larr; Older</a>
       
       <a href="/blog/archives">Blog Archives</a>
       
@@ -307,7 +344,7 @@ ALTER TABLE my_table MODIFY my_field varchar(255) CHARACTER SET utf8 COLLATE utf
     <div class="well">
       
         <section>
-  <h2>Recent Posts</h2>
+  <h4>Recent Posts</h4>
   <ul id="recent_posts">
     
       <li class="post">
@@ -333,12 +370,12 @@ ALTER TABLE my_table MODIFY my_field varchar(255) CHARACTER SET utf8 COLLATE utf
   </ul>
 </section>
 <section>
-  <h1>Categories</h1>
+  <h4>Categories</h4>
     <ul id="category-list"><li><a href='/blog/categories/articles'>Articles (8)</a></li><li><a href='/blog/categories/code'>Code (12)</a></li><li><a href='/blog/categories/general-interest'>General Interest (10)</a></li><li><a href='/blog/categories/milestones-in-music'>Milestones in Music (15)</a></li><li><a href='/blog/categories/the-pensive'>The Pensive (17)</a></li></ul>
 </section>
 
 <section>
-  <h2>GitHub Repos</h2>
+  <h4>GitHub Repos</h4>
   <ul id="gh_repos">
     <li class="loading">Status updating&#8230;</li>
   </ul>
@@ -368,7 +405,7 @@ ALTER TABLE my_table MODIFY my_field varchar(255) CHARACTER SET utf8 COLLATE utf
 
 
 <section>
-  <h2>Latest Tweets</h2>
+  <h4>Latest Tweets</h4>
   <ul id="tweets">
     <li class="loading">Status updating&#8230;</li>
   </ul>
@@ -390,12 +427,17 @@ ALTER TABLE my_table MODIFY my_field varchar(255) CHARACTER SET utf8 COLLATE utf
     <footer class="footer"><p>
   Copyright &copy; 2013 - Martin Westin -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span> -
-  
-    <span class="credit">Theme by <a href="http://brianarmstrong.org">Brian Armstrong</a></span>
-  
 </p>
 </footer>
     <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="/assets/js/prettify.js"></script>
+<script>
+  !function ($) {
+    $(function(){
+      window.prettyPrint && prettyPrint()
+    })
+  }(window.jQuery)
+</script>
 
 
 

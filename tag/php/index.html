@@ -9,7 +9,7 @@
   <meta name="author" content="Martin Westin">
 
   
-  <meta name="description" content="Posts Tagged &ldquo;php&rdquo; Minimalist Wordpress Deployment 05/17/11 Summary: mysql nginx php wordpress Why isset() in PHP can be misleading 12/ 4 &hellip;">
+  <meta name="description" content="Posts Tagged &ldquo;php&rdquo; Minimalist Wordpress Deployment 05/17/11 Why isset() in PHP can be misleading 12/ 4/09 ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -23,6 +23,7 @@
 
   <link href="/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
+  <link href="/assets/js/prettify.css" rel="stylesheet" type="text/css">
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
@@ -130,18 +131,6 @@
 	<li class="archive_list">
 		<h3 class="archive_list_header"><a class="archive_list_article_link" href='/blog/2011/05/17/minimalist-wordpress-deployment/'>Minimalist Wordpress Deployment</a></h3>
 		<time class="archive_list_post_date" datetime='2011-05-17'>05/17/11</time>
-		<p class="summary">Summary: 
-		<ul class="tag_list">
-			
-			<li class="inline archive_list"><a class="tag_list_link" href="/tag/mysql">mysql</a></li>
-			
-			<li class="inline archive_list"><a class="tag_list_link" href="/tag/nginx">nginx</a></li>
-			
-			<li class="inline archive_list"><a class="tag_list_link" href="/tag/php">php</a></li>
-			
-			<li class="inline archive_list"><a class="tag_list_link" href="/tag/wordpress">wordpress</a></li>
-			
-		</ul>
 	</li>
 	
 	
@@ -251,14 +240,6 @@
 	<li class="archive_list">
 		<h3 class="archive_list_header"><a class="archive_list_article_link" href='/blog/2009/12/04/why-isset-in-php-can-be-misleading/'>Why isset() in PHP can be misleading</a></h3>
 		<time class="archive_list_post_date" datetime='2009-12-04'>12/ 4/09</time>
-		<p class="summary">Summary: 
-		<ul class="tag_list">
-			
-			<li class="inline archive_list"><a class="tag_list_link" href="/tag/array">array</a></li>
-			
-			<li class="inline archive_list"><a class="tag_list_link" href="/tag/php">php</a></li>
-			
-		</ul>
 	</li>
 	
 	
@@ -399,12 +380,17 @@
     <footer class="footer"><p>
   Copyright &copy; 2013 - Martin Westin -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span> -
-  
-    <span class="credit">Theme by <a href="http://brianarmstrong.org">Brian Armstrong</a></span>
-  
 </p>
 </footer>
     <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="/assets/js/prettify.js"></script>
+<script>
+  !function ($) {
+    $(function(){
+      window.prettyPrint && prettyPrint()
+    })
+  }(window.jQuery)
+</script>
 
 
 

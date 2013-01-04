@@ -23,6 +23,7 @@
 
   <link href="/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
+  <link href="/assets/js/prettify.css" rel="stylesheet" type="text/css">
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
@@ -131,7 +132,7 @@
 
 <p>After much Googling I combined one Stack Overflow answer with a note on some blog (lost both references).</p>
 
-<pre lang="ruby">
+<pre class="prettyprint linenums" lang="ruby">
 some_result_value = ""
 Bundler.with_clean_env do
   Dir.chdir "/path/to/rubytool"
@@ -247,7 +248,7 @@ end
 
 <p>The small and funky change fixed this, making my script both time and ram &#8220;proof&#8221;. This is how I will start out next time I have a long-running task.</p>
 
-<pre lang="ruby">
+<pre class="prettyprint linenums" lang="ruby">
 all = Model.all.to_a # these are just simple Rails models
 while one = all.pop # this is memory management
     one.do_heavy_processing # this loads in a ton of crap
@@ -361,375 +362,6 @@ end</pre>
 
       </article>
     
-    
-      <article>
-        
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/06/24/transitioning-to-more-secure-passwords/">Transitioning to More Secure Passwords</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-06-24T00:00:00+02:00" pubdate data-updated="true">Jun 24<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>With all the news of hacked databases (mostly at Sony) and the clear-text or poorly hashed passwords in their datasets, I thought I might offer my standard trick for transitioning to a more secure form of hashing.</p>
-
-<p>I think some sites don&#8217;t change passwords security for fear of annoying users or the workload involved in managing a transition. This simple technique is completely invisible to the user and very low maintenance for the developer.</p>
-
-<p>I will be giving examples from the Devise library for Rails apps, since I recently implemented it there.</p>
-
-<h2>The technique is very very simple</h2>
-
-<p>You configure your authentication to check passwords against both the old and the new form of hashed password. And when you find a match for the old hash you update your database with the version of the password encoded using the new hash. You keep this dual check in place until all (or most likely most) of your users have logged in and had their passwords changed. The unlucky few can use your password recovery feature if you have one.</p>
-
-<p>Metacode of the basic principle:</p>
-
-<pre lang="ruby">
-if new_hash(password) == stored_password
-  // ALLOW LOGIN USING AN UP-TO-DATE PASS
-else
-  if old_hash(password) == stored_password
-    // UPDATE PASSWORD IN DB
-    // ALLOW LOGIN
-  else
-    // DISALLOW LOGIN
-  end
-end
-</pre>
-
-
-<h2>How to implement this transition in Devise</h2>
-
-<p>I implemented this by overriding the method <strong>valid_password?</strong> injected into your User model.</p>
-
-<pre lang="ruby">
-class User
-
-  def valid_password?(incoming_password)
-    result = super incoming_password
-    if !result
-      # try old encryptor during transition
-      digest = Devise::Encryptors::LegacyEncryptor.digest(incoming_password, self.class.stretches, self.password_salt, self.class.pepper)
-      result = Devise.secure_compare(digest, self.encrypted_password)
-      if result
-        # update password to use new encryptor when there is a match
-        self.password = incoming_password
-        self.save
-      end
-    end
-    result
-  end
-
-end
-</pre>
-
-
-<p>Fairly simple. You may need to hard-code some parameters (salt, stretching, pepper) if they cause problems.</p>
-
-<p>If you are changing from, say, sha1 to sha256, you can easily check the character lengths of the passwords in your database to check the &#8220;adoption rate&#8221; of the new hashes.</p>
-
-<h2>Implications on Security</h2>
-
-<p>You should realize that you ARE lowering your security level slightly by effectively allowing 2 different password checks. In reality this problem is small and only really matters if you have plain passwords you are transitioning from (and you really shouldn&#8217;t have). The problem then becomes real since I could login using a stolen new (supposedly) secure hash as the given password. In this case I would definitely disallow any password of the same length as, or simple reg-ex match for, your new hashing system to avoid this hole.</p>
-
-<p>You will also not fully benefit from the new hashing system until you remove the &#8220;dual check&#8221; after a reasonable period of time.</p>
-
-<p>If you can live with that to gain the benefits of a clean migration for you and your users this is a nice technique. I know from reading and talking to developers that I am far from the only of the first to come up with something like this. Many apps and sites have used and continue to use this kind of technique to beef-up password hash-strength without bothering users.</p>
-</div>
-  
-  
-
-
-      </article>
-    
-    
-      <article>
-        
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/05/18/am-i-fierce/">Am I Fierce?</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-05-18T00:00:00+02:00" pubdate data-updated="true">May 18<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I love Dropbox and use it every day. I love Flipboard and use it every day.</p>
-
-<p>So imagine my reaction to seeing my (and my co-founders&#8217;) little company named as one of the 15 coolest young companies in the world next to all these great companies. That was really special.</p>
-
-<p><a href="http://www.fiercewireless.com/special-reports/great-connection-mobile-medical-wireless-startups-fierce-15-2011">Fierce Wireless about Great Connection</a></p>
-
-<p>They didn&#8217;t get all the details right but if you want to know what I am up to most of the time I have seen worse descriptions. ;)</p>
-</div>
-  
-  
-
-
-      </article>
-    
-    
-      <article>
-        
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/05/17/minimalist-wordpress-deployment/">Minimalist Wordpress Deployment</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-05-17T00:00:00+02:00" pubdate data-updated="true">May 17<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>So, my &#8220;sugar daddy&#8221; datacenter is kicking me out. This is where I have been hosting absolutely free for a decade so I have nothing bad to say about them&#8230; at all. :-)</p>
-
-<p>My 4U quad-core2duo, 4GB RAM, 8TB SATA beast will soon become homeless&#8230;. Did I mention they let me host that monster for free?</p>
-
-<p>This website was a minor task for that server but last Sunday I moved it onto a minuscule &#8220;cloud&#8221; VPS at <a href="http://www.glesys.se/">Gelsys</a>. Running PHP and MySQL on 256MB of RAM (and no swap) and expecting a stable server under load did require some tinkering. I am not going to detail every little thing. I&#8217;ll only outline the basic setup.</p>
-
-<p>I have Wordpress spitting out static html files which is what is being served for 99% of all requests. PHP is only being called on to re-generate the files when the caches expire and to serve up the admin interface. In this way my mini-VPS can handle a pretty decent amount of traffic. I don&#8217;t generally get a lot of traffic but I am curious to see how the server behaves during a spike.</p>
-
-<p>Wordpress caching is handled by the excellent W3 Total Cache plugin which recently got official support for Nginx. Yay! no more custom rewrite rules. My only problem getting it running this time was that it refused to cache the index page, which is kind-of bad when it is one of the heaviest pages to render. Turned out it was a simple precedence issue. &#8220;/&#8221; is considered a folder which I caught in a rule before the caching rules had a chance to do their thing.</p>
-
-<p>Nginx is the web server. I have been running it for a few years already but for this it is absolutely essential to save on ram and get the best performance serving static files.</p>
-
-<p>PHP is called from Nginx over an unix socket and served by php-fpm. PHP is compiled with my favorite accelerator eaccelerator. It is just the simplest to get going and has shown good performance for my apps. PHP has been scaled down a lot in php.ini, reducing mainly memory usage and timeouts.</p>
-
-<p>MySQL loves memory so I had to do the equivalent here. Basically taking the standard performance tips and doing the opposite. I know I will only server Wordpress and I know I don&#8217;t have any enormous datasets so MySQl should be fine on very low memory. Also since I limit the number of php processes I consequently limit the maximum number of client connections MySQL will need to keep track of.</p>
-
-<p>The only other service running is ssh and I was surprised to find that sftp was one of the biggest memory hogs. Uploading a bunch of files of sftp and the server would immediately come dangerously close to running our of memory. In fact it did a bunch of times during my tweaking.</p>
-
-<p>I have been thinking about switching from Wordpress to some static website generator but that is for another time. This setup looks fairly smooth at the moment.</p>
-</div>
-  
-  
-
-
-      </article>
-    
-    
-      <article>
-        
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/01/19/graylog2-on-mac-os-x/">Graylog2 on Mac OS X</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-01-19T00:00:00+01:00" pubdate data-updated="true">Jan 19<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I have been playing with Graylog2 on my Mac today. Since the setup guides are all for Debian and not fully compatible with Mac OS X I thought I&#8217;d mention the changes I needed to make to get thing rolling smoothly.</p>
-
-<p>The guides are good, so go read them in the wikis on Github. I won&#8217;t re-iterate them, only point out the minor changes and tweaks I had to make.</p>
-
-<p>Graylog2 comes in two main parts. The server and the web interface. I&#8217;ll start with the server component.</p>
-
-<h2>Install The Server</h2>
-
-<p><a href="https://github.com/Graylog2/graylog2-server/wiki/Installing">https://github.com/Graylog2/graylog2-server/wiki/Installing</a></p>
-
-<p>Mac OS X has java bundled with the OS (for now). There is no need to install anything. The configuration file needs one non-obvious tweak.</p>
-
-<pre lang="bash">
-
-mongodb_host = 127.0.0.1 # localhost
-
-</pre>
-
-
-<p>Java resolves localhost to the strangest thing. It tries to connect to the Bonjour name and external IP (e.g. Martin&#8217;s Mac/192.168.0.2) instead of 127.0.0.1 which is what you want. Instead of opening MongoDB up to external access I changed the configuration to point to the loopback IP directly.</p>
-
-<h2>Starting The Server</h2>
-
-<p><a href="https://github.com/Graylog2/graylog2-server/wiki/Starting-the-server">https://github.com/Graylog2/graylog2-server/wiki/Starting-the-server</a></p>
-
-<p>I didn&#8217;t get the daemon script to start and did not investigate is since I run Graylog2 for evaluation and development and like seeing the output. Starting by running the jar file requires that you sudo.</p>
-
-<pre lang="bash">
-
-sudo java -jar graylog2-server.jar debug
-
-</pre>
-
-
-<p>That gets Graylog2 running and spitting out a lot of fun info so you know you are logging thing as you expect.</p>
-
-<h3>Installing The Web Interface</h3>
-
-<p><a href="https://github.com/Graylog2/graylog2-web-interface/wiki/Installing-the-web-interface-on-Debian-5.0">https://github.com/Graylog2/graylog2-web-interface/wiki/Installing-the-web-interface-on-Debian-5.0</a></p>
-
-<p>You can follow most of those steps if you don&#8217;t have rails and Bundler and that stuff installed. For testing and development, I would suggest running the interface using Passenger Standalone instead of Apache. And, you install Passenger as a gem and not apt, of-course.</p>
-
-<p><a href="http://www.modrails.com/documentation/Users%20guide%20Standalone.html">http://www.modrails.com/documentation/Users%20guide%20Standalone.html</a></p>
-
-<p>The cool thing about installing passenger standalone is that it will compile and run itself the first time you call passenger start. It will take a few minutes that first time but after that it will start instantly.</p>
-
-<h2>Logging from your Rails app</h2>
-
-<p><a href="https://github.com/Graylog2/graylog2_exceptions">https://github.com/Graylog2/graylog2_exceptions</a></p>
-
-<p>In the Rails app I want to log from I installed Graylog2 Exceptions. It is a small Rack middleware with practically no configuration. Only problem is that it has not been updated to comply with the current version of the Graylog2 server. Until it is updated, you have to modify the source for it. A very small mod. For me it is ok as long as I am still on my Mac and not a server.</p>
-
-<p>first</p>
-
-<pre lang="bash">
-> cd /to/my/app/dir
-> bundle open graylog2_exceptions
-</pre>
-
-
-<p>This should get you the installed gem open in your editor.
-In the file lib/graylog2_exceptions.rb you need to add the version parameter to the notification message. Possibly this should be added to the gelf gem instead. I am not sure how that version string is supposed to be used.</p>
-
-<p>Here is the modified method that does the actual notification:</p>
-
-<pre lang="ruby">
-  def send_to_graylog2 err
-    begin
-      notifier = GELF::Notifier.new(@args[:hostname], @args[:port])
-      puts notifier.notify!(
-        :version => "1.0",
-        :short_message => err.message, # <- this line is new!!!
-        :full_message => err.backtrace.join("\n"),
-        :level => @args[:level],
-        :host => @args[:local_app_name],
-        :file => err.backtrace[0].split(":")[0],
-        :line => err.backtrace[0].split(":")[1]
-      )
-    rescue => i_err
-      puts "Graylog2 Exception logger. Could not send message: " + i_err.message
-    end
-  end
-</pre>
-
-
-<p>So, that is it. Finally I get all my exceptions in Graylog2. To try it out you can just raise some dummy exception – raise &#8220;Dummy Exception Error&#8221; – here and there and see them pop up in Graylog2.</p>
-</div>
-  
-  
-
-
-      </article>
-    
-    
-      <article>
-        
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2010/11/24/rails-migration-of-indexes/">Rails Migration of Indexes</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-11-24T00:00:00+01:00" pubdate data-updated="true">Nov 24<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>A small gotcha when changing indexes in a migration. To change an index one has to first remove it and then add it again. Removing an index is the tricky part.</p>
-
-<p>The documentation states:
-remove_index(table_name, index_name): Removes the index specified by index_name.</p>
-
-<p>This is not strictly true as it turns out. The docs should probably say:
-remove_index(table_name, column_name)</p>
-
-<p>The crux is that one cannot use this syntax to remove a named index. Rails assumes the index is named something like &#8220;tablename_columnname_index&#8221; or something similar.</p>
-
-<p>To remove a named index one has to use the block syntax afaik:</p>
-
-<pre lang="ruby">
-change_table :tablename do |t|
-  t.remove_index :name => :indexname
-  t.index ["columnname"], :name => "indexname", :unique => true
-end
-</pre>
-
-</div>
-  
-  
-
-
-      </article>
-    
     <div class="pagination">
       
         <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -744,7 +376,7 @@ end
     <div class="well">
       
         <section>
-  <h2>Recent Posts</h2>
+  <h4>Recent Posts</h4>
   <ul id="recent_posts">
     
       <li class="post">
@@ -770,12 +402,12 @@ end
   </ul>
 </section>
 <section>
-  <h1>Categories</h1>
+  <h4>Categories</h4>
     <ul id="category-list"><li><a href='/blog/categories/articles'>Articles (8)</a></li><li><a href='/blog/categories/code'>Code (12)</a></li><li><a href='/blog/categories/general-interest'>General Interest (10)</a></li><li><a href='/blog/categories/milestones-in-music'>Milestones in Music (15)</a></li><li><a href='/blog/categories/the-pensive'>The Pensive (17)</a></li></ul>
 </section>
 
 <section>
-  <h2>GitHub Repos</h2>
+  <h4>GitHub Repos</h4>
   <ul id="gh_repos">
     <li class="loading">Status updating&#8230;</li>
   </ul>
@@ -805,7 +437,7 @@ end
 
 
 <section>
-  <h2>Latest Tweets</h2>
+  <h4>Latest Tweets</h4>
   <ul id="tweets">
     <li class="loading">Status updating&#8230;</li>
   </ul>
@@ -827,12 +459,17 @@ end
     <footer class="footer"><p>
   Copyright &copy; 2013 - Martin Westin -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span> -
-  
-    <span class="credit">Theme by <a href="http://brianarmstrong.org">Brian Armstrong</a></span>
-  
 </p>
 </footer>
     <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="/assets/js/prettify.js"></script>
+<script>
+  !function ($) {
+    $(function(){
+      window.prettyPrint && prettyPrint()
+    })
+  }(window.jQuery)
+</script>
 
 
 

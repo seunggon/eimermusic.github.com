@@ -23,6 +23,7 @@
 
   <link href="/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
+  <link href="/assets/js/prettify.css" rel="stylesheet" type="text/css">
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
@@ -158,7 +159,7 @@ A subscriptions module and many others.</p>
 <p>This is the simple and obvious bit. A plugin can very simply just extend or associate itself with some resource in the main application.
 As an example (finally some code!), a subscriber model would look like this.</p>
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 <?php  
 class SubsSubscriber extends SubsAppModel { 
     var $name = 'SubsSubscriber';     
@@ -176,7 +177,7 @@ class SubsSubscriber extends SubsAppModel {
 
 <p>Not only does the subscriber belong to a subscription, it also belongs to a phone. Creating a Subscriber involves registering the subscriber&#8217;s phone number with the Phone model. This ensures that there are no duplicate numbers, that any restrictions put on a certain phone is retained across the app. Things like that. The Phone model implements this registration method.</p>
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 function register($number) { 
     $number = clean_phone($number); // utility function to normalize number formatting 
 
@@ -226,14 +227,14 @@ function register($number) {
 
 <p>The application does this via the much debated requestAction:</p>
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 $this->requestAction('/'.$module['Module']['name'].'/on_incoming_sms/'.$saved['IncomingSms']['id'], array('return')); 
 </pre>
 
 
 <p>And each plugin would implement this method to do something with the message. This is done in the &#8220;PluginnameController&#8221; as the request goes to /pluginname/on_incoming_sms/123. There is a positive side-effect to this. If I want some core feature to be called in this way I can make add a controller to the table of &#8220;modules&#8221; and requestAction will never know the difference. (This is why I still use a string url.)</p>
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 function on_incoming_sms($id = null) { 
     $this->autoRender = false; 
     if ( !isset($this->params['requested']) || empty($id) ) { // check that we are contacted "from within" 
@@ -253,7 +254,7 @@ function on_incoming_sms($id = null) {
 
 <p>This is an example of such a shell</p>
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 class HourlyShell extends Shell { 
 
     var $tasks = array('LogRotation'); 
@@ -288,7 +289,7 @@ class HourlyShell extends Shell {
 
 <p>The method being called will typically just pass the call along to one or more parts of the module that need to do something periodic. For example:</p>
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 function on_hourly_update() {
     // the template in AppController can be used to check that the call is legitimate.
     if ( parent::on_hourly_update() ) {
@@ -389,7 +390,7 @@ The main application can pass events and information to plugins via the Pluginna
     <div class="well">
       
         <section>
-  <h2>Recent Posts</h2>
+  <h4>Recent Posts</h4>
   <ul id="recent_posts">
     
       <li class="post">
@@ -415,12 +416,12 @@ The main application can pass events and information to plugins via the Pluginna
   </ul>
 </section>
 <section>
-  <h1>Categories</h1>
+  <h4>Categories</h4>
     <ul id="category-list"><li><a href='/blog/categories/articles'>Articles (8)</a></li><li><a href='/blog/categories/code'>Code (12)</a></li><li><a href='/blog/categories/general-interest'>General Interest (10)</a></li><li><a href='/blog/categories/milestones-in-music'>Milestones in Music (15)</a></li><li><a href='/blog/categories/the-pensive'>The Pensive (17)</a></li></ul>
 </section>
 
 <section>
-  <h2>GitHub Repos</h2>
+  <h4>GitHub Repos</h4>
   <ul id="gh_repos">
     <li class="loading">Status updating...</li>
   </ul>
@@ -450,7 +451,7 @@ The main application can pass events and information to plugins via the Pluginna
 
 
 <section>
-  <h2>Latest Tweets</h2>
+  <h4>Latest Tweets</h4>
   <ul id="tweets">
     <li class="loading">Status updating...</li>
   </ul>
@@ -474,12 +475,17 @@ The main application can pass events and information to plugins via the Pluginna
     <footer class="footer"><p>
   Copyright &copy; 2013 - Martin Westin -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span> -
-  
-    <span class="credit">Theme by <a href="http://brianarmstrong.org">Brian Armstrong</a></span>
-  
 </p>
 </footer>
     <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="/assets/js/prettify.js"></script>
+<script>
+  !function ($) {
+    $(function(){
+      window.prettyPrint && prettyPrint()
+    })
+  }(window.jQuery)
+</script>
 
 
 

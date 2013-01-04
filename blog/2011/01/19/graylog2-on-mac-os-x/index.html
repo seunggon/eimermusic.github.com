@@ -23,6 +23,7 @@
 
   <link href="/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
+  <link href="/assets/js/prettify.css" rel="stylesheet" type="text/css">
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
@@ -133,7 +134,7 @@
 
 <p>Mac OS X has java bundled with the OS (for now). There is no need to install anything. The configuration file needs one non-obvious tweak.</p>
 
-<pre lang="bash">
+<pre class="prettyprint linenums" lang="bash">
 
 mongodb_host = 127.0.0.1 # localhost
 
@@ -148,7 +149,7 @@ mongodb_host = 127.0.0.1 # localhost
 
 <p>I didn&#8217;t get the daemon script to start and did not investigate is since I run Graylog2 for evaluation and development and like seeing the output. Starting by running the jar file requires that you sudo.</p>
 
-<pre lang="bash">
+<pre class="prettyprint linenums" lang="bash">
 
 sudo java -jar graylog2-server.jar debug
 
@@ -175,7 +176,7 @@ sudo java -jar graylog2-server.jar debug
 
 <p>first</p>
 
-<pre lang="bash">
+<pre class="prettyprint linenums" lang="bash">
 > cd /to/my/app/dir
 > bundle open graylog2_exceptions
 </pre>
@@ -186,7 +187,7 @@ In the file lib/graylog2_exceptions.rb you need to add the version parameter to 
 
 <p>Here is the modified method that does the actual notification:</p>
 
-<pre lang="ruby">
+<pre class="prettyprint linenums" lang="ruby">
   def send_to_graylog2 err
     begin
       notifier = GELF::Notifier.new(@args[:hostname], @args[:port])
@@ -272,7 +273,7 @@ In the file lib/graylog2_exceptions.rb you need to add the version parameter to 
     <div class="well">
       
         <section>
-  <h2>Recent Posts</h2>
+  <h4>Recent Posts</h4>
   <ul id="recent_posts">
     
       <li class="post">
@@ -298,12 +299,12 @@ In the file lib/graylog2_exceptions.rb you need to add the version parameter to 
   </ul>
 </section>
 <section>
-  <h1>Categories</h1>
+  <h4>Categories</h4>
     <ul id="category-list"><li><a href='/blog/categories/articles'>Articles (8)</a></li><li><a href='/blog/categories/code'>Code (12)</a></li><li><a href='/blog/categories/general-interest'>General Interest (10)</a></li><li><a href='/blog/categories/milestones-in-music'>Milestones in Music (15)</a></li><li><a href='/blog/categories/the-pensive'>The Pensive (17)</a></li></ul>
 </section>
 
 <section>
-  <h2>GitHub Repos</h2>
+  <h4>GitHub Repos</h4>
   <ul id="gh_repos">
     <li class="loading">Status updating...</li>
   </ul>
@@ -333,7 +334,7 @@ In the file lib/graylog2_exceptions.rb you need to add the version parameter to 
 
 
 <section>
-  <h2>Latest Tweets</h2>
+  <h4>Latest Tweets</h4>
   <ul id="tweets">
     <li class="loading">Status updating...</li>
   </ul>
@@ -357,12 +358,17 @@ In the file lib/graylog2_exceptions.rb you need to add the version parameter to 
     <footer class="footer"><p>
   Copyright &copy; 2013 - Martin Westin -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span> -
-  
-    <span class="credit">Theme by <a href="http://brianarmstrong.org">Brian Armstrong</a></span>
-  
 </p>
 </footer>
     <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="/assets/js/prettify.js"></script>
+<script>
+  !function ($) {
+    $(function(){
+      window.prettyPrint && prettyPrint()
+    })
+  }(window.jQuery)
+</script>
 
 
 

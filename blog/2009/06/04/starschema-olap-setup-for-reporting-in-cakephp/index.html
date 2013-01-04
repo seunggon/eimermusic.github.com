@@ -23,6 +23,7 @@
 
   <link href="/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
+  <link href="/assets/js/prettify.css" rel="stylesheet" type="text/css">
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
@@ -191,7 +192,7 @@ I found this extended DBO a long time ago. Credit should go where credit is due 
 </p>
 
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 require_once (LIBS . 'model' . DS . 'datasources' . DS . 'dbo' . DS . 'dbo_mysql.php');
 // app/models/datasources//dbo/dbo_mysql_ex.php
 class DboMysqlEx extends DboMysql {
@@ -239,7 +240,7 @@ FactModel implements a few custom methods that are common among fact models. fin
 
 <p></p>
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 /*
  *  Abstract super-model for Facts
  */
@@ -368,7 +369,7 @@ Notice that the fact table contains a field referencing the original primary key
 </p>
 
 
-<pre lang="sql">
+<pre class="prettyprint linenums" lang="sql">
 CREATE TABLE `fact_sent_smses` (
   `dimension_time_id` int(11) unsigned NOT NULL,
   `dimension_client_id` int(11) unsigned NOT NULL,
@@ -383,7 +384,7 @@ CREATE TABLE `fact_sent_smses` (
 </pre>
 
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 /*
  *  Tracks outgoing messages with daily grain.
  */
@@ -463,7 +464,7 @@ The following example is a time dimension with a daily grain. I.E. the smallest 
 This example also implements the most basic form of caching. Since the dimensions usually contain a very limited number of records caching each one in memory will dramatically increase the performance of the gathering process. Say you have the price dimension with 10 prices (that is 10 records) and 800&#8217;000 transactions to map. Evenly distributed, each price record will be queried 80&#8217;000 times. 79&#8217;999 times to many. So by caching the queries you save your database 799&#8217;990 redundant queries just for a single dimension. My simple cache is a lot faster than using cacheQueries, probably because it is so very basic. When it is all that is needed I will gladly take the performance boost.
 <p>
 
-<pre lang="sql">
+<pre class="prettyprint linenums" lang="sql">
 
 CREATE TABLE `dimension_time` (
     `id` int(11) unsigned NOT NULL auto_increment,
@@ -480,7 +481,7 @@ CREATE TABLE `dimension_time` (
 
 </pre>
 <br />
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 /*
  *  Time dimension with daily grain
  */
@@ -557,7 +558,7 @@ Group takes on a slightly special meaning here. It is used to define the dimensi
 <p>
 Mapped is a nifty little thing that replaces numerical array keys (0-n) with meaningful keys like: monday-sunday or 1-7 for day of week and  1-31 for day of month. It is a bit like findList() in that it prepares your data for the table or graph in the view.
 </p>
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 class ReportsController extends AppController {
     var $name = 'Reports';
     var $uses = array('FactSentSms');
@@ -683,7 +684,7 @@ If you design your dimensions cleverly they can be re-used for many fact tables.
     <div class="well">
       
         <section>
-  <h2>Recent Posts</h2>
+  <h4>Recent Posts</h4>
   <ul id="recent_posts">
     
       <li class="post">
@@ -709,12 +710,12 @@ If you design your dimensions cleverly they can be re-used for many fact tables.
   </ul>
 </section>
 <section>
-  <h1>Categories</h1>
+  <h4>Categories</h4>
     <ul id="category-list"><li><a href='/blog/categories/articles'>Articles (8)</a></li><li><a href='/blog/categories/code'>Code (12)</a></li><li><a href='/blog/categories/general-interest'>General Interest (10)</a></li><li><a href='/blog/categories/milestones-in-music'>Milestones in Music (15)</a></li><li><a href='/blog/categories/the-pensive'>The Pensive (17)</a></li></ul>
 </section>
 
 <section>
-  <h2>GitHub Repos</h2>
+  <h4>GitHub Repos</h4>
   <ul id="gh_repos">
     <li class="loading">Status updating...</li>
   </ul>
@@ -744,7 +745,7 @@ If you design your dimensions cleverly they can be re-used for many fact tables.
 
 
 <section>
-  <h2>Latest Tweets</h2>
+  <h4>Latest Tweets</h4>
   <ul id="tweets">
     <li class="loading">Status updating...</li>
   </ul>
@@ -768,12 +769,17 @@ If you design your dimensions cleverly they can be re-used for many fact tables.
     <footer class="footer"><p>
   Copyright &copy; 2013 - Martin Westin -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span> -
-  
-    <span class="credit">Theme by <a href="http://brianarmstrong.org">Brian Armstrong</a></span>
-  
 </p>
 </footer>
     <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="/assets/js/prettify.js"></script>
+<script>
+  !function ($) {
+    $(function(){
+      window.prettyPrint && prettyPrint()
+    })
+  }(window.jQuery)
+</script>
 
 
 

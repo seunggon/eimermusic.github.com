@@ -23,6 +23,7 @@
 
   <link href="/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
+  <link href="/assets/js/prettify.css" rel="stylesheet" type="text/css">
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
@@ -139,7 +140,7 @@
 
 <p>The save method stores each of these values in NSUserDefaults. This is really made to be a preference storage but I hope it is OK with Apple to use it for this as well :)</p>
 
-<pre lang="objc">
+<pre class="prettyprint linenums" lang="objc">
 - (void)saveGuiState {
     // basket selector state
     [[NSUserDefaults standardUserDefaults] setInteger:[basketSelector selectedSegmentIndex] forKey:@"basketSelectorIndex"];
@@ -163,7 +164,7 @@
 
 <p>The restore method does the reverse. It sets each parameter in the GUI to the value in NSUserDefaults (if it exists).</p>
 
-<pre lang="objc">
+<pre class="prettyprint linenums" lang="objc">
 - (void)restoreGuiState {
     
     // basket selector
@@ -221,7 +222,7 @@
 
 <p>One very important detail to note here is that NSUserDefaults syncs up with the OS periodically&#8230;. not immediately. Anything that is saved just before termination is very very very likely to be lost. It is a very simple fix though:</p>
 
-<pre lang="objc">
+<pre class="prettyprint linenums" lang="objc">
 [self saveGuiState];
 [[NSUserDefaults standardUserDefaults] synchronize];
 </pre>
@@ -293,7 +294,7 @@
     <div class="well">
       
         <section>
-  <h2>Recent Posts</h2>
+  <h4>Recent Posts</h4>
   <ul id="recent_posts">
     
       <li class="post">
@@ -319,12 +320,12 @@
   </ul>
 </section>
 <section>
-  <h1>Categories</h1>
+  <h4>Categories</h4>
     <ul id="category-list"><li><a href='/blog/categories/articles'>Articles (8)</a></li><li><a href='/blog/categories/code'>Code (12)</a></li><li><a href='/blog/categories/general-interest'>General Interest (10)</a></li><li><a href='/blog/categories/milestones-in-music'>Milestones in Music (15)</a></li><li><a href='/blog/categories/the-pensive'>The Pensive (17)</a></li></ul>
 </section>
 
 <section>
-  <h2>GitHub Repos</h2>
+  <h4>GitHub Repos</h4>
   <ul id="gh_repos">
     <li class="loading">Status updating...</li>
   </ul>
@@ -354,7 +355,7 @@
 
 
 <section>
-  <h2>Latest Tweets</h2>
+  <h4>Latest Tweets</h4>
   <ul id="tweets">
     <li class="loading">Status updating...</li>
   </ul>
@@ -378,12 +379,17 @@
     <footer class="footer"><p>
   Copyright &copy; 2013 - Martin Westin -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span> -
-  
-    <span class="credit">Theme by <a href="http://brianarmstrong.org">Brian Armstrong</a></span>
-  
 </p>
 </footer>
     <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="/assets/js/prettify.js"></script>
+<script>
+  !function ($) {
+    $(function(){
+      window.prettyPrint && prettyPrint()
+    })
+  }(window.jQuery)
+</script>
 
 
 

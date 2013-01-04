@@ -23,6 +23,7 @@
 
   <link href="/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
+  <link href="/assets/js/prettify.css" rel="stylesheet" type="text/css">
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
@@ -144,7 +145,7 @@ Just create a vhost and keep adding aliases for each new domain.
 </p>
 
 
-<pre lang="">
+<pre class="prettyprint linenums" lang="">
 ServerName client1.example.com
 ServerAlias client2.example.com
 ServerAlias client3.example.com
@@ -169,7 +170,7 @@ Shell access, you say? Well, that is where the first of the two if clauses in bo
 <h4>bootstrap.php</h4>
 
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 &lt;?php
 // Initial defaults go at the top, for example:
 Configure::write('Config.language', 'swe');
@@ -209,7 +210,7 @@ In <b>app/config/</b> I create a folder called <b>domains</b>. In it, I keep eac
 </p>
 
 
-<pre lang="">
+<pre class="prettyprint linenums" lang="">
 client1.example.com.php
 client2.example.com.php
 client3.example.com.php
@@ -223,7 +224,7 @@ myapp.local.php  <-- someone elses local setup.
 <h4> client1.example.com.php</h4>
 
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 &lt;?php
 // this file will mostly contain modifications of the defaults from bootstrap.php
 Configure::write('Config.language', 'eng');
@@ -273,7 +274,7 @@ As you can see I set the database configuration in the domain file. I prefer thi
 
 
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 &lt;?php
 class DATABASE_CONFIG {
     var $default = array(
@@ -322,7 +323,7 @@ The shell access is always a problem. You have no server-environment available a
 <h4>part of bootstrap.php again</h4>
 
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 &lt;?php
 
 if ( isset($_SERVER['HTTP_HOST']) ) { // normal web access
@@ -349,7 +350,7 @@ My hourly script is runs like this:
 </p>
 
 
-<pre lang="">
+<pre class="prettyprint linenums" lang="">
 /path/to/cake/cake/console/cake hourly client1.example.com
 </pre>
 
@@ -359,7 +360,7 @@ And from cron that would be:
 </p>
 
 
-<pre lang="">
+<pre class="prettyprint linenums" lang="">
 /path/to/cake/cake/console/cake -app /path/to/cake/app/ hourly client1.example.com
 </pre>
 
@@ -423,7 +424,7 @@ I did a minimal patch to the CakePHP (via git, updates are very painless with si
 
 
 
-<pre lang="xml">
+<pre class="prettyprint linenums" lang="xml">
 diff --git a/cake/config/paths.php b/cake/config/paths.php  
 index 6a6449f..075313a 100644  
 --- a/cake/config/paths.php  
@@ -450,7 +451,7 @@ I then add the necessary file app/config/paths.php and put this into it:
 
 
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 if ( !isset($_SERVER['SERVER_NAME']) ) { 
     if ( count($_SERVER['argv']) ) { // cli 
         $_SERVER['SERVER_NAME'] = $_SERVER['argv'][count($_SERVER['argv'])-1]; 
@@ -567,7 +568,7 @@ I had to hack the core, but that puts me into deployment nirvana. One source-tre
     <div class="well">
       
         <section>
-  <h2>Recent Posts</h2>
+  <h4>Recent Posts</h4>
   <ul id="recent_posts">
     
       <li class="post">
@@ -593,12 +594,12 @@ I had to hack the core, but that puts me into deployment nirvana. One source-tre
   </ul>
 </section>
 <section>
-  <h1>Categories</h1>
+  <h4>Categories</h4>
     <ul id="category-list"><li><a href='/blog/categories/articles'>Articles (8)</a></li><li><a href='/blog/categories/code'>Code (12)</a></li><li><a href='/blog/categories/general-interest'>General Interest (10)</a></li><li><a href='/blog/categories/milestones-in-music'>Milestones in Music (15)</a></li><li><a href='/blog/categories/the-pensive'>The Pensive (17)</a></li></ul>
 </section>
 
 <section>
-  <h2>GitHub Repos</h2>
+  <h4>GitHub Repos</h4>
   <ul id="gh_repos">
     <li class="loading">Status updating...</li>
   </ul>
@@ -628,7 +629,7 @@ I had to hack the core, but that puts me into deployment nirvana. One source-tre
 
 
 <section>
-  <h2>Latest Tweets</h2>
+  <h4>Latest Tweets</h4>
   <ul id="tweets">
     <li class="loading">Status updating...</li>
   </ul>
@@ -652,12 +653,17 @@ I had to hack the core, but that puts me into deployment nirvana. One source-tre
     <footer class="footer"><p>
   Copyright &copy; 2013 - Martin Westin -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span> -
-  
-    <span class="credit">Theme by <a href="http://brianarmstrong.org">Brian Armstrong</a></span>
-  
 </p>
 </footer>
     <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="/assets/js/prettify.js"></script>
+<script>
+  !function ($) {
+    $(function(){
+      window.prettyPrint && prettyPrint()
+    })
+  }(window.jQuery)
+</script>
 
 
 

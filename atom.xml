@@ -4,7 +4,7 @@
   <title><![CDATA[My New Home]]></title>
   <link href="http://eimer.co/atom.xml" rel="self"/>
   <link href="http://eimer.co/"/>
-  <updated>2013-01-03T22:29:58+01:00</updated>
+  <updated>2013-01-04T13:01:13+01:00</updated>
   <id>http://eimer.co/</id>
   <author>
     <name><![CDATA[Martin Westin]]></name>
@@ -26,7 +26,7 @@
 
 <p>After much Googling I combined one Stack Overflow answer with a note on some blog (lost both references).</p>
 
-<pre lang="ruby">
+<pre class="prettyprint linenums" lang="ruby">
 some_result_value = ""
 Bundler.with_clean_env do
   Dir.chdir "/path/to/rubytool"
@@ -88,7 +88,7 @@ end
 
 <p>The small and funky change fixed this, making my script both time and ram &#8220;proof&#8221;. This is how I will start out next time I have a long-running task.</p>
 
-<pre lang="ruby">
+<pre class="prettyprint linenums" lang="ruby">
 all = Model.all.to_a # these are just simple Rails models
 while one = all.pop # this is memory management
     one.do_heavy_processing # this loads in a ton of crap
@@ -161,7 +161,7 @@ end</pre>
 
 <p>Metacode of the basic principle:</p>
 
-<pre lang="ruby">
+<pre class="prettyprint linenums" lang="ruby">
 if new_hash(password) == stored_password
   // ALLOW LOGIN USING AN UP-TO-DATE PASS
 else
@@ -179,7 +179,7 @@ end
 
 <p>I implemented this by overriding the method <strong>valid_password?</strong> injected into your User model.</p>
 
-<pre lang="ruby">
+<pre class="prettyprint linenums" lang="ruby">
 class User
 
   def valid_password?(incoming_password)
@@ -274,7 +274,7 @@ end
 
 <p>Mac OS X has java bundled with the OS (for now). There is no need to install anything. The configuration file needs one non-obvious tweak.</p>
 
-<pre lang="bash">
+<pre class="prettyprint linenums" lang="bash">
 
 mongodb_host = 127.0.0.1 # localhost
 
@@ -289,7 +289,7 @@ mongodb_host = 127.0.0.1 # localhost
 
 <p>I didn&#8217;t get the daemon script to start and did not investigate is since I run Graylog2 for evaluation and development and like seeing the output. Starting by running the jar file requires that you sudo.</p>
 
-<pre lang="bash">
+<pre class="prettyprint linenums" lang="bash">
 
 sudo java -jar graylog2-server.jar debug
 
@@ -316,7 +316,7 @@ sudo java -jar graylog2-server.jar debug
 
 <p>first</p>
 
-<pre lang="bash">
+<pre class="prettyprint linenums" lang="bash">
 > cd /to/my/app/dir
 > bundle open graylog2_exceptions
 </pre>
@@ -327,7 +327,7 @@ In the file lib/graylog2_exceptions.rb you need to add the version parameter to 
 
 <p>Here is the modified method that does the actual notification:</p>
 
-<pre lang="ruby">
+<pre class="prettyprint linenums" lang="ruby">
   def send_to_graylog2 err
     begin
       notifier = GELF::Notifier.new(@args[:hostname], @args[:port])
@@ -368,7 +368,7 @@ remove_index(table_name, column_name)</p>
 
 <p>To remove a named index one has to use the block syntax afaik:</p>
 
-<pre lang="ruby">
+<pre class="prettyprint linenums" lang="ruby">
 change_table :tablename do |t|
   t.remove_index :name => :indexname
   t.index ["columnname"], :name => "indexname", :unique => true
@@ -415,7 +415,7 @@ end
 
 <h3>A very very very simple example in Ruby</h3>
 
-<pre lang="ruby">
+<pre class="prettyprint linenums" lang="ruby">
 
 num = "(0)701 - 23 45 67".gsub(/\D/,'')
 
@@ -618,7 +618,7 @@ Compiling this list I cannot now recall how I first came in contact with this al
 
 <p>Here it is:</p>
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 ## W3 Total CACHE BEGIN
 set $totalcache_file '';
 set $totalcache_uri $request_uri;
@@ -658,7 +658,7 @@ if (-f $document_root$totalcache_file) {
 
 <p>What I did was to change the filename. Also. If you, like me, have wp in a folder you would add that to the path as well.</p>
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 set $totalcache_file /wp-content/w3tc/pgcache/$1/_index.html;
 set $totalcache_file /your-wp-folder/wp-content/w3tc/pgcache/$1/_index.html;
 </pre>

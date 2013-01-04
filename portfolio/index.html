@@ -9,7 +9,7 @@
   <meta name="author" content="Martin Westin">
 
   
-  <meta name="description" content="To begin with, here are my two video showreels. (both last updated in 2007) Websites Reel Postproductiuon Reel (This video doesn&#8217;t play in all &hellip;">
+  <meta name="description" content=" To begin with, here are my two video showreels. (both last updated in 2007) Websites Reel Postproductiuon Reel ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -23,6 +23,7 @@
 
   <link href="/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
+  <link href="/assets/js/prettify.css" rel="stylesheet" type="text/css">
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
@@ -100,13 +101,11 @@
 
 <h2>Websites Reel</h2>
 
-<p><video width='' height='' preload='none' controls poster=''><source src='/images/websites_reel.mp4' type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'/></video></p>
+<p><video width='700' height='400' preload='none' controls poster=''><source src='/images/websites_reel.mp4' type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'/></video></p>
 
 <h2>Postproductiuon Reel</h2>
 
-<p><video width='' height='' preload='none' controls poster=''><source src='/images/video_reel.mp4' type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'/></video></p>
-
-<p>(This video doesn&#8217;t play in all versions of Chrome for some reason, sorry)</p>
+<p><video width='700' height='400' preload='none' controls poster=''><source src='/images/video_reel.mp4' type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'/></video></p>
 
 
     
@@ -126,12 +125,17 @@
     <footer class="footer"><p>
   Copyright &copy; 2013 - Martin Westin -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span> -
-  
-    <span class="credit">Theme by <a href="http://brianarmstrong.org">Brian Armstrong</a></span>
-  
 </p>
 </footer>
     <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="/assets/js/prettify.js"></script>
+<script>
+  !function ($) {
+    $(function(){
+      window.prettyPrint && prettyPrint()
+    })
+  }(window.jQuery)
+</script>
 
 
 

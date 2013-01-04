@@ -23,6 +23,7 @@
 
   <link href="/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
+  <link href="/assets/js/prettify.css" rel="stylesheet" type="text/css">
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
@@ -195,14 +196,14 @@ The current language was one of the ones I switched over. See below about i18n.
 <p>The few routes I had defined only needed to call the method statically to continue to work. For example:</p>
 
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 $Route->connect ('/', array('controller'=>'efs', 'action'=>'index'));
 </pre>
 
 
 <p>became:</p>
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 Router::connect('/', array('controller' => 'efs', 'action' => 'index'));
 </pre>
 
@@ -243,14 +244,14 @@ Router::connect('/', array('controller' => 'efs', 'action' => 'index'));
 
 <p>In AppController::beforeFilter:</p>
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 $this->Auth->authenticate =& $this->Auth->getModel();
 </pre>
 
 
 <p>And in models/user.php I added:</p>
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 function hashPasswords($data) {
     if (is_array($data) && isset($data[$this->alias])) {
         if (isset($data[$this->alias]['email']) && isset($data[$this->alias]['pass'])) {
@@ -280,14 +281,14 @@ function hashPasswords($data) {
 </p>
 
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 vendor('Archive/Tar');
 </pre>
 
 
 <p>now reads:</p>
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 App::import('Vendor','Archive/Tar');
 </pre>
 
@@ -297,7 +298,7 @@ App::import('Vendor','Archive/Tar');
 <p>The component dealing with syncing with the filesystem nor loads the needed models in a single call, like this:</p>
 
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 App::import('Model',array('Project','EfsFile'));
 </pre>
 
@@ -320,7 +321,7 @@ App::import('Model',array('Project','EfsFile'));
 
 <p>This is straight out of manual as it was a while ago:</p>
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 class User extends AppModel {
     var $name = 'User';
     var $hasMany = array(
@@ -339,7 +340,7 @@ class User extends AppModel {
 
 <p>And this is the small but important change:</p>
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 class User extends AppModel {
     var $name = 'User';
     var $hasMany = array(
@@ -358,14 +359,14 @@ class User extends AppModel {
 
 <p>I believe even empty conditions can cause you problems:</p>
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 'conditions' => '',
 </pre>
 
 
 <p>it should be:</p>
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 'conditions' => array(),
 </pre>
 
@@ -385,14 +386,14 @@ class User extends AppModel {
 <p>The Model methods find(), findAll() and so on have changed a lot. This required a lot of manual work, but since I could optimize thing at the same time and speed up the application noticeably I didn&#8217;t really mind the work. I also thing this new syntax is a lot easier to use.</p>
 
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 $allProj = $this->Project->findAll(null,null,'Project.title ASC');
 </pre>
 
 
 <p>should now read:</p>
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 $allProj = $this->Project->find('all',array(
     'order' => 'Project.title ASC'
 ));
@@ -401,7 +402,7 @@ $allProj = $this->Project->find('all',array(
 
 <p>or better yet:</p>
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 $allProj = $this->Project->find('all',array(
     'order' => array('Project.title' => 'ASC')
 ));
@@ -418,7 +419,7 @@ $allProj = $this->Project->find('all',array(
 </p>
 
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 $result = $this->deleteAll( array(
     $this->alias.'.created <' => $deadline
 ));
@@ -432,7 +433,7 @@ $result = $this->deleteAll( array(
 <p>Am am bursting with joy! Containable behavior is one of my favorite features in CakePHP 1.2. Containable is like find() on steroids.  It is like associations on acid. It is like&#8230; ok enough! The basic first step is to simple add this to the relevant models.</p>
 
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 var $actsAs = array('Containable');
 </pre>
 
@@ -451,7 +452,7 @@ These three models can easily cause a lot of unnecessary data to be loaded since
 </p>
 
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 $data = $this->User->find('first', array(
     'conditions' => array('User.id'=>$this->userData['User']['id']),
     'contain' => array(
@@ -482,7 +483,7 @@ $data = $this->User->find('first', array(
 </p>
 
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 var $validate = array(
     'name'=>VALID_NOT_EMPTY,
     'login'=>VALID_NOT_EMPTY,
@@ -493,7 +494,7 @@ var $validate = array(
 
 <p>now reads:</p>
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 var $validate = array(
     'name' => array(
         'rule' => 'notEmpty',
@@ -525,7 +526,7 @@ var $validate = array(
 </p>
 
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 foreach ( $system as $sysFile ) {
     foreach ( $data as $dataFile ) {
         if ( $sysFile['EfsFile']['filename'] == $dataFile['EfsFile']['filename'] ) {
@@ -546,7 +547,7 @@ foreach ( $system as $sysFile ) {
 </p>
 
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 foreach ( $system as $sysFile ) {
     $this->EfsFile->contain();
     $found = $this->EfsFile->find('first', array(
@@ -570,14 +571,14 @@ foreach ( $system as $sysFile ) {
 
 <p>in config/bootstrap.php</p>
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 define('EFS_FILESYSTEM_TYPE', 'ci'); // filesystem is set to case insensitive
 </pre>
 
 
 <p>in vendors/basics.php (my file of small handy global functions)</p>
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 // returns a filename or foldername in the correct case for comparison
 function file_case($str) {
     if ( EFS_FILESYSTEM_TYPE == 'ci' ) {
@@ -596,7 +597,7 @@ in vendors/basics.php (my file of small handy global functions)
 </p>
 
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 // returns a filename or foldername in the correct case for comparison
 function file_case($str) {
     if ( !defined('EFS_FILESYSTEM_TYPE') ) {
@@ -646,7 +647,7 @@ function file_case($str) {
 </p>
 
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 $labels = array();
 
 //--  login page
@@ -662,7 +663,7 @@ $labels['login_login']     = 'Login';
 </p>
 
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 # login page
 msgid "login_username"
 msgstr "Login Id"
@@ -681,7 +682,7 @@ msgstr "Login"
 </p>
 
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 function ___($singular, $return = true) {
     return __($singular, $return);
 }
@@ -696,7 +697,7 @@ function ___($singular, $return = true) {
 </p>
 
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 if (isset($_COOKIE['EFS_LANG'])) {
     //define('EFS_LANG', $_COOKIE['EFS_LANG']);
     Configure::write('Config.language', $_COOKIE['EFS_LANG']);
@@ -723,7 +724,7 @@ if (isset($_COOKIE['EFS_LANG'])) {
 </p>
 
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 <label for="UserLogin"><?php echo $lang->show('login_username'); ?></label>
 <?php
 $html->input('User/login',array(
@@ -735,7 +736,7 @@ $html->input('User/login',array(
 
 <p>now reads:</p>
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 $form->input('User.email',array(
     'label'=>___('login_username'), 
     'div' => false, 
@@ -768,14 +769,14 @@ $form->input('User.email',array(
 </p>
 
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 '/users/edit'
 </pre>
 
 
 <p>becomes:</p>
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 array('controller'=>'users', 'action'=>'edit')
 </pre>
 
@@ -790,14 +791,14 @@ array('controller'=>'users', 'action'=>'edit')
 </p>
 
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 <a href="<?php echo $html->url('/'); ?>"><?php echo $html->image('fileshifter_logo_bar.gif',array('alt'=>'Fileshifter logo'))?></a>
 </pre>
 
 
 <p>could be written like this:</p>
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 <?php echo $html->image('fileshifter_logo_bar.gif',array('alt'=>'Fileshifter logo', 'url'=>'/')); ?>
 </pre>
 
@@ -822,7 +823,7 @@ array('controller'=>'users', 'action'=>'edit')
 </p>
 
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 --base.ctp--
 ...lots of html for menu and header...
 
@@ -834,7 +835,7 @@ array('controller'=>'users', 'action'=>'edit')
 
 <p>And then I created two other layouts of this kind (this is the most simple one):</p>
 
-<pre lang="php">
+<pre class="prettyprint linenums" lang="php">
 --default.ctp--
 <?php
 echo $this->renderLayout('<div id="container">'.$content_for_layout.'</div>','base');
@@ -926,7 +927,7 @@ echo $this->renderLayout('<div id="container">'.$content_for_layout.'</div>','ba
     <div class="well">
       
         <section>
-  <h2>Recent Posts</h2>
+  <h4>Recent Posts</h4>
   <ul id="recent_posts">
     
       <li class="post">
@@ -952,12 +953,12 @@ echo $this->renderLayout('<div id="container">'.$content_for_layout.'</div>','ba
   </ul>
 </section>
 <section>
-  <h1>Categories</h1>
+  <h4>Categories</h4>
     <ul id="category-list"><li><a href='/blog/categories/articles'>Articles (8)</a></li><li><a href='/blog/categories/code'>Code (12)</a></li><li><a href='/blog/categories/general-interest'>General Interest (10)</a></li><li><a href='/blog/categories/milestones-in-music'>Milestones in Music (15)</a></li><li><a href='/blog/categories/the-pensive'>The Pensive (17)</a></li></ul>
 </section>
 
 <section>
-  <h2>GitHub Repos</h2>
+  <h4>GitHub Repos</h4>
   <ul id="gh_repos">
     <li class="loading">Status updating...</li>
   </ul>
@@ -987,7 +988,7 @@ echo $this->renderLayout('<div id="container">'.$content_for_layout.'</div>','ba
 
 
 <section>
-  <h2>Latest Tweets</h2>
+  <h4>Latest Tweets</h4>
   <ul id="tweets">
     <li class="loading">Status updating...</li>
   </ul>
@@ -1011,12 +1012,17 @@ echo $this->renderLayout('<div id="container">'.$content_for_layout.'</div>','ba
     <footer class="footer"><p>
   Copyright &copy; 2013 - Martin Westin -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span> -
-  
-    <span class="credit">Theme by <a href="http://brianarmstrong.org">Brian Armstrong</a></span>
-  
 </p>
 </footer>
     <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="/assets/js/prettify.js"></script>
+<script>
+  !function ($) {
+    $(function(){
+      window.prettyPrint && prettyPrint()
+    })
+  }(window.jQuery)
+</script>
 
 
 

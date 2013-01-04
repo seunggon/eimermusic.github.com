@@ -9,7 +9,7 @@
   <meta name="author" content="Martin Westin">
 
   
-  <meta name="description" content="Part of the series Milestones in Music (1995) This was love at second sight. Being a Public Enemy fan I thought the single was a bit cheeky. But I &hellip;">
+  <meta name="description" content="There exist many websites and web applications with elements of poor usability, engineering, design and so on. Some exhibit features so poor I can &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -23,6 +23,7 @@
 
   <link href="/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
+  <link href="/assets/js/prettify.css" rel="stylesheet" type="text/css">
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
@@ -100,7 +101,7 @@
         
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2010/07/30/tricky-maxinquaye/">Tricky - Maxinquaye</a></h1>
+      <h1 class="entry-title"><a href="/blog/2010/10/30/offensively-lazy-web-developers/">Offensively Lazy Web Developers</a></h1>
     
     
       <p class="meta">
@@ -116,282 +117,53 @@
   
 
 
-<time datetime="2010-07-30T00:00:00+02:00" pubdate data-updated="true">Jul 30<span>th</span>, 2010</time>
+<time datetime="2010-10-30T00:00:00+02:00" pubdate data-updated="true">Oct 30<span>th</span>, 2010</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/07/maxinquaye.jpg" alt="" title="Tricky - Maxinquaye" width="170" height="170" class="hang-2-column size-full wp-image-133" /></p>
+  <div class="entry-content"><p>There exist many websites and web applications with elements of poor usability, engineering, design and so on. Some exhibit features so poor I can only attribute them to laziness. Some actually make me feel offended that I have to jump through hoops to accommodate their laziness.</p>
 
-<p>Part of the series Milestones in Music</p>
+<p>Top of my list are form fields for postcodes, phone numbers, dates, times or any similar type of data. Simple numeric data. Easily validated and normalized. Yet I often see requirements to enter the data in a very specific format, often at odds with how humans customarily write such data. To most people (who are not developers) it can be very confusing to enter data in a perfectly normal way and have a computer tell them it is invalid. For me it is offensive since I know it is practically always the result of data not being normalized. A developer that does not normalize input data before validating it can only be described as lazy or, if you prefer, incompetent.</p>
 
+<h3>Postcodes</h3>
 
-<p><em>(1995)</em></p>
+<p>Nothing can be simpler, right. In many countries it is simply a few digits. Some through a few alphabetic characters in there. I&#8217;ll focus on local Swedish websites and Swedish postcodes. We have 5 digit postcodes. They are typically written &#8220;123 45&#8221;. So Why would any Swedish website validate that input and claim it is invalid. As a developer I know it is probably that a space is not a numeric character and that adding it also make the string 6 characters long and not 5.</p>
 
-<p>
-This was love at second sight. Being a Public Enemy fan I thought the single was a bit cheeky. But I truly love the rest of the album. All of it. It was released while I was an intern at IXM, a creative multimedia agency in Milan, Italy. Bought in a small record shop somewhere in the maze of central Milan, this album became the soundtrack to my time there. Ahh&#8230; CD-walkman. Those were the days.
-</p>
+<h3>Phone numbers</h3>
 
-</div>
-  
-  
+<p>A phone number is a string of numeric characters. Anything else: spaces, parenthesis, dashes and other chrome, is just that: chrome. None of that is part of the data. No server at ATT, Telia, Vodafone or any other network carrier reads these thing and need them in order to route a call. Quite the opposite. Any phone network and particularly cellular networks require a very specific internationally standardized format. Guess what? It is all numeric. A Swedish cellphone might be typed &#8220;0701 - 23 45 67&#8221; in my address book but the phone sends 46701234567 to the network anytime I make a call.</p>
 
+<h3>Dates and Times</h3>
 
-      </article>
-    
-    
-      <article>
-        
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2010/07/30/portishead-dummy/">Portishead - Dummy</a></h1>
-    
-    
-      <p class="meta">
-        
+<p>These are a bit more complex than the above. But the same principles apply. Then again, most web-focused programming languages have functions to parse a myriad of ways one could type a date or time and create a proper date or time object or data type. If you still find it does not work for you then, in this case, you should provide something other than a blank test field. Try googling for datepicker or timepicker. The problem will be one of choosing your favorite rather than finding anything at all.</p>
 
+<h3>Being constructive</h3>
 
+<p>I have ranted a bit now so I thought I&#8217;d put my code where my mouth is. Since I am not allowed to share my phone number normalizer code I wrote at work I thought I&#8217;d at least share the secret to all the normalizing tasks above&#8230; It&#8217;s regex. Regular Expressions.</p>
 
+<h3>Getting rid of whitespace</h3>
 
+<p>The following will &#8220;match&#8221; whitespace characters. By substituting the matches with nothing you will simply remove all whitespace from a string.
+<strong>/\s/</strong></p>
 
+<h3>Remove anything that is not a number</h3>
 
+<p>And the following will remove non digits if you substitute the matches with nothing.
+<strong>/\D/</strong></p>
 
+<h3>A very very very simple example in Ruby</h3>
 
-  
+<pre class="prettyprint linenums" lang="ruby">
 
+num = "(0)701 - 23 45 67".gsub(/\D/,'')
 
-<time datetime="2010-07-30T00:00:00+02:00" pubdate data-updated="true">Jul 30<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/07/portishead.jpg" alt="" title="Portishead - Dummy" width="170" height="170" class="hang-2-column size-full wp-image-131" /></p>
-
-<p>Part of the series Milestones in Music</p>
-
-
-<p><em>(1994)</em></p>
-
-<p>
-Another revolution that blew my mind completely from the first note. I remember hearing Glory Box on the radio on the way to the ski slopes, instantly pulling over and scrabbling for a pen and paper in the glove box&#8230; I was not going to miss the name of this band. Portishead are unbeatable at their game. I love everything I have been able to get my hands on. Bootlegs, remixes and all.
-</p>
-
-</div>
-  
-  
-
-
-      </article>
-    
-    
-      <article>
-        
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2010/07/29/the-root-of-all-bugs-in-iphone-development/">The Root of All Bugs in Iphone Development?</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-07-29T00:00:00+02:00" pubdate data-updated="true">Jul 29<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Catchy title, sure. I don&#8217;t write that as a universal truth but as my experience from developing my first iPhone app, <a href="http://extraction.eimermusic.com/">Extraction</a>.</p>
-
-<h2>So what is it?</h2>
-
-<p>In a word (or two): <strong>Memory Warnings</strong></p>
-
-<p>Every single bug that was in my app when it shipped was related to memory warnings in some way. Had I tested memory warnings in the simulator more thoroughly they might never have bothered my users. My simple advice to other noob iphone developers is:</p>
-
-<p>Simulate memory warnings in the simulator over and over in every conceivable view and state your app can be in.</p>
-
-<h2>Example #1. Lost data</h2>
-
-<p>Symptoms
-Rarely, but sometimes, my app would loose the most recent data while going back and forth between my main and my detail view. Really odd? I had many wild ideas of why it would suddenly loose the most recent &#8220;item&#8221;.</p>
-
-<p>The cause
-My app experienced occasional memory warnings (it takes photos which can for a brief time take up a lot of memory), sometimes causing the main view to unload and then reload when I returned to it. Normal behavior, but something I did not think much about. I had followed some tutorial or other (no finger-pointing here) and loaded my table of data in &#8220;viewDidLoad&#8221;. Naturally when the view reloaded it also reloaded the data from disk and &#8220;lost&#8221; any recent data.</p>
-
-<h2>Example #2. The Disappearing GUI</h2>
-
-<p>Symptoms
-Rarely, but sometimes, the entire detail view would just &#8220;go blank&#8221; when the keyboard appeared to edit a text area. The navbar was still there but the rest of the screen above the keyboard was just a nice background color.</p>
-
-<p>The cause
-Memory warnings again. ViewDidLoad was to blame again. This time the view registered itself to be notified about appearing keyboards and when the view reloaded after a memory warning it registered again and thus received notifications back-to-back. This caused my smooth scrolling to position the text area to happen twice and push everything off screen.</p>
-
-<h2>The moral of the story</h2>
-
-<p>ViewDidLoad can happen many times while your app is running. This is not too clear in most beginner tutorials.</p>
-
-<p>Anything you do in a DidLoad or WillAppear you should &#8220;undo&#8221; (or do the reverse of) in the corresponding UnLoad or WillDisappear. For example:</p>
-
-<p>Anything in the OS you register for, you really should resign from too.</p>
-
-<p>This is all noob stuff but I think others may be scratching their heads over similar bugs. I hope it is not just me :)</p>
-</div>
-  
-  
-
-
-      </article>
-    
-    
-      <article>
-        
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2010/07/12/implementing-gui-persistence-in-an-iphone-app/">Implementing GUI Persistence in an iPhone App</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-07-12T00:00:00+02:00" pubdate data-updated="true">Jul 12<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>With iOS 4, Apple pushes everyone to build our apps so that we preserve the state of the application when it terminates. This is because to the normal user there is no difference between an app being &#8220;pushed&#8221; to the background and an app being terminated. Apple want the users to feel like our apps never terminate. That they just leave them in the background a while.</p>
-
-<p>I&#8217;ll explain how I implemented this behaviour using NSUserDefaults in my app, <a href="http://extraction.eimermusic.com/">Extraction</a>. It may not be the most advanced technique or the best in any way. I just know it works for me.</p>
-
-<p>I will use the main view in Extraction to exemplify this. It requires that I &#8220;remember&#8221; the following things when my app terminates, receives a memory warning or is suspended in the background.</p>
-
-<ul>
-    <li>The selected item in the basket selector (at the top)</li>
-    <li>The state of the main button</li>
-    <li>The time of the timer if it is running</li>
-    <li>Finally, the scroll position of the Table View listing the stored extractions</li>
-</ul>
-
-
-<p>To handle the saving the restoration of the state of these elements I created two methods in my MainViewController, called <strong>saveGuiState</strong> and <strong>restoreGuiState</strong> of all things.</p>
-
-<p>The save method stores each of these values in NSUserDefaults. This is really made to be a preference storage but I hope it is OK with Apple to use it for this as well :)</p>
-
-<pre lang="objc">
-- (void)saveGuiState {
-    // basket selector state
-    [[NSUserDefaults standardUserDefaults] setInteger:[basketSelector selectedSegmentIndex] forKey:@"basketSelectorIndex"];
-
-    // button state based on internal "runlevel" integer
-    [[NSUserDefaults standardUserDefaults] setInteger:running forKey:@"running"];
-
-    // timer interval
-    [[NSUserDefaults standardUserDefaults] setDouble:startInterval forKey:@"startInterval"];
-
-    // Table scrolling
-    CGPoint contentOffset = [viewTable contentOffset];
-    [[NSUserDefaults standardUserDefaults] setFloat:contentOffset.y forKey:@"contentOffsetY"];
-}
 </pre>
 
 
-<p>It does nothing very complicated. It simply takes each value I need to restore the GUi and stores it to the Defaults database.</p>
-
-<p>The most interesting detail for me was discovering the contentOffset property for UIScrollView (and also the subclass UITableView). It allows me to &#8220;scroll&#8221; the table to the exact pixel value it was scrolled to before. Very handy.</p>
-
-<p>The restore method does the reverse. It sets each parameter in the GUI to the value in NSUserDefaults (if it exists).</p>
-
-<pre lang="objc">
-- (void)restoreGuiState {
-    
-    // basket selector
-    if ( NULL != [[NSUserDefaults standardUserDefaults] objectForKey:@"basketSelectorIndex"] ) {
-        [basketSelector setSelectedSegmentIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"basketSelectorIndex"]];
-    }
-    
-    // timer interval
-    if ( NULL != [[NSUserDefaults standardUserDefaults] objectForKey:@"startInterval"] ) {
-        startInterval = [[NSUserDefaults standardUserDefaults] doubleForKey:@"startInterval"];
-        elapsedTime = [NSDate timeIntervalSinceReferenceDate] - startInterval;
-
-        // restore timer if we have not been gone too long
-        if ( elapsedTime < 90 ) {
-            
-            // running state
-            if ( NULL != [[NSUserDefaults standardUserDefaults] objectForKey:@"running"] ) {
-                running = [[NSUserDefaults standardUserDefaults] integerForKey:@"running"];
-                
-                // a little method for setting the button label for each run level
-                [self stepButtonTitleForRunningState:running];
-                
-                if ( running && ![myTimer isValid] ) {
-                    // restart an invalidated timer
-                    myTimer = [NSTimer scheduledTimerWithTimeInterval: 0.05 target: self selector: @selector(updateTime) userInfo: nil repeats: YES];
-                    // set the current timer object to the last one created
-                    current = [results objectAtIndex:[results count] - 1];
-                }
-            }
-            
-        }
-        
-    }
-
-    // Table scrolling
-    [viewTable reloadData];
-    if ( NULL != [[NSUserDefaults standardUserDefaults] objectForKey:@"contentOffsetY"] ) {
-        CGPoint contentOffset = CGPointMake(0.0,[[NSUserDefaults standardUserDefaults] floatForKey:@"contentOffsetY"]);
-        [viewTable setContentOffset:contentOffset animated:NO];
-    } else {
-        NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:([results count] - 1) inSection:0];
-        [viewTable scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-    }
-}
-</pre>
-
-
-<p>Something to note here is that the if clauses check against the objectForKey value and not the integer or float. This is so it will return true even for 0 values that are set. For example, the default value for the selector is a double (index=1) if I checked against the integer I would never restore to a single basket setting.</p>
-
-<p>Also the nested ifs are there so that I only restore timer-related things if it is appropriate.</p>
-
-<p>These two methods are run then the view unloads and loads, respectively. I call the restore method in viewWillAppear and I set a bool so that I don&#8217;t do it repeatedly unless the view has been unloaded since it was last seen. I think it has to do with the UITableView needing to populate itself and viewDidLoad was too early.</p>
-
-<p>The save method is called from two places. viewDidUnload, obviously, and my &#8220;applicationWillTerminate&#8221; (which received the system notifications for both termination and entering background in iOS4). This is because viewDidUload does not fire when terminating the application and you are supposed to save state when entering background and about to be suspended.</p>
-
-<p>One very important detail to note here is that NSUserDefaults syncs up with the OS periodically&#8230;. not immediately. Anything that is saved just before termination is very very very likely to be lost. It is a very simple fix though:</p>
-
-<pre lang="objc">
-[self saveGuiState];
-[[NSUserDefaults standardUserDefaults] synchronize];
-</pre>
-
-
-<p>That is it. That is all I do to make my app behave like it never quits. It even gets some multitasking feeling on non-multitasking devices. You can make a very quick phone call on your iPhone 3G or OG (The Original Generation iPhone) and return to Extraction in time to stop the timer. Pretty cool.</p>
+<p>Seriously. That is all it takes to turn an offensive web form into a more humane one.</p>
 </div>
   
   
@@ -404,7 +176,7 @@ Memory warnings again. ViewDidLoad was to blame again. This time the view regist
         
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2010/07/08/the-prodigy-experience/">The Prodigy - Experience</a></h1>
+      <h1 class="entry-title"><a href="/blog/2010/09/30/soap-with-attachments-in-ruby/">SOAP With Attachments in Ruby</a></h1>
     
     
       <p class="meta">
@@ -420,24 +192,39 @@ Memory warnings again. ViewDidLoad was to blame again. This time the view regist
   
 
 
-<time datetime="2010-07-08T00:00:00+02:00" pubdate data-updated="true">Jul 8<span>th</span>, 2010</time>
+<time datetime="2010-09-30T00:00:00+02:00" pubdate data-updated="true">Sep 30<span>th</span>, 2010</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/07/prodigy.jpg" alt="" title="The Prodigy - Experience" width="170" height="170" class="hang-2-column size-full wp-image-124" /></p>
+  <div class="entry-content"><p>I found myself once again facing SOAP. This abomination of a protocol they even have the nerve to call &#8220;web services&#8221; is not my favorite type of API to interface with (how did you guess?). I think probably the only language with any decent support is Java and possibly .net. Neither rank among my favorite languages either. Funny that.</p>
 
-<p>Part of the series Milestones in Music</p>
+<p>My bigger problem is that the service I am interfacing with is noting as simple as sending an integer and getting an integer back. It requires that I post a multipart/mime SOAP message (aka SOAP with Attachments afaik). This is something that most SOAP libraries are not too keen on supporting.</p>
+
+<h3>What are multipart SOAP messages?</h3>
+
+<p>In short they are encoded a kind-of like email messages and their attachments but sent using http to a SOAP endpoint. The normal SOAP message becomes one of the mime parts and any other parts are called attachments and usually referenced from inside the SOAP message.</p>
+
+<h3>A little history</h3>
+
+<p>A few years ago in PHP I was stuck using NuSOAP and ended up basically bypassing most of NuSOAP and encoding the attachments and doing all that myself. The code was a real mess.</p>
+
+<p>Last week I got to do it all over again. This time in Ruby. At work, we are porting our entire platform to Ruby, but detailing that process might be a post in itself. I was so happy when I found that soap4r has support for mime messages. Then I tried to use soap4r. Long story short. I liked it so much I chose to go with Savon instead&#8230; which has no mime support.</p>
+
+<h3>What I ended up with</h3>
+
+<p>The results of my efforts is not pretty by Ruby standards but a lot better than my old code in php. I patched Savon in two places. One to enable any namespace on the SOAP body (which is otherwise hard-coded to &#8220;wsdl&#8221;) and has little to do with mime messages.</p>
+
+<p>The other place was to intercept the output and check if the SOAP object had any attachments (parts) added to it. If so, it will take the intended output and encode that as a mime part and then encode the other parts and put it all together as a nice big http packet ready for posting.</p>
+
+<p>I think it best if I just show the code now.</p>
+
+<script src="https://gist.github.com/602864.js?file=savon_mime_support_patch_example.rb"></script>
 
 
-<p><em>(1992)</em></p>
-
-<p>
-What a groundbreaking album. Still the best one from Prodigy in my mind. I don&#8217;t really care for the electro-punk type stuff of recent years. I bought a Roland sampler in, like 1998. It was the rack-mount sibling to Liams favorite W30 sampler. Anything you sampled into that thing sounded like the Prodigy. Beats never sounded better, any boring string sample could be given the &#8220;Out Of Space&#8221;-treatment in minutes&#8230;. fabulous! Notable rare tracks from Prodigy are the B-side Molotov Bitch and the remix of Method Man&#8217;s Release Yo Delf. My kind of Hip Hop.
-</p>
-
+<p>Any questions posted to the gist or here will be adressed to the best of my abilities.</p>
 </div>
   
   
@@ -450,7 +237,7 @@ What a groundbreaking album. Still the best one from Prodigy in my mind. I don&#
         
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2010/07/08/massive-attack-protection/">Massive Attack - Protection</a></h1>
+      <h1 class="entry-title"><a href="/blog/2010/08/31/kanye-west-808s-heartbreak/">Kanye West - 808s & Heartbreak</a></h1>
     
     
       <p class="meta">
@@ -466,22 +253,28 @@ What a groundbreaking album. Still the best one from Prodigy in my mind. I don&#
   
 
 
-<time datetime="2010-07-08T00:00:00+02:00" pubdate data-updated="true">Jul 8<span>th</span>, 2010</time>
+<time datetime="2010-08-31T00:00:00+02:00" pubdate data-updated="true">Aug 31<span>st</span>, 2010</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/07/massive_attack-protection.jpg" alt="" title="Massive Attack - Protection" width="170" height="170" class="hang-2-column size-full wp-image-126" /></p>
+  <div class="entry-content"><p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/08/kanye-west-170x170.jpg" alt="" title="kanye-west" width="170" height="170" class="hang-2-column size-thumbnail wp-image-154" /></p>
 
 <p>Part of the series Milestones in Music</p>
 
 
-<p><em>(1994)</em></p>
+<p><em>(2008)</em></p>
 
 <p>
-I heard Better Things on the cover-CD from some magazine. I forget which. Tracy&#8217;s voice and the very stylized music gripped me instantly. Protection is probably still my favorite album by Massive Attack. It sets itself apart from all other albums they have made by the very clean production and of-course: Tracy.
+This album blew my mind completely. It not only shows a personal side to Kanye as a song-writer. The coolest thing is that the album could more or less have been produced in any bedroom studio in the world. We all have the tools at home to make this album&#8230; we are just not as good as Kanye. Damn!</p>
+
+
+
+
+<p>
+That is the last milestone for now&#8230;
 </p>
 
 </div>
@@ -496,7 +289,7 @@ I heard Better Things on the cover-CD from some magazine. I forget which. Tracy&
         
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2010/07/04/massive-attack-unfinished-sympathy/">Massive Attack - Unfinished Sympathy</a></h1>
+      <h1 class="entry-title"><a href="/blog/2010/08/31/burial-burial/">Burial - Burial</a></h1>
     
     
       <p class="meta">
@@ -512,23 +305,22 @@ I heard Better Things on the cover-CD from some magazine. I forget which. Tracy&
   
 
 
-<time datetime="2010-07-04T00:00:00+02:00" pubdate data-updated="true">Jul 4<span>th</span>, 2010</time>
+<time datetime="2010-08-31T00:00:00+02:00" pubdate data-updated="true">Aug 31<span>st</span>, 2010</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/07/MassiveAttack-UnfinishedSympathy.jpg" alt="" title="Massive Attack - Unfinished Sympathy" width="170" height="128" class="hang-2-column size-full wp-image-121" /></p>
+  <div class="entry-content"><p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/08/Burial-Burial.jpg" alt="" title="Burial-Burial" width="170" height="170" class="hang-2-column size-full wp-image-152" /></p>
 
 <p>Part of the series Milestones in Music</p>
 
 
-<p><em>(1991)</em></p>
+<p><em>(2006)</em></p>
 
 <p>
-This song was a mystery to me for a long time. I would see part of the fantastic video on MTV every now and then. Awestruck every time. Both by the one-take video, the singing and the music. It was only after buying Protection that I realised Massive Attack had made this track. 
-</p>
+I stumbled upon this album on bleep.com by mistake. What a find. So dirty. So atmospheric. Nothing like &#8220;normal&#8221; Dub Step. Really in a genre of his own. It also helped that he (William Bevan) remained very anonymous for a very long time. No interviews, no real name, nothing. The lines spoken by Benicio del Toro and Forrest Whittaker (I believe they are real samples and not re-creations) help set the spooky mood of the album.  </p>
 
 </div>
   
@@ -542,7 +334,7 @@ This song was a mystery to me for a long time. I would see part of the fantastic
         
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2010/07/04/enigma-mcmxc-a-d/">Enigma - MCMXC a.D.</a></h1>
+      <h1 class="entry-title"><a href="/blog/2010/08/29/photek-modus-operandi/">Photek - Modus Operandi</a></h1>
     
     
       <p class="meta">
@@ -558,118 +350,23 @@ This song was a mystery to me for a long time. I would see part of the fantastic
   
 
 
-<time datetime="2010-07-04T00:00:00+02:00" pubdate data-updated="true">Jul 4<span>th</span>, 2010</time>
+<time datetime="2010-08-29T00:00:00+02:00" pubdate data-updated="true">Aug 29<span>th</span>, 2010</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/07/ENIGMA-MCMXCAD.jpg" alt="" title="Enigma - MCMXC a.D." width="170" height="170" class="hang-2-column size-full wp-image-119" /></p>
+  <div class="entry-content"><p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/08/modus-operandi.jpg" alt="" title="modus-operandi" width="170" height="170" class="hang-2-column size-full wp-image-146" /></p>
 
 <p>Part of the series Milestones in Music</p>
 
 
-<p><em>(1990)</em></p>
+<p><em>(1997)</em></p>
 
 <p>
-This album was really one of a kind at the time. I think it turned me towards a lot of &#8220;Chillout&#8221; -type music and was one of the albums that inspired me technically. Samplers could make evocative tunes? Who knew?
-</p>
+I love a lot of Rupert&#8217;s work but Modus Operandi was the one that made me take notice in the tidal wave of half-assed D&#8217;n&#8217;B from the late &#8217;90s. To get the best of Photek, though, you need to dig out the rarer tracks. My old favorites are Knightvision and Ni Ten Ichi Ryu. These days I listen to his brief stint in the more laid back arena. Halogen and Lost Blue Heaven from Solaris (the album, not the soundtrack) the tracks I am referring to. The rest of that album is not to my taste though.</p>
 
-</div>
-  
-  
-
-
-      </article>
-    
-    
-      <article>
-        
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2010/07/03/public-enemy-fear-of-a-black-planet/">Public Enemy - Fear of a Black Planet</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-07-03T00:00:00+02:00" pubdate data-updated="true">Jul 3<span>rd</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/07/fear-of-a-black-planet.jpg" alt="" title="Fear of a Black Planet" width="170" height="170" class="hang-2-column size-full wp-image-117" /></p>
-
-<p>Part of the series Milestones in Music</p>
-
-
-<p><em>(1990)</em></p>
-
-<p>
-This was the first CDs I ever bought. I always liked Public Enemy but this is one of the few albums of theirs I&#8217;ve bought. I know every sound, every beat and every rhyme by heart. Epic Hip Hop.
-</p>
-
-</div>
-  
-  
-
-
-      </article>
-    
-    
-      <article>
-        
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2010/07/03/pink-floyd-the-wall/">Pink Floyd - the Wall</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-07-03T00:00:00+02:00" pubdate data-updated="true">Jul 3<span>rd</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/07/pink-floyd-the-wall1.gif" alt="" title="Pink Floyd - The Wall" width="170" height="128" class="hang-2-column size-full wp-image-112" /></p>
-
-<p>Part of the series Milestones in Music</p>
-
-
-<p><em>(1979)</em></p>
-
-<p>
-My favorite album during early childhood. I still listen to this one a lot. I just never got bored with it. I remember thinking the album was about Star Wars. The marching on Waiting For The Worms and The Trial were storm troopers and &#8220;the defendant&#8221; in The Trial was Luke Skywalker.
-</p>
-
-
-<p><em>(Remember: I am not from an English speaking country so I did not understand a word of it before the age of at least 10 or 11.)</em></p>
 </div>
   
   
@@ -693,7 +390,7 @@ My favorite album during early childhood. I still listen to this one a lot. I ju
     <div class="well">
       
         <section>
-  <h2>Recent Posts</h2>
+  <h4>Recent Posts</h4>
   <ul id="recent_posts">
     
       <li class="post">
@@ -719,12 +416,12 @@ My favorite album during early childhood. I still listen to this one a lot. I ju
   </ul>
 </section>
 <section>
-  <h1>Categories</h1>
+  <h4>Categories</h4>
     <ul id="category-list"><li><a href='/blog/categories/articles'>Articles (8)</a></li><li><a href='/blog/categories/code'>Code (12)</a></li><li><a href='/blog/categories/general-interest'>General Interest (10)</a></li><li><a href='/blog/categories/milestones-in-music'>Milestones in Music (15)</a></li><li><a href='/blog/categories/the-pensive'>The Pensive (17)</a></li></ul>
 </section>
 
 <section>
-  <h2>GitHub Repos</h2>
+  <h4>GitHub Repos</h4>
   <ul id="gh_repos">
     <li class="loading">Status updating&#8230;</li>
   </ul>
@@ -754,7 +451,7 @@ My favorite album during early childhood. I still listen to this one a lot. I ju
 
 
 <section>
-  <h2>Latest Tweets</h2>
+  <h4>Latest Tweets</h4>
   <ul id="tweets">
     <li class="loading">Status updating&#8230;</li>
   </ul>
@@ -776,12 +473,17 @@ My favorite album during early childhood. I still listen to this one a lot. I ju
     <footer class="footer"><p>
   Copyright &copy; 2013 - Martin Westin -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span> -
-  
-    <span class="credit">Theme by <a href="http://brianarmstrong.org">Brian Armstrong</a></span>
-  
 </p>
 </footer>
     <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="/assets/js/prettify.js"></script>
+<script>
+  !function ($) {
+    $(function(){
+      window.prettyPrint && prettyPrint()
+    })
+  }(window.jQuery)
+</script>
 
 
 
