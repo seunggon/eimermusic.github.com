@@ -4,7 +4,7 @@
   <title><![CDATA[Category: The Pensive | My New Home]]></title>
   <link href="http://eimer.co/blog/categories/the-pensive/atom.xml" rel="self"/>
   <link href="http://eimer.co/"/>
-  <updated>2013-01-04T13:01:13+01:00</updated>
+  <updated>2013-01-11T14:52:02+01:00</updated>
   <id>http://eimer.co/</id>
   <author>
     <name><![CDATA[Martin Westin]]></name>
@@ -82,7 +82,7 @@ end</pre>
     <id>http://eimer.co/blog/2011/11/03/quick-tip-ios-and-web-graphics-in-illustrator</id>
     <content type="html"><![CDATA[<p>I wanted to make a note of one of these things I keep forgetting in Adobe Illustrator. It is very simple, obvious and keeps me sane while drawing UI elements.</p>
 
-<p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2011/11/transform-web.png" alt="" title="Transform Pane" width="216" height="125" class="size-full wp-image-179" /></p>
+<p><img src="http://eimer.co/images/uploads/2011/11/transform-web.png" alt="" title="Transform Pane" width="216" height="125" class="size-full wp-image-179" /></p>
 
 <p><strong>Make sure "Align to Pixel Grid" is actually selected!</strong></p>
 

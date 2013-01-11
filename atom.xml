@@ -4,7 +4,7 @@
   <title><![CDATA[My New Home]]></title>
   <link href="http://eimer.co/atom.xml" rel="self"/>
   <link href="http://eimer.co/"/>
-  <updated>2013-01-04T13:01:13+01:00</updated>
+  <updated>2013-01-11T14:52:02+01:00</updated>
   <id>http://eimer.co/</id>
   <author>
     <name><![CDATA[Martin Westin]]></name>
@@ -48,7 +48,7 @@ end
     <link href="http://eimer.co/blog/2012/02/29/winning-two-gsma-global-mobile-awards/"/>
     <updated>2012-02-29T00:00:00+01:00</updated>
     <id>http://eimer.co/blog/2012/02/29/winning-two-gsma-global-mobile-awards</id>
-    <content type="html"><![CDATA[<p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2012/02/logo_02.png" alt="" title="GSMA Global Awards 2012" width="380" height="100" class="size-full wp-image-186" /></p>
+    <content type="html"><![CDATA[<p><img src="http://eimer.co/images/uploads/2012/02/logo_02.png" alt="" title="GSMA Global Awards 2012" width="380" height="100" class="size-full wp-image-186" /></p>
 
 <p>Yesterday, Feb 28 2012, <a href="http://www.greatconnection.se/" title="Great Connection Inc">Great Connection Inc</a>, the company I co-founded and work for, won two <a href="http://www.globalmobileawards.com/winners2012.php">GSMA Global Mobile Awards</a>. We won both categories relating to healthcare and both our nominations. As this is the equivalent to an Oscar or a Grammy in our industry, but far less glamourous, it&#8217;s pretty awesome.</p>
 
@@ -106,7 +106,7 @@ end</pre>
     <id>http://eimer.co/blog/2011/11/03/quick-tip-ios-and-web-graphics-in-illustrator</id>
     <content type="html"><![CDATA[<p>I wanted to make a note of one of these things I keep forgetting in Adobe Illustrator. It is very simple, obvious and keeps me sane while drawing UI elements.</p>
 
-<p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2011/11/transform-web.png" alt="" title="Transform Pane" width="216" height="125" class="size-full wp-image-179" /></p>
+<p><img src="http://eimer.co/images/uploads/2011/11/transform-web.png" alt="" title="Transform Pane" width="216" height="125" class="size-full wp-image-179" /></p>
 
 <p><strong>Make sure &#8220;Align to Pixel Grid&#8221; is actually selected!</strong></p>
 
@@ -465,7 +465,7 @@ num = "(0)701 - 23 45 67".gsub(/\D/,'')
     <link href="http://eimer.co/blog/2010/08/31/kanye-west-808s-heartbreak/"/>
     <updated>2010-08-31T00:00:00+02:00</updated>
     <id>http://eimer.co/blog/2010/08/31/kanye-west-808s-heartbreak</id>
-    <content type="html"><![CDATA[<p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/08/kanye-west-170x170.jpg" alt="" title="kanye-west" width="170" height="170" class="hang-2-column size-thumbnail wp-image-154" /></p>
+    <content type="html"><![CDATA[<p><img src="http://eimer.co/images/uploads/2010/08/kanye-west-170x170.jpg" alt="" title="kanye-west" width="170" height="170" class="hang-2-column size-thumbnail wp-image-154" /></p>
 
 <p>Part of the series Milestones in Music</p>
 
@@ -490,7 +490,7 @@ That is the last milestone for now&#8230;
     <link href="http://eimer.co/blog/2010/08/31/burial-burial/"/>
     <updated>2010-08-31T00:00:00+02:00</updated>
     <id>http://eimer.co/blog/2010/08/31/burial-burial</id>
-    <content type="html"><![CDATA[<p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/08/Burial-Burial.jpg" alt="" title="Burial-Burial" width="170" height="170" class="hang-2-column size-full wp-image-152" /></p>
+    <content type="html"><![CDATA[<p><img src="http://eimer.co/images/uploads/2010/08/Burial-Burial.jpg" alt="" title="Burial-Burial" width="170" height="170" class="hang-2-column size-full wp-image-152" /></p>
 
 <p>Part of the series Milestones in Music</p>
 
@@ -508,7 +508,7 @@ I stumbled upon this album on bleep.com by mistake. What a find. So dirty. So at
     <link href="http://eimer.co/blog/2010/08/29/photek-modus-operandi/"/>
     <updated>2010-08-29T00:00:00+02:00</updated>
     <id>http://eimer.co/blog/2010/08/29/photek-modus-operandi</id>
-    <content type="html"><![CDATA[<p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/08/modus-operandi.jpg" alt="" title="modus-operandi" width="170" height="170" class="hang-2-column size-full wp-image-146" /></p>
+    <content type="html"><![CDATA[<p><img src="http://eimer.co/images/uploads/2010/08/modus-operandi.jpg" alt="" title="modus-operandi" width="170" height="170" class="hang-2-column size-full wp-image-146" /></p>
 
 <p>Part of the series Milestones in Music</p>
 
@@ -555,7 +555,7 @@ I love a lot of Rupert&#8217;s work but Modus Operandi was the one that made me 
     <link href="http://eimer.co/blog/2010/08/29/cliff-martinez-solaris-ost/"/>
     <updated>2010-08-29T00:00:00+02:00</updated>
     <id>http://eimer.co/blog/2010/08/29/cliff-martinez-solaris-ost</id>
-    <content type="html"><![CDATA[<p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/08/solaris.jpg" alt="" title="solaris" width="170" height="170" class="hang-2-column size-full wp-image-149" /></p>
+    <content type="html"><![CDATA[<p><img src="http://eimer.co/images/uploads/2010/08/solaris.jpg" alt="" title="solaris" width="170" height="170" class="hang-2-column size-full wp-image-149" /></p>
 
 <p>Part of the series Milestones in Music</p>
 
@@ -573,7 +573,7 @@ This soundtrack is a pure flash of genius. I&#8217;d say it has a lot to do with
     <link href="http://eimer.co/blog/2010/08/15/lamb-lamb/"/>
     <updated>2010-08-15T00:00:00+02:00</updated>
     <id>http://eimer.co/blog/2010/08/15/lamb-lamb</id>
-    <content type="html"><![CDATA[<p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/08/Lamb-Lamb.jpg" alt="" title="Lamb - Lamb" width="170" height="170" class="hang-2-column size-full wp-image-142" /></p>
+    <content type="html"><![CDATA[<p><img src="http://eimer.co/images/uploads/2010/08/Lamb-Lamb.jpg" alt="" title="Lamb - Lamb" width="170" height="170" class="hang-2-column size-full wp-image-142" /></p>
 
 <p>Part of the series Milestones in Music</p>
 
@@ -591,7 +591,7 @@ The first I heard of Lamb was a remix of Gold on a Future Music cover CD. Lamb a
     <link href="http://eimer.co/blog/2010/08/15/dj-shadow-endtroducing/"/>
     <updated>2010-08-15T00:00:00+02:00</updated>
     <id>http://eimer.co/blog/2010/08/15/dj-shadow-endtroducing</id>
-    <content type="html"><![CDATA[<p><img src="http://www.eimermusic.com/cms/wp-content/uploads/2010/08/DJ-Shadow-Endtroducing.jpg" alt="" title="DJ Shadow - Endtroducing" width="170" height="170" class="hang-2-column size-full wp-image-140" /></p>
+    <content type="html"><![CDATA[<p><img src="http://eimer.co/images/uploads/2010/08/DJ-Shadow-Endtroducing.jpg" alt="" title="DJ Shadow - Endtroducing" width="170" height="170" class="hang-2-column size-full wp-image-140" /></p>
 
 <p>Part of the series Milestones in Music</p>
 
@@ -666,6 +666,11 @@ set $totalcache_file /your-wp-folder/wp-content/w3tc/pgcache/$1/_index.html;
 
 <p>There are a dozen other sites with variations on this code. None worked for me straight away&#8230; If you have similar experience, maybe my version will work for you.</p>
 
+<p>When, or if, I get some of the other rewrite-dependent features working I&#8217;ll add another post.</p>
+]]></content>
+  </entry>
+  
+</feed>
 <p>When, or if, I get some of the other rewrite-dependent features working I&#8217;ll add another post.</p>
 ]]></content>
   </entry>
