@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>HTML5 MediaElement</title>
+
+
+	<script src="../build/jquery.js"></script>
+	<script src="jquery.colorbox.js"></script>
+	<script src="../build/mediaelement-and-player.min.js"></script>
+	<link rel="stylesheet" href="../build/mediaelementplayer.min.css" />
+	<link rel="stylesheet" href="colorbox.css" />
+</head>
+<body>
+
+<h1>Colorbox + MediaElementPlayer</h1>
+
+
+<h2>MP4 example video</h2>
+<video width="360" height="203" id="player2" controls="controls">
+	<source src="../media/echo-hereweare.mp4" type="video/mp4" title="theirs">
+	<p>Your browser leaves much to be desired.</p>
+</video>
+<p><a id="popme" href="ajax.html" title="popover">Colorbox video popover (Ajax)</a></p>
+
+
+<script>
+
+	function enable_mediaelement() {
+	  $('video').mediaelementplayer({
+	    loop: true,
+	    enableAutosize: true,
+	    features: ['playpause','progress','current','duration','fullscreen'],
+	    alwaysShowControls: true,
+	    pauseOtherPlayers: true,
+	  });
+	}
+	enable_mediaelement()
+
+  $("#popme").colorbox({
+    scalePhotos:true,
+    transition:"none",
+    width:"99%",
+    height:"99%",
+    maxWidth:"90%",
+    maxHeight:"100%"
+  });
+
+
+</script>
+
+</body>
+</html>

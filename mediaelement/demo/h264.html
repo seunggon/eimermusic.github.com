@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>HTML5 MediaElement</title>
+
+
+	<script src="../build/jquery.js"></script>
+	<script src="../build/mediaelement-and-player.min.js"></script>
+	<link rel="stylesheet" href="../build/mediaelementplayer.min.css" />
+</head>
+<body>
+
+<h1>MediaElementPlayer.js</h1>
+
+<p>Recommended Setup</p>
+
+
+<h2>MP4 example video</h2>
+<video width="360" height="203" id="player2" controls="controls">
+	<source src="../media/echo-hereweare.mp4" type="video/mp4" title="theirs">
+	<p>Your browser leaves much to be desired.</p>
+</video>
+
+<h2>Our MP4 video</h2>
+<video width="360" height="203" id="player2" controls="controls">
+	<source src="../media/our_h264.mp4" type="video/mp4" title="ours">
+	<p>Your browser leaves much to be desired.</p>
+</video>
+
+<h2>Our MP4 in Rails</h2>
+<video width="360" height="203" id="player2" controls="controls">
+	<source src="http://mobilebaby.dev/link/p6avzehzka8q/jf8wc13sz19y.mp4" type="video/mp4" title="ours">
+	<p>Your browser leaves much to be desired.</p>
+</video>
+
+<h2>Our MP4 in Rails public</h2>
+<video width="360" height="203" id="player2" controls="controls">
+	<source src="http://mobilebaby.dev/our_h264.mp4" type="video/mp4" title="ours">
+	<p>Your browser leaves much to be desired.</p>
+</video>
+
+<h2>Our MP4 in Ceph</h2>
+<video width="360" height="203" id="player2" controls="controls">
+	<source src="http://space.gcapp.com.ceph.local.gcapp.com/1.2.840.113619.2.116.5052424.1357570355.0.1440.20.281fb6e123a.mp4?AWSAccessKeyId=ACCESSKEY&Expires=1362217194&Signature=3szNuCK%2Bo5oWfTHpCMfEYa7nyAo%3D" type="video/mp4" title="ours">
+	<p>Your browser leaves much to be desired.</p>
+</video>
+
+
+
+<script>
+$('audio,video').mediaelementplayer({
+	features: ['playpause','progress','volume']
+});
+</script>
+
+</body>
+</html>
